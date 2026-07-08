@@ -2,13 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --aal-blue: #2563eb;
+  --aal-dark: #0f172a;
+  --aal-soft: #f8fafc;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
-  background: #f8fafc;
+  background: var(--aal-soft);
   color: #111827;
 }
+
 .aal-card {
-  @apply bg-white border border-gray-200 rounded-2xl shadow-sm;
+  @apply rounded-3xl border border-slate-200 bg-white shadow-sm;
 }
+
 .aal-button {
-  @apply inline-flex items-center justify-center rounded-xl bg-blue-600 px-5 py-3 font-bold text-white hover:bg-blue-700;
+  @apply inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 font-extrabold text-white transition hover:bg-blue-700;
+}
+
+.aal-button-secondary {
+  @apply inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-white px-5 py-3 font-extrabold text-slate-800 transition hover:bg-slate-50;
+}
+
+.aal-label {
+  @apply text-sm font-extrabold text-slate-500;
+}
+
+.aal-title {
+  @apply text-3xl font-extrabold tracking-tight text-slate-950 md:text-5xl;
 }
