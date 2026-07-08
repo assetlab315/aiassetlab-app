@@ -13,6 +13,7 @@
 - MVP完成までアーキテクチャ変更禁止
 - 1 Sprint = 1機能 = Commit & Push
 - 必ず動作確認してから次へ進む
+- ResultページはAI Dashboardとして育てる
 
 ---
 
@@ -31,17 +32,19 @@
 
 - [x] API修正
 - [x] 保存ID取得
-- [ ] Resultページへ遷移
-- [ ] ResultページでSupabase取得
-- [ ] タイプ別診断結果表示
+- [x] Resultページへ遷移
+- [x] ResultページでSupabase取得
+- [x] 診断結果表示
 
 ---
 
 ## Sprint6
 
-- [ ] Portfolio改善
+- [x] ResultページをAI Dashboard化
+- [ ] AI資産形成ロードマップ強化
+- [ ] 今日のミッション改善
+- [ ] Portfolio連携
 - [ ] AIチャット連携
-- [ ] シミュレーター改善
 
 ---
 
@@ -66,20 +69,9 @@
 
 # ディレクトリ構成
 
-```
+```txt
 app/
 components/
 features/
 lib/
 supabase/
-```
-
----
-
-# 完成率
-
-MVP進捗
-
-🟩🟩⬜⬜⬜⬜⬜⬜⬜⬜
-
-約20%
