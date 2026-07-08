@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background: #f8fafc;
+  color: #111827;
+}
+.aal-card {
+  @apply bg-white border border-gray-200 rounded-2xl shadow-sm;
+}
+.aal-button {
+  @apply inline-flex items-center justify-center rounded-xl bg-blue-600 px-5 py-3 font-bold text-white hover:bg-blue-700;
+}
