@@ -1,41 +1,97 @@
-# Current Sprint
+# AI Asset Lab - Project Progress
 
-Sprint D-2
+## Current Sprint
+
+### Sprint 7
+
+**Status**
+
+🟢 Ready to Start
+
+---
+
+## Current Goal
+
+Portfolio MVP の実装
+
+---
+
+## Previous Sprint
+
+Docs Sprint
 
 Status
 
-🟡 In Progress
+✅ Completed
 
 ---
 
 ## Completed
 
-✅ Git環境
+### Infrastructure
 
-✅ AI診断
+- Git / GitHub
+- GitHub Desktop
+- VS Code
+- Vercel
+- Supabase
 
-✅ Supabase
+### AI Diagnosis
 
-✅ AI Dashboard
+- Diagnosis UI
+- Diagnosis Result
+- API
+- Supabase Save
+- Result Fetch
 
-✅ Result取得
+### Dashboard
+
+- AI Dashboard
+- Today's Mission
+- Roadmap Card
+
+### Documentation
+
+- README
+- PRODUCT_VISION
+- PRODUCT_PRINCIPLES
+- ROADMAP
+- AI_CONTEXT
+- AI_PM
+- HANDOFF
+- ARCHITECTURE
+- FOLDER_STRUCTURE
+- USER_FLOW
+- UI_GUIDELINES
+- WIREFRAMES
+- CHANGELOG
+- DECISIONS
+- DEFINITION_OF_DONE
+- CONTRIBUTING
 
 ---
 
-## Current
+## Next Sprint
 
-Docs Sprint
+Sprint 7
 
-Development Documents
+Portfolio MVP
 
----
+予定
 
-## Next
-
-Architecture Documents
+- Portfolio画面
+- 資産カード
+- サマリー表示
+- Dashboardとの導線
 
 ---
 
 ## MVP Progress
 
-40%
+████░░░░░░ 40%
+
+---
+
+Last Updated
+
+2026-07-08
