@@ -4,6 +4,35 @@
 
 ---
 
+# Sprint 8
+
+## Added
+
+- Simulator MVP
+- Simulator画面
+- 毎月積立額入力
+- 運用年数入力
+- 想定利回り入力
+- 現在資産額入力
+- 将来資産額表示
+- 積立元本表示
+- 運用益表示
+- AIコメント表示
+- Portfolioへの戻り導線
+- AI Chatへの次アクション導線
+
+## Improved
+
+- Portfolio後の次アクションをSimulatorへ接続
+- 資産形成の将来イメージを数値で確認できるMVP導線を追加
+
+## Documentation
+
+- PROJECT_PROGRESS.md をSprint 8完了状態へ更新
+- CHANGELOG.md にSprint 8の変更履歴を追加
+
+---
+
 # Sprint 7
 
 ## Added
@@ -42,7 +71,6 @@
 - PRODUCT_VISION
 - PRODUCT_PRINCIPLES
 - ROADMAP
-
 - AI_CONTEXT
 - AI_PM
 - HANDOFF
@@ -51,68 +79,12 @@
 - DECISIONS
 - DEFINITION_OF_DONE
 - CONTRIBUTING
-
 - ARCHITECTURE
 - FOLDER_STRUCTURE
-
 - USER_FLOW
 - UI_GUIDELINES
 - WIREFRAMES
 
----
+## Status
 
-## Fixed
-
-- Development Rule を整理
-- Sprint運用を標準化
-- Docs First Rule を追加
-- Definition of Done を独立
-- AI PM Guide を Development Charter 化
-
----
-
-# Sprint 6
-
-## Added
-
-- AI Dashboard
-- AI分析
-- Today's Mission
-- Roadmap Card
-- Diagnosis Result API
-
----
-
-## Improved
-
-- Dashboard UI
-- Result画面
-- Diagnosis保存処理
-
----
-
-# Sprint 5
-
-## Added
-
-- Diagnosis画面
-- Supabase保存
-- Result取得API
-
----
-
-## Infrastructure
-
-- GitHub
-- GitHub Desktop
-- VS Code
-- Next.js
-- Supabase
-- Tailwind CSS
-- Vercel
-
----
-
-Last Updated
-
-2026-07-08
+✅ Completed
