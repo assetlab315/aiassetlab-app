@@ -6,7 +6,7 @@
 
 **Status**
 
-🟢 Ready to Start
+✅ Completed
 
 ---
 
@@ -50,6 +50,15 @@ Status
 - Today's Mission
 - Roadmap Card
 
+### Portfolio
+
+- Portfolio画面
+- 資産カード
+- サマリー表示
+- 推奨ポートフォリオ
+- Dashboardへの戻り導線
+- Simulatorへの次アクション導線
+
 ### Documentation
 
 - README
@@ -73,22 +82,24 @@ Status
 
 ## Next Sprint
 
-Sprint 7
+Sprint 8
 
-Portfolio MVP
+Simulator MVP
 
 予定
 
-- Portfolio画面
-- 資産カード
-- サマリー表示
-- Dashboardとの導線
+- Simulator画面
+- 毎月積立額入力
+- 運用年数入力
+- 想定利回り入力
+- 将来資産額表示
+- Portfolioとの導線
 
 ---
 
 ## MVP Progress
 
-████░░░░░░ 40%
+█████░░░░░ 50%
 
 ---
 

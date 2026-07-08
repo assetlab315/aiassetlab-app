@@ -4,6 +4,34 @@
 
 ---
 
+# Sprint 7
+
+## Added
+
+- Portfolio MVP
+- Portfolio画面
+- 資産カード
+- 総資産サマリー
+- 運用・成長資産サマリー
+- 攻めの割合表示
+- 資産配分バー
+- 推奨ポートフォリオ
+- 今日やること
+- Dashboardへの戻り導線
+- Simulatorへの次アクション導線
+
+## Improved
+
+- Dashboard後の次アクションをPortfolioへ接続
+- 診断後に資産状況を確認できるMVP導線を追加
+
+## Documentation
+
+- PROJECT_PROGRESS.md をSprint 7完了状態へ更新
+- CHANGELOG.md にSprint 7の変更履歴を追加
+
+---
+
 # Sprint D-1 ～ D-4
 
 ## Added
