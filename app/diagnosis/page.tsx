@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 const questions = [
@@ -53,11 +54,11 @@ const questions = [
 ];
 
 export default function DiagnosisPage() {
+  const router = useRouter();
+
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, number>>({});
-  const [saved, setSaved] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [savedResultId, setSavedResultId] = useState<string | null>(null);
 
   const isDone = Object.keys(answers).length === questions.length;
 
@@ -85,33 +86,39 @@ export default function DiagnosisPage() {
   async function saveResult() {
     setSaving(true);
 
-    const res = await fetch("/api/diagnosis", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        score,
-        type: resultType,
-        comment,
-        answers,
-      }),
-    });
+    try {
+      const res = await fetch("/api/diagnosis", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          score,
+          type: resultType,
+          comment,
+          answers,
+        }),
+      });
 
-    setSaving(false);
+      if (!res.ok) {
+        alert("保存に失敗しました。");
+        return;
+      }
 
-    if (!res.ok) {
-      alert("保存に失敗しました。");
-      return;
+      const result = await res.json();
+      const resultId = result?.data?.id;
+
+      if (!resultId) {
+        alert("診断結果IDの取得に失敗しました。");
+        return;
+      }
+
+      router.push(`/result?id=${resultId}`);
+    } catch {
+      alert("保存中にエラーが発生しました。");
+    } finally {
+      setSaving(false);
     }
-
-    const result = await res.json();
-    const resultId = result?.data?.id;
-
-    console.log("Saved diagnosis result id:", resultId);
-
-    setSavedResultId(resultId);
-    setSaved(true);
   }
 
   return (
@@ -187,19 +194,13 @@ export default function DiagnosisPage() {
               </div>
             </div>
 
-            {savedResultId && (
-              <div className="mt-5 rounded-2xl bg-green-50 p-4 text-sm font-bold text-green-700">
-                保存ID：{savedResultId}
-              </div>
-            )}
-
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <button
                 onClick={saveResult}
-                disabled={saving || saved}
+                disabled={saving}
                 className="aal-button"
               >
-                {saved ? "保存しました" : saving ? "保存中..." : "診断結果を保存する"}
+                {saving ? "保存中..." : "診断結果を保存して結果ページへ"}
               </button>
 
               <Link className="aal-button-secondary" href="/simulator">
@@ -207,7 +208,7 @@ export default function DiagnosisPage() {
               </Link>
 
               <Link className="aal-button-secondary" href="/">
-                Dashboardへ戻る
+                トップへ戻る
               </Link>
             </div>
           </>
