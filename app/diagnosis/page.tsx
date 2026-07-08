@@ -57,6 +57,7 @@ export default function DiagnosisPage() {
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [saved, setSaved] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [savedResultId, setSavedResultId] = useState<string | null>(null);
 
   const isDone = Object.keys(answers).length === questions.length;
 
@@ -69,15 +70,15 @@ export default function DiagnosisPage() {
     score < 50
       ? "安定重視タイプ"
       : score < 75
-      ? "バランス成長タイプ"
-      : "積極成長タイプ";
+        ? "バランス成長タイプ"
+        : "積極成長タイプ";
 
   const comment =
     score < 50
       ? "まずは新NISAと全世界株を中心に、少額から始めるのがおすすめです。"
       : score < 75
-      ? "新NISAを軸に、全世界株とS&P500をバランスよく組み合わせるのがおすすめです。"
-      : "長期目線で成長資産を多めに持つことで、資産拡大を狙いやすいタイプです。";
+        ? "新NISAを軸に、全世界株とS&P500をバランスよく組み合わせるのがおすすめです。"
+        : "長期目線で成長資産を多めに持つことで、資産拡大を狙いやすいタイプです。";
 
   const current = questions[step];
 
@@ -99,11 +100,18 @@ export default function DiagnosisPage() {
 
     setSaving(false);
 
-    if (res.ok) {
-      setSaved(true);
-    } else {
+    if (!res.ok) {
       alert("保存に失敗しました。");
+      return;
     }
+
+    const result = await res.json();
+    const resultId = result?.data?.id;
+
+    console.log("Saved diagnosis result id:", resultId);
+
+    setSavedResultId(resultId);
+    setSaved(true);
   }
 
   return (
@@ -178,6 +186,12 @@ export default function DiagnosisPage() {
                 <p className="mt-3 font-bold leading-8">{comment}</p>
               </div>
             </div>
+
+            {savedResultId && (
+              <div className="mt-5 rounded-2xl bg-green-50 p-4 text-sm font-bold text-green-700">
+                保存ID：{savedResultId}
+              </div>
+            )}
 
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <button
