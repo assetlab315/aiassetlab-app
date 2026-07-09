@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Sprint 8
+### Sprint 7
 
 **Status**
 
@@ -12,13 +12,27 @@
 
 ## Current Goal
 
-Simulator MVP の実装
+Portfolio MVP の実装
+
+---
+
+## Sprint 7 Completed
+
+### Portfolio MVP
+
+- Portfolio画面を追加
+- 資産サマリー表示を追加
+- 資産カード一覧を追加
+- 資産配分表示を追加
+- AI Next Actionを追加
+- Dashboard / Simulator 導線を追加
+- UI、ロジック、型、モックデータを責務分割
 
 ---
 
 ## Previous Sprint
 
-Sprint 7
+Docs Sprint
 
 Status
 
@@ -55,23 +69,8 @@ Status
 - Portfolio画面
 - 資産カード
 - サマリー表示
-- 推奨ポートフォリオ
-- Dashboardへの戻り導線
-- Simulatorへの次アクション導線
-
-### Simulator
-
-- Simulator画面
-- 毎月積立額入力
-- 運用年数入力
-- 想定利回り入力
-- 現在資産額入力
-- 将来資産額表示
-- 元本表示
-- 運用益表示
-- AIコメント表示
-- Portfolioへの戻り導線
-- AI Chatへの次アクション導線
+- 資産配分
+- Dashboard導線
 
 ### Documentation
 
@@ -96,23 +95,24 @@ Status
 
 ## Next Sprint
 
-Sprint 9
+Sprint 8
 
-AI Chat MVP
+Simulator MVP
 
 予定
 
-- AI Chat画面
-- 相談入力欄
-- サンプル回答表示
-- Dashboard / Simulatorとの導線
-- MVP導線の一巡完成
+- Simulator画面
+- 入力フォーム
+- 計算ロジック
+- 結果表示
+- AIコメント
+- Portfolioとの導線
 
 ---
 
 ## MVP Progress
 
-██████░░░░ 60%
+█████░░░░░ 50%
 
 ---
 

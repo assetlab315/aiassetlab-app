@@ -4,60 +4,33 @@
 
 ---
 
-# Sprint 8
-
-## Added
-
-- Simulator MVP
-- Simulator画面
-- 毎月積立額入力
-- 運用年数入力
-- 想定利回り入力
-- 現在資産額入力
-- 将来資産額表示
-- 積立元本表示
-- 運用益表示
-- AIコメント表示
-- Portfolioへの戻り導線
-- AI Chatへの次アクション導線
-
-## Improved
-
-- Portfolio後の次アクションをSimulatorへ接続
-- 資産形成の将来イメージを数値で確認できるMVP導線を追加
-
-## Documentation
-
-- PROJECT_PROGRESS.md をSprint 8完了状態へ更新
-- CHANGELOG.md にSprint 8の変更履歴を追加
-
----
-
 # Sprint 7
 
 ## Added
 
-- Portfolio MVP
+### Portfolio MVP
+
 - Portfolio画面
-- 資産カード
-- 総資産サマリー
-- 運用・成長資産サマリー
-- 攻めの割合表示
-- 資産配分バー
-- 推奨ポートフォリオ
-- 今日やること
-- Dashboardへの戻り導線
-- Simulatorへの次アクション導線
+- 資産サマリーカード
+- 資産カード一覧
+- 資産配分表示
+- AI Next Action
+- Dashboard / Simulator 導線
 
 ## Improved
 
-- Dashboard後の次アクションをPortfolioへ接続
-- 診断後に資産状況を確認できるMVP導線を追加
+- Portfolio実装を責務分割
+- UIコンポーネントを components/portfolio に分離
+- 型定義を features/portfolio/types.ts に分離
+- モックデータを features/portfolio/mockPortfolio.ts に分離
+- 計算処理を lib/portfolio/calcPortfolio.ts に分離
+- 表示フォーマットを lib/portfolio/formatPortfolio.ts に分離
 
 ## Documentation
 
-- PROJECT_PROGRESS.md をSprint 7完了状態へ更新
-- CHANGELOG.md にSprint 7の変更履歴を追加
+- PROJECT_PROGRESS.md 更新
+- CHANGELOG.md 更新
+- AI_PM.md に責務分割ルールを追加
 
 ---
 
@@ -71,6 +44,7 @@
 - PRODUCT_VISION
 - PRODUCT_PRINCIPLES
 - ROADMAP
+
 - AI_CONTEXT
 - AI_PM
 - HANDOFF
@@ -79,12 +53,68 @@
 - DECISIONS
 - DEFINITION_OF_DONE
 - CONTRIBUTING
+
 - ARCHITECTURE
 - FOLDER_STRUCTURE
+
 - USER_FLOW
 - UI_GUIDELINES
 - WIREFRAMES
 
-## Status
+---
 
-✅ Completed
+## Fixed
+
+- Development Rule を整理
+- Sprint運用を標準化
+- Docs First Rule を追加
+- Definition of Done を独立
+- AI PM Guide を Development Charter 化
+
+---
+
+# Sprint 6
+
+## Added
+
+- AI Dashboard
+- AI分析
+- Today's Mission
+- Roadmap Card
+- Diagnosis Result API
+
+---
+
+## Improved
+
+- Dashboard UI
+- Result画面
+- Diagnosis保存処理
+
+---
+
+# Sprint 5
+
+## Added
+
+- Diagnosis画面
+- Supabase保存
+- Result取得API
+
+---
+
+## Infrastructure
+
+- GitHub
+- GitHub Desktop
+- VS Code
+- Next.js
+- Supabase
+- Tailwind CSS
+- Vercel
+
+---
+
+Last Updated
+
+2026-07-08
