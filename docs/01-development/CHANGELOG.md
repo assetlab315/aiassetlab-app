@@ -2,30 +2,14 @@
 
 ## 2026-07-09
 
-### Sprint 11 - UX Foundation
+### Sprint 12.5 - Build Fix
 
-#### Added
+#### Fixed
 
-- 共通Headerを追加
-- 共通Footerを追加
-- 共通PageContainerを追加
-- 共通PageTitleを追加
-- 共通Cardを追加
-- 共通Buttonを追加
-- 共通EmptyStateを追加
-- 共通Skeletonを追加
-- AI Asset Lab風の404画面を追加
-- `/` から `/dashboard` へのリダイレクトを追加
+- `/result` ページで `useSearchParams()` を直接使用していたため、Next.js 14 の production build で発生していた prerender error を修正
+- `app/result/page.tsx` を Server Component に戻し、`Suspense` で Client Component を包む構成へ変更
+- `useSearchParams()` を `app/result/ResultClient.tsx` に分離
 
-#### Changed
+#### Validation
 
-- Dashboard画面を共通レイアウトへ移行
-- Portfolio画面を共通レイアウトへ移行
-- Simulator画面を共通レイアウトへ移行
-- Chat画面を共通レイアウトへ移行
-- 機能間ナビゲーションを `components/common/FeatureNavigation.tsx` として共通化
-
-#### Documentation
-
-- PROJECT_PROGRESS.md を更新
-- CHANGELOG.md を更新
+- `npm run build` が成功することを確認対象に追加
