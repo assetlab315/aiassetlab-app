@@ -2,9 +2,9 @@ import Link from "next/link";
 
 const navItems = [
   { label: "ホーム", href: "/dashboard" },
-  { label: "資産", href: "/portfolio" },
-  { label: "将来のお金", href: "/simulator" },
-  { label: "AIに相談", href: "/chat" },
+  { label: "資産登録", href: "/portfolio" },
+  { label: "将来試算", href: "/simulator" },
+  { label: "AI相談", href: "/chat" },
 ];
 
 export default function AppHeader() {
@@ -16,7 +16,7 @@ export default function AppHeader() {
             AI Asset Lab
           </span>
           <span className="text-xs font-semibold text-blue-600">
-            AIと一緒に、毎日一歩ずつ資産形成
+            AIが毎日の資産形成を整理します
           </span>
         </Link>
 

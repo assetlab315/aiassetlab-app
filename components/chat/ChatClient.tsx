@@ -175,12 +175,12 @@ export default function ChatClient() {
       <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[1fr_320px]">
         <section className="overflow-hidden rounded-3xl bg-white shadow-sm">
           <div className="border-b border-slate-100 p-6">
-            <p className="text-sm font-semibold text-blue-600">AIに相談</p>
+            <p className="text-sm font-semibold text-blue-600">AI相談</p>
             <h1 className="mt-2 text-3xl font-bold text-slate-900">
-              資産形成の悩みをAIに相談する
+              資産形成で迷ったことをAIに聞く
             </h1>
             <p className="mt-3 leading-7 text-slate-600">
-              登録した資産状況を踏まえて、次にやることを分かりやすく整理します。
+              登録した資産状況を踏まえて、次に確認することを短く整理します。
             </p>
           </div>
 
@@ -204,25 +204,25 @@ export default function ChatClient() {
           <ChatContextPanel context={context} onRefresh={() => setContext(readPortfolioContext())} />
 
           <div className="rounded-3xl bg-white p-5 shadow-sm">
-            <h2 className="text-lg font-bold text-slate-900">次におすすめ</h2>
+            <h2 className="text-lg font-bold text-slate-900">次に進む場所</h2>
             <div className="mt-4 space-y-3">
               <Link
                 href="/portfolio"
                 className="block rounded-2xl border border-slate-200 p-4 font-semibold text-slate-700 hover:border-blue-300 hover:bg-blue-50"
               >
-                資産を見る →
+                資産を登録・確認する →
               </Link>
               <Link
                 href="/simulator"
                 className="block rounded-2xl border border-slate-200 p-4 font-semibold text-slate-700 hover:border-blue-300 hover:bg-blue-50"
               >
-                将来のお金を計算する →
+                将来シミュレーションへ →
               </Link>
               <Link
                 href="/dashboard"
                 className="block rounded-2xl border border-slate-200 p-4 font-semibold text-slate-700 hover:border-blue-300 hover:bg-blue-50"
               >
-                Dashboardへ戻る →
+                ホームで確認する →
               </Link>
             </div>
           </div>

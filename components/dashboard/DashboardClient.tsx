@@ -59,7 +59,7 @@ export default function DashboardClient() {
               今日の資産形成を始めましょう。
             </h1>
             <p className="mt-4 max-w-2xl leading-7 text-slate-600">
-              資産サマリー、AIインサイト、今日やることを1画面に整理しました。迷ったら上から順番に確認してください。
+              資産サマリー、AIインサイト、今日やることを1画面に整理しました。上から確認すれば、今日必要な判断が分かります。
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <Button href={insight.ctaHref}>{insight.ctaLabel}</Button>
@@ -149,7 +149,7 @@ export default function DashboardClient() {
 
       <DashboardPremiumPreviewCard preview={premiumPreview} />
 
-      <FeatureNavigation currentPath="/dashboard" title="ほかの機能へ移動する" />
+      <FeatureNavigation currentPath="/dashboard" title="次に進む場所" />
     </PageContainer>
   );
 }

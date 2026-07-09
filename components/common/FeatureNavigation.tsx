@@ -3,23 +3,23 @@ import Card from "../ui/Card";
 
 const featureItems = [
   {
-    label: "Dashboard",
-    description: "今日やることを確認する",
+    label: "ホーム",
+    description: "今日の判断と次の一歩を確認する",
     href: "/dashboard",
   },
   {
-    label: "Portfolio",
-    description: "資産の現在地を見る",
+    label: "資産登録",
+    description: "保有資産と毎月積立を更新する",
     href: "/portfolio",
   },
   {
-    label: "Simulator",
-    description: "将来の資産額を試算する",
+    label: "将来シミュレーション",
+    description: "今のペースで将来いくらになるか見る",
     href: "/simulator",
   },
   {
-    label: "AI Chat",
-    description: "次の行動をAIに相談する",
+    label: "AI相談",
+    description: "迷ったことを短くAIに聞く",
     href: "/chat",
   },
 ];
@@ -31,23 +31,18 @@ type Props = {
 
 export default function FeatureNavigation({
   currentPath,
-  title = "次に使う機能",
+  title = "次に進む場所",
 }: Props) {
   const items = featureItems.filter((item) => item.href !== currentPath);
 
   return (
     <Card>
-      <div className="mb-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-        <div>
-          <p className="text-sm font-semibold text-blue-600">Next Action</p>
-          <h2 className="text-xl font-black text-slate-900">{title}</h2>
-        </div>
-        <Link
-          href="/mvp"
-          className="w-fit rounded-full bg-slate-100 px-4 py-2 text-xs font-bold text-slate-600 transition hover:bg-slate-200"
-        >
-          MVP一覧を見る
-        </Link>
+      <div className="mb-4">
+        <p className="text-sm font-semibold text-blue-600">迷ったらここから</p>
+        <h2 className="mt-1 text-xl font-black text-slate-900">{title}</h2>
+        <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-500">
+          AI Asset Labでは、ホームで確認し、資産を更新し、必要なときだけAIに相談します。
+        </p>
       </div>
 
       <div className="grid gap-3 md:grid-cols-3">

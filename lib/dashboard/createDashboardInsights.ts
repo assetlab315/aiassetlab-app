@@ -362,7 +362,7 @@ export function createDashboardPremiumPreview(
     badgeLabel: "Premium準備中",
     title: "次は、AIが資産形成の改善ポイントを深掘りできる状態です。",
     description:
-      "資産と積立が見えているユーザーには、週次レポート・資産配分の深掘り・将来シミュレーションの比較が有料価値になり得ます。まずは無料のAI相談で反応を見ます。",
+      "資産と積立が見えているユーザーには、週次レポート・資産配分の深掘り・将来シミュレーションの比較がAI Premium価値になり得ます。まずは無料のAI相談で反応を見ます。",
     ctaLabel: "将来のお金を計算する",
     ctaHref: "/simulator",
   };

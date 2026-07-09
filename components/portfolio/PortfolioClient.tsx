@@ -109,16 +109,16 @@ export default function PortfolioClient() {
           <p className="text-sm font-bold text-blue-100">AI Asset Lab</p>
           <div className="mt-3 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
-              <h1 className="text-3xl font-black md:text-4xl">資産を見る</h1>
+              <h1 className="text-3xl font-black md:text-4xl">資産を登録・確認する</h1>
               <p className="mt-3 max-w-2xl leading-7 text-blue-50">
-                いま持っている資産を登録して、合計額・毎月の積立額・資産配分を確認できます。
+                いま持っている資産と毎月の積立を登録すると、DashboardとAI相談があなた向けになります。
               </p>
             </div>
             <Link
               href="/dashboard"
               className="rounded-full bg-white px-5 py-3 text-center text-sm font-bold text-blue-700 hover:bg-blue-50"
             >
-              ホームへ戻る
+              ホームで確認する
             </Link>
           </div>
         </section>

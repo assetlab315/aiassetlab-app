@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Sprint 18
+### Sprint 19
 
 **Status**
 
@@ -12,7 +12,7 @@
 
 ## Current Goal
 
-Dashboard AI Insight / Asset Impact の実装
+Version 1.0 UX Polish / Release Readiness
 
 ---
 
@@ -83,18 +83,26 @@ Dashboard AI Insight / Asset Impact の実装
 - 今日見るテーマとおすすめ行動を資産状況に応じて出し分け
 - AI相談導線を「詳しくAIに聞く」に改善
 
+### Version 1.0 UX Polish / Release Readiness
+
+- Header / Dashboard / Portfolio / Chat の主要導線名を日本語で統一
+- Dashboard下部のFeatureNavigationからMVP一覧導線を削除し、公開前ユーザー向けの導線に整理
+- Premium候補の表現を「AI Premium 準備中」へ変更し、内部検証感を減らす
+- Portfolio / Chat の見出しとCTAを「ホーム起点」の体験に統一
+- Release前に迷いやすい英語ラベルと内部向け表現を削減
+
 ## Next Sprint
 
-Sprint 19
+Sprint 20
 
-Version 1.0 UX Polish / Release Readiness
+Dashboard Morning Experience / Daily Check Foundation
 
 予定
 
-- Dashboard / Portfolio / Chat の文言を統一
-- 主要導線のクリック順を再確認
-- Premium導線の露出位置と文言を再確認
-- 公開前に迷いやすい導線を削る
+- Dashboardに「朝開いたときの一言」を追加
+- 今日見るべきポイントをさらに短く整理
+- 習慣化カードを毎日確認しやすい表現へ改善
+- 将来の資産推移・ストリーク導入前の土台を作る
 
 ---
 
@@ -106,7 +114,7 @@ Version 1.0 UX Polish / Release Readiness
 
 ## Version 1.0 Progress
 
-█████████▓ 93%
+██████████ 96%
 
 ---
 

@@ -2,6 +2,23 @@
 
 ## 2026-07-09
 
+### Sprint 19 - Version 1.0 UX Polish / Release Readiness
+
+#### Changed
+
+- Header / Dashboard / Portfolio / Chat の主要導線名を日本語で統一
+- Dashboard下部のFeatureNavigationからMVP一覧導線を削除し、公開前ユーザー向けの導線に整理
+- Premium候補カードの表現を「AI Premium 準備中」へ変更
+- PortfolioのHero文言を、DashboardとAI相談につながる説明へ改善
+- Chat画面の見出しと右サイド導線を「次に進む場所」に統一
+
+#### Notes
+
+- 新機能は追加せず、Version 1.0公開前の迷いやすい表現を削減
+- Premiumの販売導線はまだ実装せず、価値検証の表現に留める
+
+## 2026-07-09
+
 ### Sprint 18 - Dashboard AI Insight / Asset Impact
 
 #### Added

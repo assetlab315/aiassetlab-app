@@ -19,7 +19,7 @@ export default function DashboardPremiumPreviewCard({ preview }: Props) {
         <div>
           <div className="flex flex-wrap items-center gap-2">
             <span className="rounded-full bg-blue-600 px-3 py-1 text-xs font-black text-white">
-              Premium候補
+              AI Premium 準備中
             </span>
             <span className="rounded-full bg-white px-3 py-1 text-xs font-black text-blue-700 shadow-sm">
               {preview.badgeLabel}
@@ -36,13 +36,13 @@ export default function DashboardPremiumPreviewCard({ preview }: Props) {
           <div className="mt-5 flex flex-col gap-3 sm:flex-row">
             <Button href={preview.ctaHref}>{preview.ctaLabel}</Button>
             <Button href="/chat" variant="outline">
-              AIに相談する
+              無料でAIに相談する
             </Button>
           </div>
         </div>
 
         <div className="rounded-[1.5rem] bg-white p-5 shadow-sm">
-          <p className="text-sm font-black text-slate-900">無料版で見えること</p>
+          <p className="text-sm font-black text-slate-900">今できること</p>
           <ul className="mt-4 space-y-3">
             {valueItems.map((item) => (
               <li key={item} className="flex gap-3 text-sm font-bold leading-6 text-slate-600">
@@ -55,9 +55,9 @@ export default function DashboardPremiumPreviewCard({ preview }: Props) {
           </ul>
 
           <div className="mt-5 rounded-2xl bg-slate-50 p-4">
-            <p className="text-xs font-black text-slate-500">将来のPremium候補</p>
+            <p className="text-xs font-black text-slate-500">将来のAI Premium 準備中</p>
             <p className="mt-2 text-sm font-bold leading-6 text-slate-700">
-              資産配分の深掘り、週次レポート、改善シミュレーションを有料機能として検証します。
+              資産配分の深掘り、週次レポート、改善シミュレーションを今後のAI Premium価値として検証します。
             </p>
           </div>
         </div>
