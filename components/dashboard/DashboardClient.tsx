@@ -7,6 +7,7 @@ import DashboardDailyCheckCard from "./DashboardDailyCheckCard";
 import DashboardInsightCard from "./DashboardInsightCard";
 import DashboardHabitCard from "./DashboardHabitCard";
 import DashboardPremiumPreviewCard from "./DashboardPremiumPreviewCard";
+import DashboardReleaseCheckCard from "./DashboardReleaseCheckCard";
 import FeatureNavigation from "../common/FeatureNavigation";
 import SectionHeader from "../common/SectionHeader";
 import PageContainer from "../layout/PageContainer";
@@ -88,17 +89,17 @@ export default function DashboardClient() {
           <div>
             <p className="mb-3 text-sm font-black text-blue-600">AI Dashboard</p>
             <h1 className="text-3xl font-black tracking-tight text-slate-900 md:text-4xl">
-              おかえりなさい。
+              未来の資産を、
               <br />
-              今日の確認を始めましょう。
+              今日少し前へ。
             </h1>
             <p className="mt-4 max-w-2xl leading-7 text-slate-600">
-              毎朝30秒で、資産サマリー・AIインサイト・今日やることを確認できます。
+              資産を見て、必要なときだけAIに相談できます。
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              <Button href={insight.ctaHref}>{insight.ctaLabel}</Button>
+              <Button href="/portfolio">資産を見る</Button>
               <Button href="/chat" variant="outline">
-                詳しくAIに聞く
+                AIに相談する
               </Button>
             </div>
           </div>
@@ -176,6 +177,8 @@ export default function DashboardClient() {
       </section>
 
       <DashboardHabitCard habit={habit} isChecked={isDailyChecked} />
+
+      <DashboardReleaseCheckCard />
 
       <DashboardPremiumPreviewCard preview={premiumPreview} />
 

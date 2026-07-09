@@ -12,8 +12,8 @@ type Props = {
 
 const toneClass = {
   blue: "bg-blue-50 text-blue-700",
-  emerald: "bg-emerald-50 text-emerald-700",
-  violet: "bg-violet-50 text-violet-700",
+  emerald: "bg-slate-100 text-slate-700",
+  violet: "bg-slate-100 text-slate-700",
 };
 
 export default function ActionCard({

@@ -5,22 +5,26 @@ const featureItems = [
   {
     label: "ホーム",
     description: "今日の判断と次の一歩を確認する",
+    actionLabel: "ホームを見る",
     href: "/dashboard",
   },
   {
     label: "資産登録",
     description: "保有資産と毎月積立を更新する",
+    actionLabel: "資産を見る",
     href: "/portfolio",
-  },
-  {
-    label: "将来シミュレーション",
-    description: "今のペースで将来いくらになるか見る",
-    href: "/simulator",
   },
   {
     label: "AI相談",
     description: "迷ったことを短くAIに聞く",
+    actionLabel: "AIに相談する",
     href: "/chat",
+  },
+  {
+    label: "AI診断",
+    description: "まだ迷うときは最初の状態を診断する",
+    actionLabel: "診断する",
+    href: "/diagnosis",
   },
 ];
 
@@ -56,7 +60,9 @@ export default function FeatureNavigation({
             <p className="mt-2 text-sm leading-6 text-slate-500">
               {item.description}
             </p>
-            <p className="mt-3 text-sm font-black text-blue-600">開く →</p>
+            <p className="mt-3 text-sm font-black text-blue-600">
+              {item.actionLabel} →
+            </p>
           </Link>
         ))}
       </div>

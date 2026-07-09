@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Sprint 21
+### Sprint 23
 
 **Status**
 
@@ -12,7 +12,7 @@
 
 ## Current Goal
 
-Dashboard Micro Polish / Daily Habit UX
+First Impression Polish
 
 ---
 
@@ -107,18 +107,34 @@ Dashboard Micro Polish / Daily Habit UX
 - 今日見るポイントを、未確認時は番号、確認後はチェック表示に変化するUIへ改善
 - 「今日のチェック」表現の重複を削減し、朝の確認と毎日の習慣の役割を分離
 
+### Dashboard Release Readiness / Final MVP Check
+
+- Dashboardに公開前の最終確認カードを追加
+- 資産確認、次の行動、毎日の習慣の3観点でVersion 1.0入口としての状態を明示
+- 下部のFeatureNavigation CTAを「開く」から「確認する」へ変更し、行動が分かる導線に改善
+- 新機能を増やさず、Dashboard全体の公開前チェックに必要な文言と導線を整理
+
+### First Impression Polish
+
+- Dashboard Heroを短く、未来志向のコピーへ改善
+- Hero CTAを「資産を見る」「AIに相談する」に統一し、目的が分かる導線へ整理
+- FeatureNavigationを利用頻度順に変更し、Dashboard / Portfolio / AI Chat / Diagnosis の順序へ整理
+- Dashboard周辺の「詳しく」系CTAを目的が分かる文言へ変更
+- 緑・紫の強調色を減らし、Primary Color中心の見え方へ調整
+- PageContainerの余白をDesktop / Tablet / Mobileで自然になるよう調整
+
 ## Next Sprint
 
-Sprint 22
+Sprint 24
 
-Dashboard Release Readiness / Final MVP Check
+Version 1.0 Launch Handoff / Documentation Finalization
 
 予定
 
-- Dashboard全体の公開前最終確認
-- CTA導線と主要画面遷移の確認
-- Version 1.0公開に向けた文言、余白、不要導線の最終調整
-- README / UI_COMPONENTS / design docs の必要更新確認
+- README / UI_COMPONENTS / design docs の最終確認
+- Version 1.0公開前の引き継ぎ情報整理
+- 既知の未実装範囲とMVP完了範囲の明確化
+- 必要に応じた軽微な文言整理
 
 ---
 
@@ -130,7 +146,7 @@ Dashboard Release Readiness / Final MVP Check
 
 ## Version 1.0 Progress
 
-██████████ 97%
+██████████ 100%
 
 ---
 

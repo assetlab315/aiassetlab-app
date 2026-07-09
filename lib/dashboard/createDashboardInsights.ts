@@ -87,7 +87,7 @@ export function createDashboardDailyCheck(
       "資産と積立の状態を確認できました。今日は無理に動かず、必要なときだけAIに相談すれば大丈夫です。",
     statusLabel: "今日の確認",
     focusItems: ["資産サマリー", "AIインサイト", "今日やること"],
-    ctaLabel: "詳しくAIに聞く",
+    ctaLabel: "AIに相談する",
     ctaHref: "/chat",
   };
 }
@@ -139,7 +139,7 @@ export function createDashboardInsight(
       impactLevel: 3,
       primaryPoint: `中心資産は${mainCategoryLabel}です。全体の約${Math.round(mainCategory.rate)}%を占めています。`,
       secondaryPoint: "不安がある場合は、AIにリスクと見直しポイントを聞きましょう。",
-      ctaLabel: "詳しく分析する",
+      ctaLabel: "AIに相談する",
       ctaHref: "/chat",
     };
   }
@@ -206,7 +206,7 @@ export function createDashboardAssetImpact(
     mainAssetRate: mainCategory.rate,
     marketTheme: themeByCategory[mainCategory.category],
     actionLabel: actionByCategory[mainCategory.category],
-    ctaLabel: "AIに詳しく聞く",
+    ctaLabel: "AIに相談する",
     ctaHref: "/chat",
   };
 }

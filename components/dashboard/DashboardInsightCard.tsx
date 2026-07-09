@@ -37,7 +37,7 @@ export default function DashboardInsightCard({ insight }: Props) {
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
             <Button href={insight.ctaHref}>{insight.ctaLabel}</Button>
             <Button href="/chat" variant="outline">
-              詳しくAIに聞く
+              AIに相談する
             </Button>
           </div>
         </div>

@@ -36,7 +36,7 @@ export default function DashboardPremiumPreviewCard({ preview }: Props) {
           <div className="mt-5 flex flex-col gap-3 sm:flex-row">
             <Button href={preview.ctaHref}>{preview.ctaLabel}</Button>
             <Button href="/chat" variant="outline">
-              無料でAIに相談する
+              AIに相談する
             </Button>
           </div>
         </div>

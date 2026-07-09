@@ -2,6 +2,43 @@
 
 ## 2026-07-09
 
+### Sprint 23 - First Impression Polish
+
+#### Changed
+
+- Dashboard Heroを「未来の資産を、今日少し前へ。」へ短縮し、第一印象を前向きに改善
+- Hero CTAを「資産を見る」「AIに相談する」へ統一
+- Dashboard周辺の「詳しく」系CTAを目的が分かる文言へ変更
+- FeatureNavigationを Dashboard / Portfolio / AI Chat / Diagnosis の利用頻度順へ整理
+- ActionCardと公開前確認カードの強調色をPrimary Color中心へ調整
+- PageContainerの上下余白とカード間余白を、Mobile / Tablet / Desktopで自然になるよう調整
+
+#### Notes
+
+- 新機能は追加せず、Version 1.0公開前の第一印象と導線整理のみ実施
+- Simulator自体は維持し、FeatureNavigationの並びからは公開前の利用頻度に合わせて外した
+
+## 2026-07-09
+
+### Sprint 22 - Dashboard Release Readiness / Final MVP Check
+
+#### Added
+
+- Dashboardに公開前の最終確認カードを追加
+- 資産確認、次の行動、毎日の習慣の3観点でMVPの入口状態を確認できる表示を追加
+
+#### Changed
+
+- Dashboard下部のFeatureNavigation CTAを「開く」から「確認する」へ変更
+- Version 1.0公開前チェックとして、Dashboard内の導線と確認ポイントを整理
+
+#### Notes
+
+- 新機能追加ではなく、公開前の最終確認と導線整理を目的としたSprint
+- READMEはUTF-8で読み直し、文字化けのない状態で内容を確認済み
+
+## 2026-07-09
+
 ### Sprint 21 - Dashboard Micro Polish / Daily Habit UX
 
 #### Added
