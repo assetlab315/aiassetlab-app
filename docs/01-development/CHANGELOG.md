@@ -2,14 +2,24 @@
 
 ## 2026-07-09
 
-### Sprint 12.5 - Build Fix
+### Sprint 13 - Project Quality Sprint
 
-#### Fixed
+#### Added
 
-- `/result` ページで `useSearchParams()` を直接使用していたため、Next.js 14 の production build で発生していた prerender error を修正
-- `app/result/page.tsx` を Server Component に戻し、`Suspense` で Client Component を包む構成へ変更
-- `useSearchParams()` を `app/result/ResultClient.tsx` に分離
+- `.gitattributes` を追加
+- `.editorconfig` を追加
+- `.prettierrc` を追加
+- `.prettierignore` を追加
+- `.vscode/settings.json` を追加
+- `.vscode/extensions.json` を追加
 
-#### Validation
+#### Changed
 
-- `npm run build` が成功することを確認対象に追加
+- Gitの改行コードwarningを抑制しやすい構成へ変更
+- VS Codeで保存時にフォーマットされる設定を追加
+- チーム開発・AI開発で差分がぶれにくい開発環境へ改善
+
+#### Documentation
+
+- PROJECT_PROGRESS.md を更新
+- CHANGELOG.md を更新
