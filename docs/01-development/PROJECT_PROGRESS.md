@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Sprint 15
+### Sprint 16
 
 **Status**
 
@@ -12,7 +12,7 @@
 
 ## Current Goal
 
-AI Chat v2 の実装
+Dashboard v3 の実装
 
 ---
 
@@ -57,20 +57,28 @@ AI Chat v2 の実装
 - 資産状況パネル
 - 送信中表示
 
+### Dashboard v3
+
+- Portfolio v2 のlocalStorage資産情報をDashboardへ反映
+- 資産合計、毎月積立、登録資産数、最大資産を表示
+- 資産状況に応じた今日のAIアドバイスを表示
+- 次にやることを登録状況に応じて自動出し分け
+- 習慣化UIの土台として今日のチェックカードを追加
+
 ---
 
 ## Next Sprint
 
-Sprint 16
+Sprint 17
 
-Dashboard v3
+Dashboard v3.1 / Monetization Foundation
 
 予定
 
-- Portfolio v2 の登録資産をDashboardへ反映
-- 今日のAIアドバイスを資産状況に応じて表示
-- 次にやることの自動出し分け
-- 連続利用・習慣化UIの土台
+- Dashboard上に無料/有料の価値差が分かる導線を設計
+- AI Premium候補機能を小さく検証
+- 継続利用につながる週次チェック導線を検討
+- Version 1.0完了に向けたUX整理
 
 ---
 
@@ -82,7 +90,7 @@ Dashboard v3
 
 ## Version 1.0 Progress
 
-███████░░░ 70%
+████████░░ 80%
 
 ---
 

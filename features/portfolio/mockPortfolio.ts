@@ -7,6 +7,8 @@ export const mockPortfolioAssets: PortfolioAsset[] = [
     category: 'cash',
     amount: 800000,
     targetRate: 25,
+    monthlyContribution: 0,
+    updatedAt: '2026-07-09T00:00:00.000Z',
     memo: '急な出費に備えるための現金です。',
   },
   {
@@ -15,6 +17,8 @@ export const mockPortfolioAssets: PortfolioAsset[] = [
     category: 'fund',
     amount: 1200000,
     targetRate: 45,
+    monthlyContribution: 30000,
+    updatedAt: '2026-07-09T00:00:00.000Z',
     memo: '長期資産形成の中心です。',
   },
   {
@@ -23,6 +27,8 @@ export const mockPortfolioAssets: PortfolioAsset[] = [
     category: 'stock',
     amount: 500000,
     targetRate: 20,
+    monthlyContribution: 10000,
+    updatedAt: '2026-07-09T00:00:00.000Z',
     memo: '配当収入を増やすための資産です。',
   },
   {
@@ -31,6 +37,8 @@ export const mockPortfolioAssets: PortfolioAsset[] = [
     category: 'other',
     amount: 200000,
     targetRate: 10,
+    monthlyContribution: 5000,
+    updatedAt: '2026-07-09T00:00:00.000Z',
     memo: 'AI学習や副業準備に使うお金です。',
   },
 ];

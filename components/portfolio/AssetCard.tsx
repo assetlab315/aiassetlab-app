@@ -1,6 +1,6 @@
 import { assetCategoryLabels } from '../../features/portfolio/constants';
 import type { PortfolioAsset } from '../../features/portfolio/types';
-import { formatPercent, formatYen } from '../../lib/portfolio/formatPortfolio';
+import { formatYen } from '../../lib/portfolio/formatPortfolio';
 
 type AssetCardProps = {
   asset: PortfolioAsset;
@@ -15,7 +15,7 @@ export function AssetCard({ asset }: AssetCardProps) {
           <h3 className="mt-1 text-lg font-bold text-slate-900">{asset.name}</h3>
         </div>
         <p className="rounded-full bg-blue-50 px-3 py-1 text-xs font-bold text-blue-700">
-          目安 {formatPercent(asset.targetRate)}
+          {formatYen(asset.monthlyContribution)} / 月
         </p>
       </div>
       <p className="mt-4 text-2xl font-bold text-slate-900">{formatYen(asset.amount)}</p>

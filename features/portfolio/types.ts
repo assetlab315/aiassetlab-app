@@ -12,6 +12,7 @@ export type PortfolioAsset = {
   category: AssetCategory;
   amount: number;
   monthlyContribution: number;
+  targetRate?: number;
   memo?: string;
   updatedAt: string;
 };
@@ -30,6 +31,8 @@ export type PortfolioSummary = {
   assetCount: number;
   largestAssetName: string;
   largestAssetAmount: number;
+  riskLabel?: string;
+  monthlyAction?: string;
 };
 
 export type AssetAllocation = {
@@ -37,4 +40,11 @@ export type AssetAllocation = {
   label: string;
   amount: number;
   percentage: number;
+};
+
+export type PortfolioAllocation = {
+  category: AssetCategory;
+  label: string;
+  amount: number;
+  rate: number;
 };

@@ -14,7 +14,10 @@ export function getPortfolioSummary(assets: PortfolioAsset[]): PortfolioSummary 
 
   return {
     totalAmount,
+    totalMonthlyContribution: assets.reduce((total, asset) => total + asset.monthlyContribution, 0),
     assetCount: assets.length,
+    largestAssetName: [...assets].sort((a, b) => b.amount - a.amount)[0]?.name ?? '未登録',
+    largestAssetAmount: [...assets].sort((a, b) => b.amount - a.amount)[0]?.amount ?? 0,
     riskLabel: cashRate >= 30 ? '安定型' : '成長型',
     monthlyAction: cashRate >= 30 ? portfolioActions.rebalance : portfolioActions.keep,
   };

@@ -40,3 +40,10 @@ export const DEFAULT_ASSETS: PortfolioAsset[] = [
     updatedAt: "2026-07-09T00:00:00.000Z",
   },
 ];
+
+export const assetCategoryLabels = ASSET_CATEGORY_LABELS;
+
+export const portfolioActions = {
+  keep: "今の積立を続けましょう",
+  rebalance: "資産配分を見直しましょう",
+};

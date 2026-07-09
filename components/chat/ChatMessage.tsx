@@ -16,7 +16,7 @@ export default function ChatMessage({ message }: Props) {
             : "bg-slate-100 text-slate-800"
         }`}
       >
-        {message.body}
+        {message.content}
       </div>
     </div>
   );

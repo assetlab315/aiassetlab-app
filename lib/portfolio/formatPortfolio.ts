@@ -9,3 +9,5 @@ export function formatCurrency(value: number): string {
 export function formatPercent(value: number): string {
   return `${Math.round(value)}%`;
 }
+
+export const formatYen = formatCurrency;
