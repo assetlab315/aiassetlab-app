@@ -2,6 +2,30 @@
 
 ## 2026-07-09
 
+### Sprint 25 - Version1.0 Release Candidate Review
+
+#### Changed
+
+- TOPをDashboard直行から診断開始の入口へ変更
+- 診断結果後の導線を「資産を見る」「Dashboardを見る」「AIに相談する」に統一
+- Portfolio未登録時の空状態に、次に入力する内容を明示
+- AI Chat未利用時の初期メッセージと資産未登録時のCTAを改善
+- Morning Check未実施時のCTAを「今日の確認をする」へ短縮
+- グローバルナビの順序とラベルを初回利用者向けに整理
+- モバイル表示向けに主要カードの余白、ボタン高さ、チャット入力の並びを調整
+- 主要入力・ボタンにaria-labelとfocus-visibleリングを追加
+
+#### Removed
+
+- 未使用の旧FeatureNavigationコンポーネントとfeatures/navigation関連ファイルを削除
+
+#### Notes
+
+- 新機能は追加せず、Version1.0 RCとして初回ユーザーが迷わないことを優先
+- TOP / Diagnosis / Portfolio / Dashboard / AI Chat の流れを公開前の基本導線として整理
+
+## 2026-07-09
+
 ### Sprint 24 - Daily Value
 
 #### Added

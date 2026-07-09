@@ -22,7 +22,7 @@ export default function AssetForm({
   const canSubmit = input.name.trim().length > 0;
 
   return (
-    <section className="rounded-3xl bg-white p-6 shadow-sm">
+    <section className="rounded-3xl bg-white p-5 shadow-sm md:p-6">
       <p className="text-sm font-bold text-blue-600">資産を登録</p>
       <h2 className="mt-2 text-2xl font-black text-slate-900">
         {isEditing ? "資産を編集する" : "まず1つ追加しましょう"}
@@ -36,6 +36,7 @@ export default function AssetForm({
           <span className="text-sm font-bold text-slate-700">資産名</span>
           <input
             className={inputClass}
+            aria-label="資産名"
             placeholder="例：新NISA 全世界株式"
             value={input.name}
             onChange={(event) => onChange({ ...input, name: event.target.value })}
@@ -46,6 +47,7 @@ export default function AssetForm({
           <span className="text-sm font-bold text-slate-700">種類</span>
           <select
             className={inputClass}
+            aria-label="資産の種類"
             value={input.category}
             onChange={(event) =>
               onChange({
@@ -66,6 +68,7 @@ export default function AssetForm({
           <span className="text-sm font-bold text-slate-700">現在の金額</span>
           <input
             className={inputClass}
+            aria-label="現在の金額"
             inputMode="numeric"
             placeholder="例：1200000"
             type="number"
@@ -78,6 +81,7 @@ export default function AssetForm({
           <span className="text-sm font-bold text-slate-700">毎月の積立額</span>
           <input
             className={inputClass}
+            aria-label="毎月の積立額"
             inputMode="numeric"
             placeholder="例：30000"
             type="number"
@@ -92,6 +96,7 @@ export default function AssetForm({
           <span className="text-sm font-bold text-slate-700">メモ</span>
           <textarea
             className={`${inputClass} min-h-24 resize-none`}
+            aria-label="資産メモ"
             placeholder="例：長期で積み立てる中心資産"
             value={input.memo}
             onChange={(event) => onChange({ ...input, memo: event.target.value })}
@@ -104,7 +109,7 @@ export default function AssetForm({
           type="button"
           onClick={onSubmit}
           disabled={!canSubmit}
-          className="rounded-full bg-blue-600 px-5 py-3 font-bold text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-300"
+          className="min-h-12 rounded-full bg-blue-600 px-5 py-3 font-bold text-white hover:bg-blue-700 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-200 disabled:cursor-not-allowed disabled:bg-slate-300"
         >
           {isEditing ? "変更を保存する" : "資産を追加する"}
         </button>
@@ -113,7 +118,7 @@ export default function AssetForm({
           <button
             type="button"
             onClick={onCancel}
-            className="rounded-full border border-slate-200 px-5 py-3 font-bold text-slate-600 hover:bg-slate-50"
+            className="min-h-12 rounded-full border border-slate-200 px-5 py-3 font-bold text-slate-600 hover:bg-slate-50 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-100"
           >
             キャンセル
           </button>

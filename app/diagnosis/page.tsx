@@ -122,8 +122,8 @@ export default function DiagnosisPage() {
   }
 
   return (
-    <main className="mx-auto max-w-4xl px-4 py-10">
-      <div className="aal-card p-8">
+    <main className="mx-auto max-w-4xl px-4 py-6 md:py-10">
+      <div className="aal-card p-5 md:p-8">
         <p className="mb-3 inline-flex rounded-full bg-blue-50 px-3 py-1 text-sm font-extrabold text-blue-700">
           AI資産形成診断 v2
         </p>
@@ -161,7 +161,7 @@ export default function DiagnosisPage() {
                       setStep(step + 1);
                     }
                   }}
-                  className="rounded-2xl border border-slate-200 bg-white p-5 text-left font-bold hover:border-blue-300 hover:bg-blue-50"
+                  className="min-h-12 rounded-2xl border border-slate-200 bg-white p-5 text-left font-bold hover:border-blue-300 hover:bg-blue-50 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-100"
                 >
                   {option.label}
                 </button>
@@ -199,16 +199,17 @@ export default function DiagnosisPage() {
                 onClick={saveResult}
                 disabled={saving}
                 className="aal-button"
+                aria-label="診断結果を保存して結果ページへ進む"
               >
-                {saving ? "保存中..." : "診断結果を保存して結果ページへ"}
+                {saving ? "保存中..." : "診断結果を見る"}
               </button>
 
-              <Link className="aal-button-secondary" href="/simulator">
-                積立シミュレーターへ
+              <Link className="aal-button-secondary" href="/portfolio">
+                資産を見る
               </Link>
 
               <Link className="aal-button-secondary" href="/">
-                トップへ戻る
+                TOPへ戻る
               </Link>
             </div>
           </>

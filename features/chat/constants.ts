@@ -5,7 +5,7 @@ export const INITIAL_CHAT_MESSAGES: ChatMessage[] = [
     id: "initial-ai-message",
     role: "assistant",
     content:
-      "こんにちは。資産形成で迷っていることを、何でも聞いてください。資産登録がある場合は、その内容も踏まえて一緒に考えます。",
+      "こんにちは。まずは下の候補を選ぶか、今の不安を1つ送ってください。資産登録がある場合は、その内容も踏まえて一緒に考えます。",
     createdAt: new Date().toISOString(),
   },
 ];

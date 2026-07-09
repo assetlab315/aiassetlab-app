@@ -30,7 +30,7 @@ function getTodayMissions(result: DiagnosisResult) {
     return [
       "毎月の積立可能額を決める",
       "積立シミュレーターで将来資産を確認する",
-      "AIチャットで資産形成の疑問を1つ質問する",
+      "AI相談で資産形成の疑問を1つ質問する",
     ];
   }
 
@@ -45,7 +45,7 @@ function getTodayMissions(result: DiagnosisResult) {
   return [
     "積立額とリスク許容度を再確認する",
     "AIを使って副業・収入源アイデアを整理する",
-    "ポートフォリオを確認して運用方針を決める",
+    "資産を見て運用方針を決める",
   ];
 }
 
@@ -139,7 +139,7 @@ export default function ResultClient() {
 
           <Link
             href="/diagnosis"
-            className="rounded-lg bg-blue-600 px-5 py-3 font-semibold text-white hover:bg-blue-700"
+            className="inline-flex min-h-12 items-center justify-center rounded-full bg-blue-600 px-5 py-3 font-semibold text-white hover:bg-blue-700 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-200"
           >
             診断する
           </Link>
@@ -151,7 +151,7 @@ export default function ResultClient() {
   return (
     <main className="min-h-screen bg-gray-50 px-6 py-10">
       <div className="mx-auto max-w-4xl space-y-8">
-        <section className="rounded-3xl bg-white p-8 shadow-sm">
+        <section className="rounded-3xl bg-white p-6 shadow-sm md:p-8">
           <p className="mb-2 text-sm font-semibold text-blue-600">
             AI Asset Lab Dashboard
           </p>
@@ -225,26 +225,26 @@ export default function ResultClient() {
 
           <div className="grid gap-4 md:grid-cols-3">
             <Link
-              href="/simulator"
-              className="rounded-2xl border border-gray-200 p-5 hover:border-blue-300 hover:bg-blue-50"
-            >
-              <p className="text-xl font-bold text-gray-900">
-                積立シミュレーター
-              </p>
-              <p className="mt-2 text-sm leading-6 text-gray-600">
-                毎月の積立額から将来資産を試算します。
-              </p>
-            </Link>
-
-            <Link
               href="/portfolio"
               className="rounded-2xl border border-gray-200 p-5 hover:border-blue-300 hover:bg-blue-50"
             >
               <p className="text-xl font-bold text-gray-900">
-                ポートフォリオ
+                資産を見る
               </p>
               <p className="mt-2 text-sm leading-6 text-gray-600">
-                自分の資産状況を整理します。
+                診断後は、今の資産を1つ登録します。
+              </p>
+            </Link>
+
+            <Link
+              href="/dashboard"
+              className="rounded-2xl border border-gray-200 p-5 hover:border-blue-300 hover:bg-blue-50"
+            >
+              <p className="text-xl font-bold text-gray-900">
+                Dashboardを見る
+              </p>
+              <p className="mt-2 text-sm leading-6 text-gray-600">
+                資産登録後に、今日やることを確認します。
               </p>
             </Link>
 
@@ -253,7 +253,7 @@ export default function ResultClient() {
               className="rounded-2xl border border-gray-200 p-5 hover:border-blue-300 hover:bg-blue-50"
             >
               <p className="text-xl font-bold text-gray-900">
-                AIチャット
+                AIに相談する
               </p>
               <p className="mt-2 text-sm leading-6 text-gray-600">
                 資産形成の疑問をAIに相談します。
@@ -264,17 +264,24 @@ export default function ResultClient() {
 
         <div className="flex flex-col gap-3 sm:flex-row">
           <Link
+            href="/portfolio"
+            className="rounded-full bg-blue-600 px-5 py-3 text-center font-semibold text-white hover:bg-blue-700 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-200"
+          >
+            資産を見る
+          </Link>
+
+          <Link
             href="/diagnosis"
-            className="rounded-lg border border-gray-300 px-5 py-3 text-center font-semibold text-gray-700 hover:bg-gray-100"
+            className="rounded-full border border-gray-300 px-5 py-3 text-center font-semibold text-gray-700 hover:bg-gray-100 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-100"
           >
             もう一度診断する
           </Link>
 
           <Link
             href="/"
-            className="rounded-lg border border-gray-300 px-5 py-3 text-center font-semibold text-gray-700 hover:bg-gray-100"
+            className="rounded-full border border-gray-300 px-5 py-3 text-center font-semibold text-gray-700 hover:bg-gray-100 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-100"
           >
-            トップへ戻る
+            TOPへ戻る
           </Link>
         </div>
       </div>

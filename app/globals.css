@@ -22,11 +22,11 @@ body {
 }
 
 .aal-button {
-  @apply inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 font-extrabold text-white transition hover:bg-blue-700;
+  @apply inline-flex min-h-12 items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 font-extrabold text-white transition hover:bg-blue-700 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-200;
 }
 
 .aal-button-secondary {
-  @apply inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-white px-5 py-3 font-extrabold text-slate-800 transition hover:bg-slate-50;
+  @apply inline-flex min-h-12 items-center justify-center rounded-2xl border border-slate-200 bg-white px-5 py-3 font-extrabold text-slate-800 transition hover:bg-slate-50 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-100;
 }
 
 .aal-label {

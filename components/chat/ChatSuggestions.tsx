@@ -11,8 +11,9 @@ export default function ChatSuggestions({
         <button
           key={suggestion}
           type="button"
+          aria-label={`${suggestion}を入力する`}
           onClick={() => onSelect(suggestion)}
-          className="shrink-0 rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700"
+          className="min-h-11 shrink-0 rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-100"
         >
           {suggestion}
         </button>

@@ -6,7 +6,7 @@ function MessageBubble({ message }: { message: ChatMessage }) {
   return (
     <div className={`flex ${isUser ? "justify-end" : "justify-start"}`}>
       <div
-        className={`max-w-[82%] whitespace-pre-line rounded-3xl px-5 py-4 leading-7 ${
+        className={`max-w-[92%] whitespace-pre-line rounded-3xl px-5 py-4 leading-7 sm:max-w-[82%] ${
           isUser
             ? "bg-blue-600 text-white"
             : "border border-slate-100 bg-slate-50 text-slate-700"

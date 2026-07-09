@@ -31,7 +31,7 @@ export default function DashboardDailyCheckCard({
           <p className="mt-5 text-sm font-black text-blue-100">
             {dailyCheck.greeting}
           </p>
-          <h2 className="mt-2 text-3xl font-black tracking-tight md:text-4xl">
+          <h2 className="mt-2 text-2xl font-black tracking-tight md:text-4xl">
             {isChecked ? dailyCheck.checkedTitle : dailyCheck.title}
           </h2>
           <p className="mt-4 max-w-2xl leading-7 text-blue-50">
@@ -44,7 +44,7 @@ export default function DashboardDailyCheckCard({
               variant="secondary"
               className="bg-white text-blue-700 hover:bg-blue-50"
             >
-              {isChecked ? "確認済み" : "今日の確認を完了する"}
+              {isChecked ? "確認済み" : "今日の確認をする"}
             </Button>
             <Button
               href={dailyCheck.ctaHref}

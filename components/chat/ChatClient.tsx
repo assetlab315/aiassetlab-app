@@ -171,10 +171,10 @@ export default function ChatClient() {
   };
 
   return (
-    <main className="min-h-screen bg-slate-50 px-4 py-8">
+    <main className="min-h-screen bg-slate-50 px-4 py-6 md:py-8">
       <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[1fr_320px]">
         <section className="overflow-hidden rounded-3xl bg-white shadow-sm">
-          <div className="border-b border-slate-100 p-6">
+          <div className="border-b border-slate-100 p-5 md:p-6">
             <p className="text-sm font-semibold text-blue-600">AI相談</p>
             <h1 className="mt-2 text-3xl font-bold text-slate-900">
               資産形成で迷ったことをAIに聞く
@@ -184,7 +184,7 @@ export default function ChatClient() {
             </p>
           </div>
 
-          <div className="flex h-[620px] flex-col">
+          <div className="flex h-[68vh] min-h-[560px] flex-col lg:h-[620px]">
             <ChatMessageList messages={messages} isSending={isSending} />
             <div ref={bottomRef} />
 
@@ -208,21 +208,21 @@ export default function ChatClient() {
             <div className="mt-4 space-y-3">
               <Link
                 href="/portfolio"
-                className="block rounded-2xl border border-slate-200 p-4 font-semibold text-slate-700 hover:border-blue-300 hover:bg-blue-50"
+                className="block rounded-2xl border border-slate-200 p-4 font-semibold text-slate-700 hover:border-blue-300 hover:bg-blue-50 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-100"
               >
-                資産を登録・確認する →
+                資産を見る →
               </Link>
               <Link
                 href="/simulator"
-                className="block rounded-2xl border border-slate-200 p-4 font-semibold text-slate-700 hover:border-blue-300 hover:bg-blue-50"
+                className="block rounded-2xl border border-slate-200 p-4 font-semibold text-slate-700 hover:border-blue-300 hover:bg-blue-50 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-100"
               >
-                将来シミュレーションへ →
+                将来のお金を計算する →
               </Link>
               <Link
                 href="/dashboard"
-                className="block rounded-2xl border border-slate-200 p-4 font-semibold text-slate-700 hover:border-blue-300 hover:bg-blue-50"
+                className="block rounded-2xl border border-slate-200 p-4 font-semibold text-slate-700 hover:border-blue-300 hover:bg-blue-50 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-100"
               >
-                ホームで確認する →
+                Dashboardを見る →
               </Link>
             </div>
           </div>

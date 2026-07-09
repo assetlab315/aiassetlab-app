@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { ChatUserContext } from "../../features/chat/types";
 
 function formatCurrency(value: number) {
@@ -25,7 +26,8 @@ export default function ChatContextPanel({
         <button
           type="button"
           onClick={onRefresh}
-          className="rounded-full border border-slate-200 px-3 py-1 text-xs font-bold text-slate-600 hover:bg-slate-50"
+          aria-label="資産情報を更新する"
+          className="rounded-full border border-slate-200 px-3 py-2 text-xs font-bold text-slate-600 hover:bg-slate-50 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-100"
         >
           更新
         </button>
@@ -53,9 +55,18 @@ export default function ChatContextPanel({
         </div>
       </div>
 
-      <p className="mt-4 text-xs leading-6 text-slate-500">
-        資産画面で登録した内容を読み取り、AI相談の文脈として利用します。
-      </p>
+      {context.assetCount === 0 ? (
+        <Link
+          href="/portfolio"
+          className="mt-4 block rounded-2xl bg-blue-50 p-4 text-sm font-black text-blue-700 hover:bg-blue-100 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-100"
+        >
+          先に資産を1つ登録する →
+        </Link>
+      ) : (
+        <p className="mt-4 text-xs leading-6 text-slate-500">
+          資産画面で登録した内容を読み取り、AI相談の文脈として利用します。
+        </p>
+      )}
     </div>
   );
 }

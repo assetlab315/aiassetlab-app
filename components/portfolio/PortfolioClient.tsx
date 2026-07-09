@@ -103,9 +103,9 @@ export default function PortfolioClient() {
   };
 
   return (
-    <main className="min-h-screen bg-slate-50 px-4 py-8 text-slate-900 md:px-8">
+    <main className="min-h-screen bg-slate-50 px-4 py-6 text-slate-900 md:px-8 md:py-8">
       <div className="mx-auto flex max-w-6xl flex-col gap-6">
-        <section className="rounded-3xl bg-gradient-to-br from-blue-600 to-indigo-700 p-6 text-white shadow-sm md:p-8">
+        <section className="rounded-3xl bg-gradient-to-br from-blue-600 to-indigo-700 p-5 text-white shadow-sm md:p-8">
           <p className="text-sm font-bold text-blue-100">AI Asset Lab</p>
           <div className="mt-3 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
@@ -116,9 +116,9 @@ export default function PortfolioClient() {
             </div>
             <Link
               href="/dashboard"
-              className="rounded-full bg-white px-5 py-3 text-center text-sm font-bold text-blue-700 hover:bg-blue-50"
+              className="inline-flex min-h-12 items-center justify-center rounded-full bg-white px-5 py-3 text-center text-sm font-bold text-blue-700 hover:bg-blue-50 focus:outline-none focus-visible:ring-4 focus-visible:ring-white/40"
             >
-              ホームで確認する
+              Dashboardを見る
             </Link>
           </div>
         </section>
@@ -155,7 +155,8 @@ export default function PortfolioClient() {
         <button
           type="button"
           onClick={handleResetDemo}
-          className="self-start text-sm font-semibold text-slate-400 hover:text-slate-600"
+          className="self-start rounded-full px-1 py-2 text-sm font-semibold text-slate-400 hover:text-slate-600 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-100"
+          aria-label="デモ状態に戻す"
         >
           デモ状態に戻す
         </button>

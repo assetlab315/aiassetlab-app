@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Sprint 24
+### Sprint 25
 
 **Status**
 
@@ -12,7 +12,7 @@
 
 ## Current Goal
 
-Daily Value
+Version1.0 Release Candidate Review
 
 ---
 
@@ -131,9 +131,19 @@ Daily Value
 - Morning Checkを今日やることの後ろへ移動し、今日のAIとの役割重複を回避
 - 未使用のDashboardAdvice型と生成関数、不要定数を削除
 
+### Version1.0 Release Candidate Review
+
+- TOPをDashboard直行から診断開始の入口へ変更し、初回導線を TOP / Diagnosis / Portfolio / Dashboard / AI Chat に整理
+- Portfolio未登録時に「次にやること」を明示し、資産登録フォームへ迷わず進める空状態へ改善
+- AI Chat未利用時の初期メッセージと資産未登録時の文脈パネルCTAを改善
+- Morning Check未実施時のCTAを「今日の確認をする」へ短縮し、スマホでも理解しやすく整理
+- 診断結果後の導線を「資産を見る」「Dashboardを見る」「AIに相談する」に統一
+- モバイル余白、ボタン高さ、フォーカスリング、aria-labelを主要入力・ボタンへ追加
+- 未使用の旧FeatureNavigation関連ファイルを削除し、グローバルナビのラベルと順序を整理
+
 ## Next Sprint
 
-Sprint 25
+Sprint 26
 
 Version 1.0 Launch Handoff / Documentation Finalization
 
