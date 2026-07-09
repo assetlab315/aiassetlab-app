@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Sprint 8
+### Sprint 9
 
 **Status**
 
@@ -12,15 +12,15 @@
 
 ## Current Goal
 
-Simulator MVP の実装
+AI Chat MVP の実装
 
 ---
 
 ## Previous Sprint
 
-### Sprint 7
+### Sprint 8
 
-Portfolio MVP
+Simulator MVP
 
 Status
 
@@ -69,6 +69,15 @@ Status
 - Simple Asset Breakdown Chart
 - AI Advice Card
 
+### AI Chat
+
+- AI Chat Page
+- Chat Message UI
+- Chat Input Form
+- Suggested Questions
+- Mock AI Reply
+- Typing Indicator
+
 ### Documentation
 
 - README
@@ -92,23 +101,23 @@ Status
 
 ## Next Sprint
 
-Sprint 9
+Sprint 10
 
-AI Chat MVP
+MVP Polish
 
 予定
 
-- AI Chat画面
-- 入力フォーム
-- 回答表示
-- 初期質問テンプレート
-- MVP用モック応答
+- Dashboard導線の整理
+- Portfolio / Simulator / Chat への導線確認
+- MVP全体のUI確認
+- 不要な文言の整理
+- Build確認
 
 ---
 
 ## MVP Progress
 
-██████░░░░ 60%
+████████░░ 80%
 
 ---
 
