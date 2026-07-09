@@ -1,12 +1,162 @@
+import { ASSET_CATEGORY_LABELS } from "../../features/portfolio/constants";
 import type { PortfolioAsset, PortfolioSummary } from "../../features/portfolio/types";
 import type {
   DashboardAdvice,
+  DashboardAssetImpact,
   DashboardHabit,
+  DashboardInsight,
   DashboardPremiumPreview,
   DashboardTask,
 } from "../../features/dashboard/types";
 
 const minimumMonthlyContribution = 10000;
+
+function getMainAssetCategory(assets: PortfolioAsset[], summary: PortfolioSummary) {
+  const grouped = assets.reduce<Record<PortfolioAsset["category"], number>>(
+    (acc, asset) => {
+      acc[asset.category] += asset.amount;
+      return acc;
+    },
+    {
+      cash: 0,
+      stock: 0,
+      fund: 0,
+      crypto: 0,
+      pension: 0,
+      other: 0,
+    },
+  );
+
+  const [category, amount] = Object.entries(grouped).sort((a, b) => b[1] - a[1])[0] ?? [
+    "other",
+    0,
+  ];
+
+  return {
+    category: category as PortfolioAsset["category"],
+    amount,
+    rate: summary.totalAmount === 0 ? 0 : (amount / summary.totalAmount) * 100,
+  };
+}
+
+export function createDashboardInsight(
+  assets: PortfolioAsset[],
+  summary: PortfolioSummary,
+): DashboardInsight {
+  if (assets.length === 0 || summary.totalAmount === 0) {
+    return {
+      label: "今日のAIインサイト",
+      title: "まずは資産を1つ登録すると、AIがあなた向けに整理できます。",
+      description:
+        "今はまだ分析する材料がありません。金額はざっくりで大丈夫なので、預金・NISA・投資信託などを1つ登録しましょう。",
+      impactLabel: "未分析",
+      impactLevel: 0,
+      primaryPoint: "最初の目的は、正確さよりも現在地を見える化することです。",
+      secondaryPoint: "Portfolioで1つ登録すると、Dashboardの提案があなた向けになります。",
+      ctaLabel: "資産を登録する",
+      ctaHref: "/portfolio",
+    };
+  }
+
+  const mainCategory = getMainAssetCategory(assets, summary);
+  const mainCategoryLabel = ASSET_CATEGORY_LABELS[mainCategory.category];
+
+  if (summary.totalMonthlyContribution === 0) {
+    return {
+      label: "今日のAIインサイト",
+      title: `${mainCategoryLabel}が中心です。次は毎月の積立を見える化しましょう。`,
+      description:
+        "資産の登録はできています。次に積立額を入れると、今の資産形成が続けやすい形かどうかを判断しやすくなります。",
+      impactLabel: "中",
+      impactLevel: 2,
+      primaryPoint: `現在は${mainCategoryLabel}の比率が高めです。まずは資産の全体像を把握しましょう。`,
+      secondaryPoint: "積立額を入れると、将来の見通しと次の行動が具体化します。",
+      ctaLabel: "積立額を入力する",
+      ctaHref: "/portfolio",
+    };
+  }
+
+  if (mainCategory.category === "crypto" || mainCategory.rate >= 70) {
+    return {
+      label: "今日のAIインサイト",
+      title: `${mainCategoryLabel}の比率が高めです。今日は増やすより確認を優先しましょう。`,
+      description:
+        "特定の資産に寄っている場合、短期の値動きに気持ちが左右されやすくなります。今日は売買判断よりも、積立を続けられる形かを確認しましょう。",
+      impactLabel: "高",
+      impactLevel: 3,
+      primaryPoint: `中心資産は${mainCategoryLabel}です。全体の約${Math.round(mainCategory.rate)}%を占めています。`,
+      secondaryPoint: "不安がある場合は、AIにリスクと見直しポイントを聞きましょう。",
+      ctaLabel: "詳しく分析する",
+      ctaHref: "/chat",
+    };
+  }
+
+  return {
+    label: "今日のAIインサイト",
+    title: "資産と積立が見えています。今日は大きく変えず、続けることを優先しましょう。",
+    description:
+      "資産形成では、毎日大きな判断をする必要はありません。登録内容を確認し、必要なときだけAIに相談できる状態を保ちましょう。",
+    impactLabel: "低〜中",
+    impactLevel: 1,
+    primaryPoint: `中心資産は${mainCategoryLabel}です。全体の約${Math.round(mainCategory.rate)}%です。`,
+    secondaryPoint: "将来シミュレーションで、今の積立ペースを一度確認しましょう。",
+    ctaLabel: "将来のお金を計算する",
+    ctaHref: "/simulator",
+  };
+}
+
+export function createDashboardAssetImpact(
+  assets: PortfolioAsset[],
+  summary: PortfolioSummary,
+): DashboardAssetImpact {
+  if (assets.length === 0 || summary.totalAmount === 0) {
+    return {
+      label: "あなたの資産への影響",
+      title: "資産を登録すると、今日見るべきポイントが分かります。",
+      description:
+        "ニュースをそのまま読むのではなく、あなたの資産に関係するポイントだけを確認できるようにします。",
+      mainAssetLabel: "未登録",
+      mainAssetRate: 0,
+      marketTheme: "現在地の確認",
+      actionLabel: "1つ登録",
+      ctaLabel: "Portfolioへ",
+      ctaHref: "/portfolio",
+    };
+  }
+
+  const mainCategory = getMainAssetCategory(assets, summary);
+  const mainCategoryLabel = ASSET_CATEGORY_LABELS[mainCategory.category];
+  const themeByCategory: Record<PortfolioAsset["category"], string> = {
+    cash: "インフレと生活防衛",
+    stock: "株式市場の値動き",
+    fund: "長期積立の継続",
+    crypto: "大きな価格変動",
+    pension: "長期運用",
+    other: "資産全体の確認",
+  };
+
+  const actionByCategory: Record<PortfolioAsset["category"], string> = {
+    cash: "投資余力を確認",
+    stock: "偏りを確認",
+    fund: "積立を継続",
+    crypto: "比率を確認",
+    pension: "長期で継続",
+    other: "内容を整理",
+  };
+
+  return {
+    label: "あなたの資産への影響",
+    title: `${mainCategoryLabel}を中心に、今日見るポイントを整理しました。`,
+    description:
+      "市場ニュースを全部追う必要はありません。まずは、自分の保有資産に関係するテーマだけを確認しましょう。",
+    mainAssetLabel: mainCategoryLabel,
+    mainAssetRate: mainCategory.rate,
+    marketTheme: themeByCategory[mainCategory.category],
+    actionLabel: actionByCategory[mainCategory.category],
+    ctaLabel: "AIに詳しく聞く",
+    ctaHref: "/chat",
+  };
+}
 
 export function createDashboardAdvice(
   assets: PortfolioAsset[],

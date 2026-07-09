@@ -2,6 +2,28 @@
 
 ## 2026-07-09
 
+### Sprint 18 - Dashboard AI Insight / Asset Impact
+
+#### Added
+
+- Dashboardに「今日のAIインサイト」カードを追加
+- Dashboardに「あなたの資産への影響」カードを追加
+- Portfolio登録内容から中心資産カテゴリと比率を読み取り、Dashboard上で表示
+- 資産状況に応じた影響度、今日見るテーマ、おすすめ行動の生成ロジックを追加
+
+#### Changed
+
+- Dashboard Heroの文言を短くし、AIが話す領域をAIインサイトへ集約
+- 「AIに相談する」導線を「詳しくAIに聞く」へ改善
+- Dashboardを情報表示から、毎朝確認するホーム画面に近づける構成へ改善
+
+#### Notes
+
+- 実マーケットデータ連携は未実装
+- Version 1.0では、外部ニュース取得よりも「自分の資産に関係あるか」を理解できるUXを優先
+
+## 2026-07-09
+
 ### Sprint 17 - Dashboard v3.1 / Monetization Foundation
 
 #### Added

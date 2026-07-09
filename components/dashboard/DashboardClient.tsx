@@ -2,8 +2,9 @@
 
 import { useEffect, useMemo, useState } from "react";
 import ActionCard from "../common/ActionCard";
+import DashboardAssetImpactCard from "./DashboardAssetImpactCard";
+import DashboardInsightCard from "./DashboardInsightCard";
 import DashboardPremiumPreviewCard from "./DashboardPremiumPreviewCard";
-import AIAdviceCard from "../common/AIAdviceCard";
 import FeatureNavigation from "../common/FeatureNavigation";
 import SectionHeader from "../common/SectionHeader";
 import PageContainer from "../layout/PageContainer";
@@ -14,8 +15,9 @@ import { calculatePortfolioSummary } from "../../lib/portfolio/calculatePortfoli
 import { formatCurrency } from "../../lib/portfolio/formatPortfolio";
 import { loadPortfolioAssets } from "../../lib/portfolio/storage";
 import {
-  createDashboardAdvice,
+  createDashboardAssetImpact,
   createDashboardHabit,
+  createDashboardInsight,
   createDashboardPremiumPreview,
   createDashboardTasks,
 } from "../../lib/dashboard/createDashboardInsights";
@@ -30,8 +32,12 @@ export default function DashboardClient() {
   }, []);
 
   const summary = useMemo(() => calculatePortfolioSummary(assets), [assets]);
-  const advice = useMemo(
-    () => createDashboardAdvice(assets, summary),
+  const insight = useMemo(
+    () => createDashboardInsight(assets, summary),
+    [assets, summary],
+  );
+  const assetImpact = useMemo(
+    () => createDashboardAssetImpact(assets, summary),
     [assets, summary],
   );
   const tasks = useMemo(() => createDashboardTasks(assets, summary), [assets, summary]);
@@ -50,15 +56,15 @@ export default function DashboardClient() {
             <h1 className="text-3xl font-black tracking-tight text-slate-900 md:text-4xl">
               おかえりなさい。
               <br />
-              今日やることを整理しました。
+              今日の資産形成を始めましょう。
             </h1>
             <p className="mt-4 max-w-2xl leading-7 text-slate-600">
-              登録した資産をもとに、AI Asset Labが今日のおすすめを整理します。迷ったら上から順番に進めれば大丈夫です。
+              資産サマリー、AIインサイト、今日やることを1画面に整理しました。迷ったら上から順番に確認してください。
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              <Button href={advice.ctaHref}>{advice.ctaLabel}</Button>
+              <Button href={insight.ctaHref}>{insight.ctaLabel}</Button>
               <Button href="/chat" variant="outline">
-                AIに相談する
+                詳しくAIに聞く
               </Button>
             </div>
           </div>
@@ -103,13 +109,9 @@ export default function DashboardClient() {
         </div>
       </section>
 
-      <AIAdviceCard
-        label={advice.label}
-        title={advice.title}
-        description={advice.description}
-        ctaLabel={advice.ctaLabel}
-        ctaHref={advice.ctaHref}
-      />
+      <DashboardInsightCard insight={insight} />
+
+      <DashboardAssetImpactCard impact={assetImpact} />
 
       <section className="space-y-4">
         <SectionHeader

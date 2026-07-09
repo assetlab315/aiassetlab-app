@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Sprint 17
+### Sprint 18
 
 **Status**
 
@@ -12,7 +12,7 @@
 
 ## Current Goal
 
-Dashboard v3.1 / Monetization Foundation の実装
+Dashboard AI Insight / Asset Impact の実装
 
 ---
 
@@ -74,18 +74,27 @@ Dashboard v3.1 / Monetization Foundation の実装
 
 ---
 
+### Dashboard AI Insight / Asset Impact
+
+- Dashboard Heroの文言を整理
+- 今日のAIインサイトを追加
+- 資産登録内容から中心資産カテゴリと比率を表示
+- あなたの資産への影響カードを追加
+- 今日見るテーマとおすすめ行動を資産状況に応じて出し分け
+- AI相談導線を「詳しくAIに聞く」に改善
+
 ## Next Sprint
 
-Sprint 18
+Sprint 19
 
 Version 1.0 UX Polish / Release Readiness
 
 予定
 
-- Version 1.0公開前の主要導線を整理
-- Top / Dashboard / Portfolio / Chat の文言を統一
-- 迷いやすい導線を削る
+- Dashboard / Portfolio / Chat の文言を統一
+- 主要導線のクリック順を再確認
 - Premium導線の露出位置と文言を再確認
+- 公開前に迷いやすい導線を削る
 
 ---
 
@@ -97,7 +106,7 @@ Version 1.0 UX Polish / Release Readiness
 
 ## Version 1.0 Progress
 
-█████████░ 90%
+█████████▓ 93%
 
 ---
 
