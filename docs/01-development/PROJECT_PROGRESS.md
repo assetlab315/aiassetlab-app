@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Sprint 7
+### Sprint 8
 
 **Status**
 
@@ -12,27 +12,15 @@
 
 ## Current Goal
 
-Portfolio MVP の実装
-
----
-
-## Sprint 7 Completed
-
-### Portfolio MVP
-
-- Portfolio画面を追加
-- 資産サマリー表示を追加
-- 資産カード一覧を追加
-- 資産配分表示を追加
-- AI Next Actionを追加
-- Dashboard / Simulator 導線を追加
-- UI、ロジック、型、モックデータを責務分割
+Simulator MVP の実装
 
 ---
 
 ## Previous Sprint
 
-Docs Sprint
+### Sprint 7
+
+Portfolio MVP
 
 Status
 
@@ -66,11 +54,20 @@ Status
 
 ### Portfolio
 
-- Portfolio画面
-- 資産カード
-- サマリー表示
-- 資産配分
-- Dashboard導線
+- Portfolio Page
+- Portfolio Summary
+- Asset Cards
+- Mock Portfolio Data
+- Portfolio Calculation Utility
+
+### Simulator
+
+- Simulator Page
+- Simulator Input Form
+- Future Value Calculation
+- Principal / Profit Summary
+- Simple Asset Breakdown Chart
+- AI Advice Card
 
 ### Documentation
 
@@ -95,27 +92,26 @@ Status
 
 ## Next Sprint
 
-Sprint 8
+Sprint 9
 
-Simulator MVP
+AI Chat MVP
 
 予定
 
-- Simulator画面
+- AI Chat画面
 - 入力フォーム
-- 計算ロジック
-- 結果表示
-- AIコメント
-- Portfolioとの導線
+- 回答表示
+- 初期質問テンプレート
+- MVP用モック応答
 
 ---
 
 ## MVP Progress
 
-█████░░░░░ 50%
+██████░░░░ 60%
 
 ---
 
 Last Updated
 
-2026-07-08
+2026-07-09
