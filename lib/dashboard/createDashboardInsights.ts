@@ -172,7 +172,7 @@ export function createDashboardAssetImpact(
       mainAssetRate: 0,
       marketTheme: "現在地の確認",
       actionLabel: "1つ登録",
-      ctaLabel: "Portfolioへ",
+      ctaLabel: "資産を登録する",
       ctaHref: "/portfolio",
     };
   }
@@ -363,24 +363,42 @@ export function createDashboardHabit(
 ): DashboardHabit {
   if (assets.length === 0 || summary.totalAmount === 0) {
     return {
-      title: "今日のチェック",
-      description: "資産を1つ登録すると、毎日のおすすめがあなた向けになります。",
+      title: "まずは1つだけ登録すれば十分です。",
+      description:
+        "毎日の習慣は、完璧な入力から始める必要はありません。預金やNISAなど、分かる資産を1つ入れるだけでDashboardがあなた向けになります。",
+      checkedTitle: "今日の確認を始められました。",
+      checkedDescription:
+        "次は資産を1つ登録しましょう。明日から、AIインサイトと今日やることがより具体的になります。",
       statusLabel: "未登録",
+      ctaLabel: "資産を登録する",
+      ctaHref: "/portfolio",
     };
   }
 
   if (summary.totalMonthlyContribution === 0) {
     return {
-      title: "今日のチェック",
-      description: "資産登録は完了。次は毎月の積立額を入れるだけです。",
+      title: "資産は見えています。次は積立だけです。",
+      description:
+        "保有資産を確認する習慣はでき始めています。毎月の積立額を入れると、将来のお金をより具体的に確認できます。",
+      checkedTitle: "今日の資産確認は完了です。",
+      checkedDescription:
+        "次に進むなら、毎月の積立額を追加しましょう。入力後のAIインサイトがさらに使いやすくなります。",
       statusLabel: "あと1歩",
+      ctaLabel: "積立額を入力する",
+      ctaHref: "/portfolio",
     };
   }
 
   return {
-    title: "今日のチェック",
-    description: "資産と積立が確認できています。今日は将来のお金を見てみましょう。",
+    title: "毎朝30秒の確認を続けましょう。",
+    description:
+      "資産と積立が見えています。毎日やることは、確認して、必要なときだけAIに聞くことです。大きな判断は急がなくて大丈夫です。",
+    checkedTitle: "今日の確認は完了です。",
+    checkedDescription:
+      "今日は無理に動かず、気になる点だけAIに相談しましょう。確認を続けることが、資産形成の土台になります。",
     statusLabel: "確認OK",
+    ctaLabel: "気になる点をAIに聞く",
+    ctaHref: "/chat",
   };
 }
 

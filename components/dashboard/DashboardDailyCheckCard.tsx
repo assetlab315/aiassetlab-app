@@ -17,14 +17,14 @@ export default function DashboardDailyCheckCard({
 }: Props) {
   return (
     <Card className="border border-blue-100 bg-gradient-to-br from-blue-600 to-blue-700 text-white">
-      <div className="grid gap-6 lg:grid-cols-[1fr_0.7fr] lg:items-center">
+      <div className="grid gap-6 lg:grid-cols-[1fr_0.72fr] lg:items-center">
         <div>
           <div className="flex flex-wrap items-center gap-2">
             <span className="rounded-full bg-white/15 px-3 py-1 text-xs font-black text-blue-50">
               {dateLabel}
             </span>
             <span className="rounded-full bg-white/15 px-3 py-1 text-xs font-black text-blue-50">
-              {isChecked ? "確認済み" : dailyCheck.statusLabel}
+              {isChecked ? "今日の確認済み" : dailyCheck.statusLabel}
             </span>
           </div>
 
@@ -44,7 +44,7 @@ export default function DashboardDailyCheckCard({
               variant="secondary"
               className="bg-white text-blue-700 hover:bg-blue-50"
             >
-              {isChecked ? "今日の確認は完了" : "今日の状態を確認した"}
+              {isChecked ? "確認済み" : "今日の確認を完了する"}
             </Button>
             <Button
               href={dailyCheck.ctaHref}
@@ -59,14 +59,19 @@ export default function DashboardDailyCheckCard({
         <div className="rounded-[1.5rem] bg-white/10 p-5 backdrop-blur">
           <p className="text-xs font-black text-blue-100">今日見るポイント</p>
           <div className="mt-4 space-y-3">
-            {dailyCheck.focusItems.map((item) => (
-              <div key={item} className="rounded-2xl bg-white/10 p-4">
+            {dailyCheck.focusItems.map((item, index) => (
+              <div key={item} className="flex items-center gap-3 rounded-2xl bg-white/10 p-4">
+                <span className="inline-flex size-7 shrink-0 items-center justify-center rounded-full bg-white text-xs font-black text-blue-700">
+                  {isChecked ? "✓" : index + 1}
+                </span>
                 <p className="text-sm font-black leading-6 text-white">{item}</p>
               </div>
             ))}
           </div>
           <p className="mt-4 text-sm font-bold leading-6 text-blue-50">
-            まずは30秒で確認。大きな判断は、必要なときだけで大丈夫です。
+            {isChecked
+              ? "今日の確認は完了です。次は必要なときだけAIに相談しましょう。"
+              : "上から3つ見るだけで大丈夫です。大きな判断は急がなくて構いません。"}
           </p>
         </div>
       </div>

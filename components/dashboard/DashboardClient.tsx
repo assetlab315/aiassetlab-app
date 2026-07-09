@@ -5,6 +5,7 @@ import ActionCard from "../common/ActionCard";
 import DashboardAssetImpactCard from "./DashboardAssetImpactCard";
 import DashboardDailyCheckCard from "./DashboardDailyCheckCard";
 import DashboardInsightCard from "./DashboardInsightCard";
+import DashboardHabitCard from "./DashboardHabitCard";
 import DashboardPremiumPreviewCard from "./DashboardPremiumPreviewCard";
 import FeatureNavigation from "../common/FeatureNavigation";
 import SectionHeader from "../common/SectionHeader";
@@ -174,18 +175,7 @@ export default function DashboardClient() {
         </div>
       </section>
 
-      <Card>
-        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <div>
-            <p className="text-sm font-black text-blue-600">毎日の習慣</p>
-            <h2 className="mt-2 text-2xl font-black text-slate-900">{habit.title}</h2>
-            <p className="mt-3 max-w-2xl leading-7 text-slate-600">{habit.description}</p>
-          </div>
-          <Button href="/chat" variant="secondary">
-            気になる点をAIに聞く
-          </Button>
-        </div>
-      </Card>
+      <DashboardHabitCard habit={habit} isChecked={isDailyChecked} />
 
       <DashboardPremiumPreviewCard preview={premiumPreview} />
 

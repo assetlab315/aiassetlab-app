@@ -2,6 +2,26 @@
 
 ## 2026-07-09
 
+### Sprint 21 - Dashboard Micro Polish / Daily Habit UX
+
+#### Added
+
+- Dashboardに毎日の習慣カードを追加し、今日の確認状態に応じて文言とCTAを出し分け
+
+#### Changed
+
+- 朝の確認カードのボタン文言と確認済み表示を改善
+- 今日見るポイントを番号付きから確認後のチェック表示へ変化するUIに改善
+- Dashboard内で重複していた「今日のチェック」表現を整理し、朝の確認と毎日の習慣の役割を分離
+- PortfolioへのCTA文言を「資産を登録する」に統一
+
+#### Notes
+
+- 新機能追加ではなく、Version 1.0公開前のDashboard習慣化UXの磨き込み
+- 認証未実装のため、確認済み状態は引き続きlocalStorageで保存
+
+## 2026-07-09
+
 ### Sprint 20 - Dashboard Morning Experience / Daily Check Foundation
 
 #### Added

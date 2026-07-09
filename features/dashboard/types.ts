@@ -57,7 +57,11 @@ export type DashboardTask = {
 export type DashboardHabit = {
   title: string;
   description: string;
+  checkedTitle: string;
+  checkedDescription: string;
   statusLabel: string;
+  ctaLabel: string;
+  ctaHref: string;
 };
 
 

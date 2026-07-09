@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Sprint 20
+### Sprint 21
 
 **Status**
 
@@ -12,7 +12,7 @@
 
 ## Current Goal
 
-Dashboard Morning Experience / Daily Check Foundation
+Dashboard Micro Polish / Daily Habit UX
 
 ---
 
@@ -99,18 +99,26 @@ Dashboard Morning Experience / Daily Check Foundation
 - Hero文言をさらに短くし、毎朝30秒で確認する体験へ整理
 - 習慣化カードの表現を「毎日の習慣」へ改善
 
+### Dashboard Micro Polish / Daily Habit UX
+
+- Dashboardに毎日の習慣カードを追加
+- 今日の確認状態に応じて、習慣カードの文言とCTAを自動で出し分け
+- 朝の確認カードのボタン文言と確認済み表示を改善
+- 今日見るポイントを、未確認時は番号、確認後はチェック表示に変化するUIへ改善
+- 「今日のチェック」表現の重複を削減し、朝の確認と毎日の習慣の役割を分離
+
 ## Next Sprint
 
-Sprint 21
+Sprint 22
 
-Dashboard Micro Polish / Daily Habit UX
+Dashboard Release Readiness / Final MVP Check
 
 予定
 
-- Dashboard内の重複表現を削減
-- AIインサイトと朝の確認カードの役割をさらに明確化
-- Daily Checkの視認性と押した後の気持ちよさを改善
-- Version 1.0公開前のDashboard最終調整
+- Dashboard全体の公開前最終確認
+- CTA導線と主要画面遷移の確認
+- Version 1.0公開に向けた文言、余白、不要導線の最終調整
+- README / UI_COMPONENTS / design docs の必要更新確認
 
 ---
 
