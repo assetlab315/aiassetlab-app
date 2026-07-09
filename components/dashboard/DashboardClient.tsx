@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import ActionCard from "../common/ActionCard";
+import DashboardPremiumPreviewCard from "./DashboardPremiumPreviewCard";
 import AIAdviceCard from "../common/AIAdviceCard";
 import FeatureNavigation from "../common/FeatureNavigation";
 import SectionHeader from "../common/SectionHeader";
@@ -15,6 +16,7 @@ import { loadPortfolioAssets } from "../../lib/portfolio/storage";
 import {
   createDashboardAdvice,
   createDashboardHabit,
+  createDashboardPremiumPreview,
   createDashboardTasks,
 } from "../../lib/dashboard/createDashboardInsights";
 
@@ -34,6 +36,10 @@ export default function DashboardClient() {
   );
   const tasks = useMemo(() => createDashboardTasks(assets, summary), [assets, summary]);
   const habit = useMemo(() => createDashboardHabit(assets, summary), [assets, summary]);
+  const premiumPreview = useMemo(
+    () => createDashboardPremiumPreview(assets, summary),
+    [assets, summary],
+  );
 
   return (
     <PageContainer size="xl">
@@ -138,6 +144,8 @@ export default function DashboardClient() {
           </Button>
         </div>
       </Card>
+
+      <DashboardPremiumPreviewCard preview={premiumPreview} />
 
       <FeatureNavigation currentPath="/dashboard" title="ほかの機能へ移動する" />
     </PageContainer>

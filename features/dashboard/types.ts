@@ -22,3 +22,12 @@ export type DashboardHabit = {
   description: string;
   statusLabel: string;
 };
+
+
+export type DashboardPremiumPreview = {
+  badgeLabel: string;
+  title: string;
+  description: string;
+  ctaLabel: string;
+  ctaHref: string;
+};

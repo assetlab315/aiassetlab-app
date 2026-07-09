@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Sprint 16
+### Sprint 17
 
 **Status**
 
@@ -12,7 +12,7 @@
 
 ## Current Goal
 
-Dashboard v3 の実装
+Dashboard v3.1 / Monetization Foundation の実装
 
 ---
 
@@ -65,20 +65,27 @@ Dashboard v3 の実装
 - 次にやることを登録状況に応じて自動出し分け
 - 習慣化UIの土台として今日のチェックカードを追加
 
+### Dashboard v3.1 / Monetization Foundation
+
+- Dashboard上にPremium候補カードを追加
+- 無料版で見える価値と将来の有料価値を分けて表示
+- 資産登録状況に応じてPremium導線の文言を出し分け
+- 課金を急がせず、まず無料価値を体験してもらう導線に整理
+
 ---
 
 ## Next Sprint
 
-Sprint 17
+Sprint 18
 
-Dashboard v3.1 / Monetization Foundation
+Version 1.0 UX Polish / Release Readiness
 
 予定
 
-- Dashboard上に無料/有料の価値差が分かる導線を設計
-- AI Premium候補機能を小さく検証
-- 継続利用につながる週次チェック導線を検討
-- Version 1.0完了に向けたUX整理
+- Version 1.0公開前の主要導線を整理
+- Top / Dashboard / Portfolio / Chat の文言を統一
+- 迷いやすい導線を削る
+- Premium導線の露出位置と文言を再確認
 
 ---
 
@@ -90,7 +97,7 @@ Dashboard v3.1 / Monetization Foundation
 
 ## Version 1.0 Progress
 
-████████░░ 80%
+█████████░ 90%
 
 ---
 

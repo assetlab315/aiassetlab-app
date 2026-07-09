@@ -2,6 +2,7 @@ import type { PortfolioAsset, PortfolioSummary } from "../../features/portfolio/
 import type {
   DashboardAdvice,
   DashboardHabit,
+  DashboardPremiumPreview,
   DashboardTask,
 } from "../../features/dashboard/types";
 
@@ -177,5 +178,42 @@ export function createDashboardHabit(
     title: "今日のチェック",
     description: "資産と積立が確認できています。今日は将来のお金を見てみましょう。",
     statusLabel: "確認OK",
+  };
+}
+
+
+export function createDashboardPremiumPreview(
+  assets: PortfolioAsset[],
+  summary: PortfolioSummary,
+): DashboardPremiumPreview {
+  if (assets.length === 0 || summary.totalAmount === 0) {
+    return {
+      badgeLabel: "まず無料で開始",
+      title: "Premiumの前に、まずは無料で現在地を見える化しましょう。",
+      description:
+        "AI Asset Labは、最初から課金を急がせません。資産を1つ登録すると、無料版でも今日やることが分かる状態になります。",
+      ctaLabel: "資産を登録する",
+      ctaHref: "/portfolio",
+    };
+  }
+
+  if (summary.totalMonthlyContribution === 0) {
+    return {
+      badgeLabel: "価値検証中",
+      title: "積立額まで入れると、AI分析の価値が分かりやすくなります。",
+      description:
+        "有料化の前に、まずは無料版で資産と積立を整理できる体験を強化します。Premiumでは、積立額の見直しや改善案の深掘りを検証します。",
+      ctaLabel: "積立額を入力する",
+      ctaHref: "/portfolio",
+    };
+  }
+
+  return {
+    badgeLabel: "Premium準備中",
+    title: "次は、AIが資産形成の改善ポイントを深掘りできる状態です。",
+    description:
+      "資産と積立が見えているユーザーには、週次レポート・資産配分の深掘り・将来シミュレーションの比較が有料価値になり得ます。まずは無料のAI相談で反応を見ます。",
+    ctaLabel: "将来のお金を計算する",
+    ctaHref: "/simulator",
   };
 }

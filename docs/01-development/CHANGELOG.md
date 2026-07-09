@@ -2,6 +2,27 @@
 
 ## 2026-07-09
 
+### Sprint 17 - Dashboard v3.1 / Monetization Foundation
+
+#### Added
+
+- DashboardにPremium候補カードを追加
+- 無料版で見える価値と将来のPremium候補を分けて表示
+- 資産登録状況に応じてPremium導線の文言を自動出し分け
+- Premium候補表示用の型と生成ロジックを追加
+
+#### Changed
+
+- Dashboardを「今日やること」だけでなく、将来の収益導線を検証できる画面へ改善
+- 課金を急がせず、無料価値を先に体験してもらうコピーに整理
+
+#### Notes
+
+- 決済・ログイン・有料制御は未実装
+- Version 1.0では、Premiumは販売ではなく価値検証導線として扱う
+
+## 2026-07-09
+
 ### Sprint 16 - Dashboard v3
 
 #### Added
