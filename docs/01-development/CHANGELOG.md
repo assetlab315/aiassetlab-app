@@ -2,25 +2,21 @@
 
 ## 2026-07-09
 
-### Sprint 9 - AI Chat MVP
+### Sprint 10-2 - MVP Navigation Fix
+
+#### Fixed
+
+- `/mvp` から `/dashboard` へ遷移した際に404になる問題を修正
+- Portfolio画面からAI Chatへの導線が分かりにくい問題を修正
+- Simulator画面からPortfolio / AI Chatへの導線がない問題を修正
+- Chat画面からPortfolio / Simulatorへの導線がない問題を修正
 
 #### Added
 
-- AI資産形成チャット画面を追加
-- チャットメッセージUIを追加
-- 入力フォームと送信処理を追加
-- おすすめ質問を追加
-- MVP用のモックAI回答を追加
-- AI応答中の表示を追加
-
-#### Changed
-
-- Chat機能を責務分割構成で実装
-- UIをcomponents配下へ分離
-- 型と初期メッセージをfeatures配下へ分離
-- 回答生成処理をlib配下へ分離
+- 共通の機能間ナビゲーション `FeatureNavigation` を追加
+- Dashboard MVP Hub画面を追加
+- Portfolio / Simulator / Chat の下部に次の機能へ進む導線を追加
 
 #### Documentation
 
-- PROJECT_PROGRESS.md を更新
 - CHANGELOG.md を更新

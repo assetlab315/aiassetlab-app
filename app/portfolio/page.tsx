@@ -1,12 +1,16 @@
-import { AllocationBar } from '../../components/portfolio/AllocationBar';
-import { AssetList } from '../../components/portfolio/AssetList';
-import { EmptyPortfolio } from '../../components/portfolio/EmptyPortfolio';
-import { PortfolioActionCard } from '../../components/portfolio/PortfolioActionCard';
-import { PortfolioDashboardLink } from '../../components/portfolio/PortfolioDashboardLink';
-import { PortfolioHeader } from '../../components/portfolio/PortfolioHeader';
-import { PortfolioSummaryCards } from '../../components/portfolio/PortfolioSummaryCards';
-import { mockPortfolioAssets } from '../../features/portfolio/mockPortfolio';
-import { getPortfolioAllocation, getPortfolioSummary } from '../../lib/portfolio/calcPortfolio';
+import FeatureNavigation from "../../components/navigation/FeatureNavigation";
+import { AllocationBar } from "../../components/portfolio/AllocationBar";
+import { AssetList } from "../../components/portfolio/AssetList";
+import { EmptyPortfolio } from "../../components/portfolio/EmptyPortfolio";
+import { PortfolioActionCard } from "../../components/portfolio/PortfolioActionCard";
+import { PortfolioDashboardLink } from "../../components/portfolio/PortfolioDashboardLink";
+import { PortfolioHeader } from "../../components/portfolio/PortfolioHeader";
+import { PortfolioSummaryCards } from "../../components/portfolio/PortfolioSummaryCards";
+import { mockPortfolioAssets } from "../../features/portfolio/mockPortfolio";
+import {
+  getPortfolioAllocation,
+  getPortfolioSummary,
+} from "../../lib/portfolio/calcPortfolio";
 
 export default function PortfolioPage() {
   const assets = mockPortfolioAssets;
@@ -30,6 +34,7 @@ export default function PortfolioPage() {
                 <PortfolioDashboardLink />
               </div>
             </div>
+            <FeatureNavigation currentPath="/portfolio" title="Portfolioから次へ進む" />
           </>
         )}
       </div>

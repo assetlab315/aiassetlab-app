@@ -1,10 +1,11 @@
+import FeatureNavigation from "../../components/navigation/FeatureNavigation";
 import SimulatorClient from "../../components/simulator/SimulatorClient";
 
 export default function SimulatorPage() {
   return (
     <main className="min-h-screen bg-slate-50 px-4 py-8">
-      <div className="mx-auto max-w-5xl">
-        <section className="mb-8">
+      <div className="mx-auto max-w-5xl space-y-6">
+        <section>
           <p className="mb-2 text-sm font-semibold text-blue-600">
             AI Asset Lab
           </p>
@@ -17,6 +18,7 @@ export default function SimulatorPage() {
         </section>
 
         <SimulatorClient />
+        <FeatureNavigation currentPath="/simulator" title="Simulatorから次へ進む" />
       </div>
     </main>
   );
