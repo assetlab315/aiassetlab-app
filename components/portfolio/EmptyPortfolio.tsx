@@ -1,8 +1,13 @@
-export function EmptyPortfolio() {
+export default function EmptyPortfolio() {
   return (
-    <section className="rounded-2xl border border-dashed border-slate-200 bg-white p-8 text-center">
-      <h2 className="text-xl font-bold text-slate-900">資産データがありません</h2>
-      <p className="mt-3 text-sm text-slate-600">最初の資産を登録すると、配分と次の行動が表示されます。</p>
+    <section className="rounded-3xl bg-white p-8 text-center shadow-sm">
+      <p className="text-sm font-bold text-blue-600">まだ資産がありません</p>
+      <h2 className="mt-2 text-2xl font-black text-slate-900">
+        まず1つだけ登録しましょう
+      </h2>
+      <p className="mx-auto mt-3 max-w-md leading-7 text-slate-500">
+        銀行預金、NISA、iDeCoなど、いま分かる範囲で大丈夫です。登録すると資産配分が見えるようになります。
+      </p>
     </section>
   );
 }

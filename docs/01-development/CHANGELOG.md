@@ -2,24 +2,28 @@
 
 ## 2026-07-09
 
-### Sprint 13 - Project Quality Sprint
+### Sprint 14 - Portfolio v2
 
 #### Added
 
-- `.gitattributes` を追加
-- `.editorconfig` を追加
-- `.prettierrc` を追加
-- `.prettierignore` を追加
-- `.vscode/settings.json` を追加
-- `.vscode/extensions.json` を追加
+- Portfolioに資産追加機能を追加
+- Portfolioに資産編集機能を追加
+- Portfolioに資産削除機能を追加
+- 現在の資産合計を自動計算
+- 毎月の積立額を自動計算
+- 資産配分表示を追加
+- localStorageによるブラウザ保存を追加
+- PortfolioからSimulator / AI Chatへの導線を改善
 
 #### Changed
 
-- Gitの改行コードwarningを抑制しやすい構成へ変更
-- VS Codeで保存時にフォーマットされる設定を追加
-- チーム開発・AI開発で差分がぶれにくい開発環境へ改善
+- Portfolio画面を「見るだけ」から「自分の資産を登録できる画面」へ改善
+- 初心者向けに文言を「Portfolio」ではなく「資産を見る」へ寄せた
+- Asset関連の型・定数・計算・保存処理を責務分割
 
-#### Documentation
+#### Notes
 
-- PROJECT_PROGRESS.md を更新
-- CHANGELOG.md を更新
+- Supabase保存は認証・ユーザーID設計とセットで実装する方が安全なため、Sprint14では実装しない。
+- Sprint14ではまずユーザーが自分の資産を登録できる体験を優先し、ブラウザ保存で価値検証する。
+
+---

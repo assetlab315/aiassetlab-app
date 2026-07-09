@@ -1,24 +1,40 @@
-export type AssetCategory = 'cash' | 'stock' | 'fund' | 'crypto' | 'other';
+export type AssetCategory =
+  | "cash"
+  | "stock"
+  | "fund"
+  | "crypto"
+  | "pension"
+  | "other";
 
 export type PortfolioAsset = {
   id: string;
   name: string;
   category: AssetCategory;
   amount: number;
-  targetRate: number;
+  monthlyContribution: number;
+  memo?: string;
+  updatedAt: string;
+};
+
+export type AssetFormInput = {
+  name: string;
+  category: AssetCategory;
+  amount: string;
+  monthlyContribution: string;
   memo: string;
 };
 
 export type PortfolioSummary = {
   totalAmount: number;
+  totalMonthlyContribution: number;
   assetCount: number;
-  monthlyAction: string;
-  riskLabel: string;
+  largestAssetName: string;
+  largestAssetAmount: number;
 };
 
-export type PortfolioAllocation = {
+export type AssetAllocation = {
   category: AssetCategory;
   label: string;
   amount: number;
-  rate: number;
+  percentage: number;
 };

@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Sprint 13
+### Sprint 14
 
 **Status**
 
@@ -12,80 +12,119 @@
 
 ## Current Goal
 
-Project Quality Sprint
-
-開発環境・改行コード・フォーマットルールを整備し、今後のSprintでGit warningや整形差分が出にくい状態にする。
+Portfolio v2 の実装
 
 ---
 
-## Previous Sprint
+## Sprint 14 Scope
 
-### Sprint 12.5
-
-Build Fix
-
-Status
-
-✅ Completed
+- 資産追加
+- 資産編集
+- 資産削除
+- 資産合計の自動計算
+- 毎月積立額の自動計算
+- 資産配分表示
+- ブラウザ保存（localStorage）
+- PortfolioからSimulator / AI Chatへの導線改善
 
 ---
 
 ## Completed
 
-### MVP Features
+### Infrastructure
 
-- AI Diagnosis
+- Git / GitHub
+- VS Code
+- Vercel
+- Supabase
+- Project Quality Settings
+
+### AI Diagnosis
+
+- Diagnosis UI
 - Diagnosis Result
+- API
+- Supabase Save
+- Result Fetch
+- Result Build Fix
+
+### Dashboard
+
 - AI Dashboard
-- Portfolio MVP
-- Simulator MVP
-- AI Chat MVP
-- MVP Navigation Polish
-
-### Product Foundation
-
 - UX Foundation
-- Design System v1.0
-- Copy Guidelines
-- Product Style Guide
-- Dashboard UX改善
+- Design System
+- Dashboard UX v2
 
-### Project Quality
+### Portfolio
 
-- `.gitattributes` による改行コード制御
-- `.editorconfig` によるエディタ共通設定
-- Prettier基本設定
-- VS Code推奨設定
-- VS Code推奨拡張機能
+- Portfolio MVP
+- Portfolio v2 CRUD
+- Asset Form
+- Asset List
+- Allocation Chart
+- Local Persistence
+
+### Simulator
+
+- Simulator MVP
+- Future Value Calculation
+- Advice Card
+
+### AI Chat
+
+- AI Chat MVP
+- Mock Response
+- Suggested Questions
+
+### Documentation
+
+- README
+- PRODUCT_VISION
+- PRODUCT_PRINCIPLES
+- ROADMAP
+- AI_CONTEXT
+- AI_PM
+- HANDOFF
+- ARCHITECTURE
+- FOLDER_STRUCTURE
+- USER_FLOW
+- UI_GUIDELINES
+- WIREFRAMES
+- DESIGN_SYSTEM
+- COPY_GUIDELINES
+- PRODUCT_STYLE_GUIDE
+- UI_COMPONENTS
+- CHANGELOG
+- DECISIONS
+- DEFINITION_OF_DONE
+- CONTRIBUTING
 
 ---
 
 ## Next Sprint
 
-Sprint 14
+### Sprint 15
 
-Portfolio v2
+AI Chat v2
 
 予定
 
-- 資産追加フォーム
-- 資産編集
-- 資産削除
-- 資産割合表示
-- Empty State改善
-- 将来的なSupabase保存を見据えた構成整理
+- AI Chat回答品質改善
+- Portfolio入力を前提にした相談導線
+- OpenAI API接続の設計判断
+- 必要であればAPI実装
 
 ---
 
-## MVP Progress
+## Product Score
 
-██████████ 100%
-
----
-
-## Version 1.0 Progress
-
-███░░░░░░░ 30%
+| 項目 | 評価 |
+|---|---:|
+| UX | 8.6 / 10 |
+| UI | 8.7 / 10 |
+| 保守性 | 8.8 / 10 |
+| SEO | 7.4 / 10 |
+| 収益性 | 8.0 / 10 |
 
 ---
 

@@ -1,49 +1,18 @@
 # Decisions
 
-## 2026-07
+## 2026-07-09
 
 ### Decision
 
-Resultページは
+Portfolio v2では、資産データの保存をまずlocalStorageで実装する。
 
-AI Dashboard
+### Reason
 
-として設計する。
+Supabase保存にはユーザー認証、user_id設計、RLS設計が必要になる。
+認証前に共有DBへ資産データを保存すると、データ分離とセキュリティの観点で危険がある。
 
-Reason
+Sprint14では、ユーザーが「自分の資産を登録して確認できる」体験を最優先し、ブラウザ保存で価値検証する。
 
-診断をゴールではなく
+### Future
 
-資産形成のスタート地点にするため。
-
----
-
-### Decision
-
-MVP完成までは
-
-アーキテクチャ変更禁止。
-
-Reason
-
-開発速度と品質を優先するため。
-
----
-
-### Decision
-
-完成版コードのみ提示する。
-
-Reason
-
-VS Codeでコピペしやすくするため。
-
----
-
-### Decision
-
-1 Sprint = 1 Commit
-
-Reason
-
-履歴を管理しやすくするため。
+Sprint17以降の認証・マイページ実装後に、PortfolioデータをSupabaseへ移行する。
