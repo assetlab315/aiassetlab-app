@@ -3,6 +3,7 @@ import type { PortfolioAsset, PortfolioSummary } from "../../features/portfolio/
 import type {
   DashboardAdvice,
   DashboardAssetImpact,
+  DashboardDailyCheck,
   DashboardHabit,
   DashboardInsight,
   DashboardPremiumPreview,
@@ -36,6 +37,58 @@ function getMainAssetCategory(assets: PortfolioAsset[], summary: PortfolioSummar
     category: category as PortfolioAsset["category"],
     amount,
     rate: summary.totalAmount === 0 ? 0 : (amount / summary.totalAmount) * 100,
+  };
+}
+
+
+export function createDashboardDailyCheck(
+  assets: PortfolioAsset[],
+  summary: PortfolioSummary,
+): DashboardDailyCheck {
+  if (assets.length === 0 || summary.totalAmount === 0) {
+    return {
+      greeting: "おはようございます。",
+      title: "まずは資産を1つ登録して、今日の確認を始めましょう。",
+      description:
+        "AI Asset Labは、毎朝30秒で資産形成の現在地を確認するためのホーム画面です。最初は預金やNISAなど、分かるものを1つ入れるだけで大丈夫です。",
+      checkedTitle: "今日の確認を始めました。",
+      checkedDescription:
+        "次は資産を1つ登録しましょう。登録すると、明日からAIインサイトと今日やることがあなた向けになります。",
+      statusLabel: "未登録",
+      focusItems: ["資産を1つ登録", "金額はざっくりでOK", "完璧さより継続"],
+      ctaLabel: "資産を登録する",
+      ctaHref: "/portfolio",
+    };
+  }
+
+  if (summary.totalMonthlyContribution === 0) {
+    return {
+      greeting: "おはようございます。",
+      title: "資産は見えています。今日は積立額だけ確認しましょう。",
+      description:
+        "保有資産は登録できています。毎朝見る画面として使うために、次は毎月の積立額を入れて、続けられる資産形成か確認できる状態にしましょう。",
+      checkedTitle: "今日の資産確認は完了です。",
+      checkedDescription:
+        "次に時間があるとき、毎月の積立額を1つ追加してください。AIの提案がさらに具体的になります。",
+      statusLabel: "あと1歩",
+      focusItems: ["総資産を確認", "積立額を入力", "AIインサイトを読む"],
+      ctaLabel: "積立額を入力する",
+      ctaHref: "/portfolio",
+    };
+  }
+
+  return {
+    greeting: "おはようございます。",
+    title: "今日は大きく変えず、続けることを確認しましょう。",
+    description:
+      "資産と積立が見えています。毎朝やることは、資産状況・AIインサイト・今日やることを上から確認するだけです。必要なときだけAIに相談しましょう。",
+    checkedTitle: "今日の確認は完了です。",
+    checkedDescription:
+      "資産と積立の状態を確認できました。今日は無理に動かず、必要なときだけAIに相談すれば大丈夫です。",
+    statusLabel: "今日の確認",
+    focusItems: ["資産サマリー", "AIインサイト", "今日やること"],
+    ctaLabel: "詳しくAIに聞く",
+    ctaHref: "/chat",
   };
 }
 

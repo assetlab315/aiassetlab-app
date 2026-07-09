@@ -2,6 +2,27 @@
 
 ## 2026-07-09
 
+### Sprint 20 - Dashboard Morning Experience / Daily Check Foundation
+
+#### Added
+
+- Dashboardに「朝の確認」カードを追加
+- 今日の確認済み状態をlocalStorageに保存
+- 資産登録状況に応じた朝の一言、今日見るポイント、CTAを生成するロジックを追加
+
+#### Changed
+
+- Dashboard Heroの文言を「毎朝30秒で確認する」体験に合わせて短く整理
+- 習慣化カードの見出しを「毎日の習慣」へ変更
+- Dashboard上のCTAを、確認後にAI相談へ自然につながる表現へ改善
+
+#### Notes
+
+- 認証未実装のため、Daily Checkの保存はlocalStorageを利用
+- ストリークや履歴保存は、認証・ユーザー保存の導入後に拡張する
+
+## 2026-07-09
+
 ### Sprint 19 - Version 1.0 UX Polish / Release Readiness
 
 #### Changed

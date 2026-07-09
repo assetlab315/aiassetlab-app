@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Sprint 19
+### Sprint 20
 
 **Status**
 
@@ -12,7 +12,7 @@
 
 ## Current Goal
 
-Version 1.0 UX Polish / Release Readiness
+Dashboard Morning Experience / Daily Check Foundation
 
 ---
 
@@ -91,18 +91,26 @@ Version 1.0 UX Polish / Release Readiness
 - Portfolio / Chat の見出しとCTAを「ホーム起点」の体験に統一
 - Release前に迷いやすい英語ラベルと内部向け表現を削減
 
+### Dashboard Morning Experience / Daily Check Foundation
+
+- Dashboardに「朝の確認」カードを追加
+- 今日の確認済み状態をlocalStorageで保存
+- 資産登録状況に応じて朝の一言、見るポイント、次のCTAを出し分け
+- Hero文言をさらに短くし、毎朝30秒で確認する体験へ整理
+- 習慣化カードの表現を「毎日の習慣」へ改善
+
 ## Next Sprint
 
-Sprint 20
+Sprint 21
 
-Dashboard Morning Experience / Daily Check Foundation
+Dashboard Micro Polish / Daily Habit UX
 
 予定
 
-- Dashboardに「朝開いたときの一言」を追加
-- 今日見るべきポイントをさらに短く整理
-- 習慣化カードを毎日確認しやすい表現へ改善
-- 将来の資産推移・ストリーク導入前の土台を作る
+- Dashboard内の重複表現を削減
+- AIインサイトと朝の確認カードの役割をさらに明確化
+- Daily Checkの視認性と押した後の気持ちよさを改善
+- Version 1.0公開前のDashboard最終調整
 
 ---
 
@@ -114,7 +122,7 @@ Dashboard Morning Experience / Daily Check Foundation
 
 ## Version 1.0 Progress
 
-██████████ 96%
+██████████ 97%
 
 ---
 

@@ -32,6 +32,19 @@ export type DashboardAssetImpact = {
   ctaHref: string;
 };
 
+
+export type DashboardDailyCheck = {
+  greeting: string;
+  title: string;
+  description: string;
+  checkedTitle: string;
+  checkedDescription: string;
+  statusLabel: string;
+  focusItems: string[];
+  ctaLabel: string;
+  ctaHref: string;
+};
+
 export type DashboardTask = {
   step: string;
   title: string;

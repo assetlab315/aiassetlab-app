@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import ActionCard from "../common/ActionCard";
 import DashboardAssetImpactCard from "./DashboardAssetImpactCard";
+import DashboardDailyCheckCard from "./DashboardDailyCheckCard";
 import DashboardInsightCard from "./DashboardInsightCard";
 import DashboardPremiumPreviewCard from "./DashboardPremiumPreviewCard";
 import FeatureNavigation from "../common/FeatureNavigation";
@@ -16,22 +17,49 @@ import { formatCurrency } from "../../lib/portfolio/formatPortfolio";
 import { loadPortfolioAssets } from "../../lib/portfolio/storage";
 import {
   createDashboardAssetImpact,
+  createDashboardDailyCheck,
   createDashboardHabit,
   createDashboardInsight,
   createDashboardPremiumPreview,
   createDashboardTasks,
 } from "../../lib/dashboard/createDashboardInsights";
 
+const dailyCheckStorageKey = "aiassetlab:dashboard-daily-check";
+
+function getTodayKey() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const date = String(now.getDate()).padStart(2, "0");
+  return `${year}-${month}-${date}`;
+}
+
+function getDateLabel() {
+  return new Intl.DateTimeFormat("ja-JP", {
+    month: "long",
+    day: "numeric",
+    weekday: "short",
+  }).format(new Date());
+}
+
 export default function DashboardClient() {
   const [assets, setAssets] = useState<PortfolioAsset[]>([]);
   const [isReady, setIsReady] = useState(false);
+  const [isDailyChecked, setIsDailyChecked] = useState(false);
+  const [dateLabel, setDateLabel] = useState("");
 
   useEffect(() => {
     setAssets(loadPortfolioAssets());
+    setIsDailyChecked(localStorage.getItem(dailyCheckStorageKey) === getTodayKey());
+    setDateLabel(getDateLabel());
     setIsReady(true);
   }, []);
 
   const summary = useMemo(() => calculatePortfolioSummary(assets), [assets]);
+  const dailyCheck = useMemo(
+    () => createDashboardDailyCheck(assets, summary),
+    [assets, summary],
+  );
   const insight = useMemo(
     () => createDashboardInsight(assets, summary),
     [assets, summary],
@@ -47,6 +75,11 @@ export default function DashboardClient() {
     [assets, summary],
   );
 
+  function handleDailyCheck() {
+    localStorage.setItem(dailyCheckStorageKey, getTodayKey());
+    setIsDailyChecked(true);
+  }
+
   return (
     <PageContainer size="xl">
       <section className="rounded-[2rem] bg-white p-6 shadow-sm md:p-8">
@@ -56,10 +89,10 @@ export default function DashboardClient() {
             <h1 className="text-3xl font-black tracking-tight text-slate-900 md:text-4xl">
               おかえりなさい。
               <br />
-              今日の資産形成を始めましょう。
+              今日の確認を始めましょう。
             </h1>
             <p className="mt-4 max-w-2xl leading-7 text-slate-600">
-              資産サマリー、AIインサイト、今日やることを1画面に整理しました。上から確認すれば、今日必要な判断が分かります。
+              毎朝30秒で、資産サマリー・AIインサイト・今日やることを確認できます。
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <Button href={insight.ctaHref}>{insight.ctaLabel}</Button>
@@ -109,6 +142,13 @@ export default function DashboardClient() {
         </div>
       </section>
 
+      <DashboardDailyCheckCard
+        dailyCheck={dailyCheck}
+        dateLabel={dateLabel || "今日"}
+        isChecked={isDailyChecked}
+        onCheck={handleDailyCheck}
+      />
+
       <DashboardInsightCard insight={insight} />
 
       <DashboardAssetImpactCard impact={assetImpact} />
@@ -137,12 +177,12 @@ export default function DashboardClient() {
       <Card>
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
-            <p className="text-sm font-black text-blue-600">習慣化の土台</p>
+            <p className="text-sm font-black text-blue-600">毎日の習慣</p>
             <h2 className="mt-2 text-2xl font-black text-slate-900">{habit.title}</h2>
             <p className="mt-3 max-w-2xl leading-7 text-slate-600">{habit.description}</p>
           </div>
-          <Button href="/dashboard" variant="secondary">
-            今日の状態を確認する
+          <Button href="/chat" variant="secondary">
+            気になる点をAIに聞く
           </Button>
         </div>
       </Card>
