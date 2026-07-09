@@ -2,6 +2,30 @@
 
 ## 2026-07-09
 
+### Sprint 24 - Daily Value
+
+#### Added
+
+- Dashboardに短文の「今日のAI」カードを追加
+- 資産登録状況に応じて「今日は資産登録を1つ進めましょう。」「今日は積立を続けましょう。」などの一言を表示
+
+#### Changed
+
+- Dashboardの表示順を Hero / 今日のAI / 資産 / 今日やること に整理
+- Morning Checkを今日やることの後ろへ移動し、今日のAIと役割が重ならない構成へ変更
+
+#### Removed
+
+- 未使用のDashboardAdvice型と生成関数を削除
+- 未使用になっていたminimumMonthlyContribution定数を削除
+
+#### Notes
+
+- Version 1.0公開前のため、新機能は最小限の短文カードに限定
+- 今日のAIは行動を増やすためではなく、Dashboardを今日開く理由を作るための表示として追加
+
+## 2026-07-09
+
 ### Sprint 23 - First Impression Polish
 
 #### Changed

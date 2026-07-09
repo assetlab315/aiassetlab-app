@@ -1,16 +1,14 @@
 import { ASSET_CATEGORY_LABELS } from "../../features/portfolio/constants";
 import type { PortfolioAsset, PortfolioSummary } from "../../features/portfolio/types";
 import type {
-  DashboardAdvice,
   DashboardAssetImpact,
   DashboardDailyCheck,
   DashboardHabit,
   DashboardInsight,
   DashboardPremiumPreview,
   DashboardTask,
+  DashboardTodayAi,
 } from "../../features/dashboard/types";
-
-const minimumMonthlyContribution = 10000;
 
 function getMainAssetCategory(assets: PortfolioAsset[], summary: PortfolioSummary) {
   const grouped = assets.reduce<Record<PortfolioAsset["category"], number>>(
@@ -89,6 +87,35 @@ export function createDashboardDailyCheck(
     focusItems: ["資産サマリー", "AIインサイト", "今日やること"],
     ctaLabel: "AIに相談する",
     ctaHref: "/chat",
+  };
+}
+
+export function createDashboardTodayAi(
+  assets: PortfolioAsset[],
+  summary: PortfolioSummary,
+): DashboardTodayAi {
+  if (assets.length === 0 || summary.totalAmount === 0) {
+    return {
+      message: "今日は資産登録を1つ進めましょう。",
+    };
+  }
+
+  if (summary.totalMonthlyContribution === 0) {
+    return {
+      message: "今日は積立額だけ入れておきましょう。",
+    };
+  }
+
+  const mainCategory = getMainAssetCategory(assets, summary);
+
+  if (mainCategory.category === "crypto" || mainCategory.rate >= 70) {
+    return {
+      message: "今日は増やすより、比率を確認しましょう。",
+    };
+  }
+
+  return {
+    message: "今日は積立を続けましょう。",
   };
 }
 
@@ -208,53 +235,6 @@ export function createDashboardAssetImpact(
     actionLabel: actionByCategory[mainCategory.category],
     ctaLabel: "AIに相談する",
     ctaHref: "/chat",
-  };
-}
-
-export function createDashboardAdvice(
-  assets: PortfolioAsset[],
-  summary: PortfolioSummary,
-): DashboardAdvice {
-  if (assets.length === 0 || summary.totalAmount === 0) {
-    return {
-      label: "今日のAIアドバイス",
-      title: "まずは資産を1つ登録して、現在地を見える化しましょう。",
-      description:
-        "資産形成は、今の状態を知るところから始まります。金額がざっくりでも大丈夫です。まず1つ登録すると、次の行動が決めやすくなります。",
-      ctaLabel: "資産を登録する",
-      ctaHref: "/portfolio",
-    };
-  }
-
-  if (summary.totalMonthlyContribution === 0) {
-    return {
-      label: "今日のAIアドバイス",
-      title: "毎月の積立額を1つ決めると、次の一歩が見えます。",
-      description:
-        "すでに資産は登録できています。次は無理のない範囲で毎月の積立額を入力し、続けられる形に整えましょう。",
-      ctaLabel: "積立額を入力する",
-      ctaHref: "/portfolio",
-    };
-  }
-
-  if (summary.totalMonthlyContribution < minimumMonthlyContribution) {
-    return {
-      label: "今日のAIアドバイス",
-      title: "今の積立を続けることを最優先にしましょう。",
-      description:
-        "少額でも継続できていることは大きな前進です。増額よりも、まずは続けやすい仕組みを作ることを優先しましょう。",
-      ctaLabel: "将来のお金を計算する",
-      ctaHref: "/simulator",
-    };
-  }
-
-  return {
-    label: "今日のAIアドバイス",
-    title: "登録資産と積立をもとに、将来のお金を一度確認しましょう。",
-    description:
-      "資産と毎月の積立が見えているので、次は将来いくらになりそうかを確認する段階です。結果を見て、無理なく続けられる金額か見直しましょう。",
-    ctaLabel: "将来のお金を計算する",
-    ctaHref: "/simulator",
   };
 }
 

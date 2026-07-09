@@ -8,6 +8,7 @@ import DashboardInsightCard from "./DashboardInsightCard";
 import DashboardHabitCard from "./DashboardHabitCard";
 import DashboardPremiumPreviewCard from "./DashboardPremiumPreviewCard";
 import DashboardReleaseCheckCard from "./DashboardReleaseCheckCard";
+import DashboardTodayAiCard from "./DashboardTodayAiCard";
 import FeatureNavigation from "../common/FeatureNavigation";
 import SectionHeader from "../common/SectionHeader";
 import PageContainer from "../layout/PageContainer";
@@ -24,6 +25,7 @@ import {
   createDashboardInsight,
   createDashboardPremiumPreview,
   createDashboardTasks,
+  createDashboardTodayAi,
 } from "../../lib/dashboard/createDashboardInsights";
 
 const dailyCheckStorageKey = "aiassetlab:dashboard-daily-check";
@@ -70,6 +72,10 @@ export default function DashboardClient() {
     () => createDashboardAssetImpact(assets, summary),
     [assets, summary],
   );
+  const todayAi = useMemo(
+    () => createDashboardTodayAi(assets, summary),
+    [assets, summary],
+  );
   const tasks = useMemo(() => createDashboardTasks(assets, summary), [assets, summary]);
   const habit = useMemo(() => createDashboardHabit(assets, summary), [assets, summary]);
   const premiumPreview = useMemo(
@@ -85,75 +91,62 @@ export default function DashboardClient() {
   return (
     <PageContainer size="xl">
       <section className="rounded-[2rem] bg-white p-6 shadow-sm md:p-8">
-        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div>
-            <p className="mb-3 text-sm font-black text-blue-600">AI Dashboard</p>
-            <h1 className="text-3xl font-black tracking-tight text-slate-900 md:text-4xl">
-              未来の資産を、
-              <br />
-              今日少し前へ。
-            </h1>
-            <p className="mt-4 max-w-2xl leading-7 text-slate-600">
-              資産を見て、必要なときだけAIに相談できます。
-            </p>
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              <Button href="/portfolio">資産を見る</Button>
-              <Button href="/chat" variant="outline">
-                AIに相談する
-              </Button>
-            </div>
-          </div>
-
-          <Card variant="soft" className="bg-slate-50">
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="text-sm font-black uppercase tracking-wide text-blue-600">
-                  資産サマリー
-                </p>
-                <p className="mt-3 text-xs font-black text-slate-500">総資産</p>
-                <p className="mt-1 text-3xl font-black text-slate-900">
-                  {isReady ? formatCurrency(summary.totalAmount) : "確認中"}
-                </p>
-              </div>
-              <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-black text-blue-700">
-                {habit.statusLabel}
-              </span>
-            </div>
-
-            <div className="mt-5 grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
-              <div className="rounded-2xl bg-white p-4">
-                <p className="text-xs font-black text-slate-500">毎月積立</p>
-                <p className="mt-2 text-xl font-black text-blue-600">
-                  {formatCurrency(summary.totalMonthlyContribution)}
-                </p>
-              </div>
-              <div className="rounded-2xl bg-white p-4">
-                <p className="text-xs font-black text-slate-500">保有資産</p>
-                <p className="mt-2 text-xl font-black text-slate-900">
-                  {summary.assetCount}件
-                </p>
-              </div>
-              <div className="rounded-2xl bg-white p-4">
-                <p className="text-xs font-black text-slate-500">最大保有資産</p>
-                <p className="mt-2 line-clamp-1 text-xl font-black text-slate-900">
-                  {summary.largestAssetName}
-                </p>
-              </div>
-            </div>
-          </Card>
+        <p className="mb-3 text-sm font-black text-blue-600">AI Dashboard</p>
+        <h1 className="text-3xl font-black tracking-tight text-slate-900 md:text-4xl">
+          未来の資産を、
+          <br />
+          今日少し前へ。
+        </h1>
+        <p className="mt-4 max-w-2xl leading-7 text-slate-600">
+          資産を見て、必要なときだけAIに相談できます。
+        </p>
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+          <Button href="/portfolio">資産を見る</Button>
+          <Button href="/chat" variant="outline">
+            AIに相談する
+          </Button>
         </div>
       </section>
 
-      <DashboardDailyCheckCard
-        dailyCheck={dailyCheck}
-        dateLabel={dateLabel || "今日"}
-        isChecked={isDailyChecked}
-        onCheck={handleDailyCheck}
-      />
+      <DashboardTodayAiCard todayAi={todayAi} />
 
-      <DashboardInsightCard insight={insight} />
+      <Card variant="soft" className="bg-slate-50">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <p className="text-sm font-black uppercase tracking-wide text-blue-600">
+              資産サマリー
+            </p>
+            <p className="mt-3 text-xs font-black text-slate-500">総資産</p>
+            <p className="mt-1 text-3xl font-black text-slate-900">
+              {isReady ? formatCurrency(summary.totalAmount) : "確認中"}
+            </p>
+          </div>
+          <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-black text-blue-700">
+            {habit.statusLabel}
+          </span>
+        </div>
 
-      <DashboardAssetImpactCard impact={assetImpact} />
+        <div className="mt-5 grid gap-3 sm:grid-cols-3">
+          <div className="rounded-2xl bg-white p-4">
+            <p className="text-xs font-black text-slate-500">毎月積立</p>
+            <p className="mt-2 text-xl font-black text-blue-600">
+              {formatCurrency(summary.totalMonthlyContribution)}
+            </p>
+          </div>
+          <div className="rounded-2xl bg-white p-4">
+            <p className="text-xs font-black text-slate-500">保有資産</p>
+            <p className="mt-2 text-xl font-black text-slate-900">
+              {summary.assetCount}件
+            </p>
+          </div>
+          <div className="rounded-2xl bg-white p-4">
+            <p className="text-xs font-black text-slate-500">最大保有資産</p>
+            <p className="mt-2 line-clamp-1 text-xl font-black text-slate-900">
+              {summary.largestAssetName}
+            </p>
+          </div>
+        </div>
+      </Card>
 
       <section className="space-y-4">
         <SectionHeader
@@ -175,6 +168,17 @@ export default function DashboardClient() {
           ))}
         </div>
       </section>
+
+      <DashboardDailyCheckCard
+        dailyCheck={dailyCheck}
+        dateLabel={dateLabel || "今日"}
+        isChecked={isDailyChecked}
+        onCheck={handleDailyCheck}
+      />
+
+      <DashboardInsightCard insight={insight} />
+
+      <DashboardAssetImpactCard impact={assetImpact} />
 
       <DashboardHabitCard habit={habit} isChecked={isDailyChecked} />
 

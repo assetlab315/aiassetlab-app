@@ -1,13 +1,5 @@
 export type DashboardTone = "blue" | "emerald" | "violet";
 
-export type DashboardAdvice = {
-  label: string;
-  title: string;
-  description: string;
-  ctaLabel: string;
-  ctaHref: string;
-};
-
 export type DashboardInsight = {
   label: string;
   title: string;
@@ -32,6 +24,9 @@ export type DashboardAssetImpact = {
   ctaHref: string;
 };
 
+export type DashboardTodayAi = {
+  message: string;
+};
 
 export type DashboardDailyCheck = {
   greeting: string;
@@ -63,7 +58,6 @@ export type DashboardHabit = {
   ctaLabel: string;
   ctaHref: string;
 };
-
 
 export type DashboardPremiumPreview = {
   badgeLabel: string;

@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Sprint 23
+### Sprint 24
 
 **Status**
 
@@ -12,7 +12,7 @@
 
 ## Current Goal
 
-First Impression Polish
+Daily Value
 
 ---
 
@@ -123,9 +123,17 @@ First Impression Polish
 - 緑・紫の強調色を減らし、Primary Color中心の見え方へ調整
 - PageContainerの余白をDesktop / Tablet / Mobileで自然になるよう調整
 
+### Daily Value
+
+- Dashboardに短文の「今日のAI」カードを追加
+- 資産登録状況、積立額、資産比率に応じて今日開く理由を1文で表示
+- Dashboardの順序を Hero / 今日のAI / 資産 / 今日やること に整理
+- Morning Checkを今日やることの後ろへ移動し、今日のAIとの役割重複を回避
+- 未使用のDashboardAdvice型と生成関数、不要定数を削除
+
 ## Next Sprint
 
-Sprint 24
+Sprint 25
 
 Version 1.0 Launch Handoff / Documentation Finalization
 
