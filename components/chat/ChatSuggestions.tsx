@@ -1,27 +1,22 @@
 import { CHAT_SUGGESTIONS } from "../../features/chat/constants";
 
-type Props = {
-  onSelect: (message: string) => void;
-};
-
-export default function ChatSuggestions({ onSelect }: Props) {
+export default function ChatSuggestions({
+  onSelect,
+}: {
+  onSelect: (suggestion: string) => void;
+}) {
   return (
-    <div>
-      <p className="text-sm font-semibold text-slate-900">
-        おすすめ質問
-      </p>
-      <div className="mt-3 flex flex-wrap gap-2">
-        {CHAT_SUGGESTIONS.map((suggestion) => (
-          <button
-            key={suggestion}
-            type="button"
-            onClick={() => onSelect(suggestion)}
-            className="rounded-full border border-blue-100 bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-700 transition hover:bg-blue-100"
-          >
-            {suggestion}
-          </button>
-        ))}
-      </div>
+    <div className="flex gap-2 overflow-x-auto pb-1">
+      {CHAT_SUGGESTIONS.map((suggestion) => (
+        <button
+          key={suggestion}
+          type="button"
+          onClick={() => onSelect(suggestion)}
+          className="shrink-0 rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700"
+        >
+          {suggestion}
+        </button>
+      ))}
     </div>
   );
 }

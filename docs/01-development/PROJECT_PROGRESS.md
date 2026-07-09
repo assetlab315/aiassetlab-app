@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Sprint 14
+### Sprint 15
 
 **Status**
 
@@ -12,119 +12,77 @@
 
 ## Current Goal
 
-Portfolio v2 の実装
-
----
-
-## Sprint 14 Scope
-
-- 資産追加
-- 資産編集
-- 資産削除
-- 資産合計の自動計算
-- 毎月積立額の自動計算
-- 資産配分表示
-- ブラウザ保存（localStorage）
-- PortfolioからSimulator / AI Chatへの導線改善
+AI Chat v2 の実装
 
 ---
 
 ## Completed
 
-### Infrastructure
+### MVP
 
-- Git / GitHub
-- VS Code
-- Vercel
-- Supabase
-- Project Quality Settings
+- AI診断
+- Supabase保存
+- Resultページ
+- Dashboard
+- Portfolio
+- Simulator
+- AI Chat
+- MVP Navigation
 
-### AI Diagnosis
+### Version 1.0 Foundation
 
-- Diagnosis UI
-- Diagnosis Result
-- API
-- Supabase Save
-- Result Fetch
-- Result Build Fix
-
-### Dashboard
-
-- AI Dashboard
 - UX Foundation
 - Design System
-- Dashboard UX v2
+- Dashboard UX
+- Build Fix
+- Project Quality Settings
 
-### Portfolio
+### Portfolio v2
 
-- Portfolio MVP
-- Portfolio v2 CRUD
-- Asset Form
-- Asset List
-- Allocation Chart
-- Local Persistence
+- 資産追加
+- 資産編集
+- 資産削除
+- 資産合計
+- 毎月積立合計
+- 資産配分表示
+- localStorage保存
 
-### Simulator
+### AI Chat v2
 
-- Simulator MVP
-- Future Value Calculation
-- Advice Card
-
-### AI Chat
-
-- AI Chat MVP
-- Mock Response
-- Suggested Questions
-
-### Documentation
-
-- README
-- PRODUCT_VISION
-- PRODUCT_PRINCIPLES
-- ROADMAP
-- AI_CONTEXT
-- AI_PM
-- HANDOFF
-- ARCHITECTURE
-- FOLDER_STRUCTURE
-- USER_FLOW
-- UI_GUIDELINES
-- WIREFRAMES
-- DESIGN_SYSTEM
-- COPY_GUIDELINES
-- PRODUCT_STYLE_GUIDE
-- UI_COMPONENTS
-- CHANGELOG
-- DECISIONS
-- DEFINITION_OF_DONE
-- CONTRIBUTING
+- OpenAI API連携用エンドポイント
+- APIキー未設定時のフォールバック回答
+- 資産情報を踏まえたチャット文脈
+- 会話履歴を踏まえたプロンプト生成
+- おすすめ質問
+- 資産状況パネル
+- 送信中表示
 
 ---
 
 ## Next Sprint
 
-### Sprint 15
+Sprint 16
 
-AI Chat v2
+Dashboard v3
 
 予定
 
-- AI Chat回答品質改善
-- Portfolio入力を前提にした相談導線
-- OpenAI API接続の設計判断
-- 必要であればAPI実装
+- Portfolio v2 の登録資産をDashboardへ反映
+- 今日のAIアドバイスを資産状況に応じて表示
+- 次にやることの自動出し分け
+- 連続利用・習慣化UIの土台
 
 ---
 
-## Product Score
+## MVP Progress
 
-| 項目 | 評価 |
-|---|---:|
-| UX | 8.6 / 10 |
-| UI | 8.7 / 10 |
-| 保守性 | 8.8 / 10 |
-| SEO | 7.4 / 10 |
-| 収益性 | 8.0 / 10 |
+██████████ 100%
+
+---
+
+## Version 1.0 Progress
+
+███████░░░ 70%
 
 ---
 

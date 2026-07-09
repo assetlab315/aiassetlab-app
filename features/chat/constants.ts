@@ -2,16 +2,17 @@ import type { ChatMessage } from "./types";
 
 export const INITIAL_CHAT_MESSAGES: ChatMessage[] = [
   {
-    id: "initial-assistant-message",
+    id: "initial-ai-message",
     role: "assistant",
-    body:
-      "こんにちは。AI Asset Labです。資産形成で迷っていることを、できるだけシンプルに整理します。まずは下のおすすめ質問から選んでください。",
+    content:
+      "こんにちは。資産形成で迷っていることを、何でも聞いてください。資産登録がある場合は、その内容も踏まえて一緒に考えます。",
+    createdAt: new Date().toISOString(),
   },
 ];
 
 export const CHAT_SUGGESTIONS = [
-  "何から資産形成を始めればいい？",
-  "毎月3万円ならどう運用する？",
-  "副業収入を資産形成に回したい",
-  "リスクを抑えて増やしたい",
+  "今の資産配分をどう見直せばいい？",
+  "毎月いくら積み立てるべき？",
+  "新NISAでは何から始めればいい？",
+  "20年後に向けて何をすればいい？",
 ];
