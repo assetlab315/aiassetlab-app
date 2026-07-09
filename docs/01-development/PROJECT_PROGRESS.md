@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Sprint 25
+### Sprint 26
 
 **Status**
 
@@ -12,7 +12,7 @@
 
 ## Current Goal
 
-Version1.0 Release Candidate Review
+Version1 Release Review
 
 ---
 
@@ -141,9 +141,19 @@ Version1.0 Release Candidate Review
 - モバイル余白、ボタン高さ、フォーカスリング、aria-labelを主要入力・ボタンへ追加
 - 未使用の旧FeatureNavigation関連ファイルを削除し、グローバルナビのラベルと順序を整理
 
+### Version1 Release Review
+
+- Root metadataをVersion1向けのtitle / description / canonical / OGP / robots設定へ整理
+- 主要ページにページ別metadataを追加し、診断ページは専用layoutでmetadataを管理
+- robots.txt と sitemap.xml をApp Routerで生成
+- 重複していたPageContainer内の独自Header / Footerを削除し、共通layoutナビへ統一
+- 旧AppHeader / AppFooterの未使用ファイルを削除
+- 共通Button、FeatureNavigation、資産一覧の編集/削除ボタンのフォーカスと押しやすさを改善
+- 資産一覧ボタンにaria-labelを追加し、操作対象が分かるよう改善
+
 ## Next Sprint
 
-Sprint 26
+Sprint 27
 
 Version 1.0 Launch Handoff / Documentation Finalization
 

@@ -52,14 +52,16 @@ export default function AssetTable({ assets, onDelete, onEdit }: Props) {
               <button
                 type="button"
                 onClick={() => onEdit(asset)}
-                className="rounded-full border border-slate-200 px-4 py-2 text-sm font-bold text-slate-700 hover:bg-white"
+                aria-label={`${asset.name}を編集する`}
+                className="min-h-11 rounded-full border border-slate-200 px-4 py-2 text-sm font-bold text-slate-700 hover:bg-white focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-100"
               >
                 編集
               </button>
               <button
                 type="button"
                 onClick={() => onDelete(asset.id)}
-                className="rounded-full border border-red-100 px-4 py-2 text-sm font-bold text-red-500 hover:bg-red-50"
+                aria-label={`${asset.name}を削除する`}
+                className="min-h-11 rounded-full border border-red-100 px-4 py-2 text-sm font-bold text-red-600 hover:bg-red-50 focus:outline-none focus-visible:ring-4 focus-visible:ring-red-100"
               >
                 削除
               </button>

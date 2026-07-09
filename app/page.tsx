@@ -1,4 +1,14 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "TOP",
+  description:
+    "AI Asset Labの入口です。診断から資産登録、Dashboard、AI相談まで迷わず進めます。",
+  alternates: {
+    canonical: "/",
+  },
+};
 
 export default function HomePage() {
   return (

@@ -31,7 +31,7 @@ export default function Button({
   type = "button",
   onClick,
 }: Props) {
-  const baseClass = `inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-black transition focus:outline-none focus-visible:ring-4 ${variantClass[variant]} ${className}`;
+  const baseClass = `inline-flex min-h-12 items-center justify-center rounded-full px-5 py-3 text-sm font-black transition focus:outline-none focus-visible:ring-4 ${variantClass[variant]} ${className}`;
 
   if (href) {
     return (

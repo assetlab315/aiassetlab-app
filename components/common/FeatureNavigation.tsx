@@ -54,7 +54,7 @@ export default function FeatureNavigation({
           <Link
             key={item.href}
             href={item.href}
-            className="rounded-2xl border border-slate-100 bg-slate-50 p-4 transition hover:border-blue-200 hover:bg-blue-50"
+            className="rounded-2xl border border-slate-100 bg-slate-50 p-4 transition hover:border-blue-200 hover:bg-blue-50 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-100"
           >
             <p className="font-black text-slate-900">{item.label}</p>
             <p className="mt-2 text-sm leading-6 text-slate-500">

@@ -3,9 +3,37 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { BarChart3, Bot, Gauge, Home, LayoutDashboard } from "lucide-react";
 
+const siteUrl = "https://aiassetlab.jp";
+
 export const metadata: Metadata = {
-  title: "AI Asset Lab App",
-  description: "AIで、資産形成をもっとシンプルに。",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "AI Asset Lab | AIで資産形成をシンプルに",
+    template: "%s | AI Asset Lab",
+  },
+  description:
+    "AI Asset Labは、診断、資産登録、Dashboard、AI相談で資産形成の次の一歩を整理するサービスです。",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "AI Asset Lab",
+    description:
+      "AIで、資産形成をもっとシンプルに。診断からDashboard、AI相談まで迷わず進めます。",
+    url: siteUrl,
+    siteName: "AI Asset Lab",
+    locale: "ja_JP",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "AI Asset Lab",
+    description: "AIで、資産形成をもっとシンプルに。",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 const nav = [
@@ -21,9 +49,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ja">
       <body>
         <div className="min-h-screen bg-slate-50">
-          <aside className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-72 lg:flex-col border-r bg-white">
-            <div className="flex h-16 items-center px-6 border-b">
-              <Link href="/" className="text-xl font-extrabold tracking-tight">
+          <aside className="hidden border-r bg-white lg:fixed lg:inset-y-0 lg:flex lg:w-72 lg:flex-col">
+            <div className="flex h-16 items-center border-b px-6">
+              <Link
+                href="/"
+                className="text-xl font-extrabold tracking-tight focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-100"
+              >
                 AI Asset Lab
               </Link>
             </div>
@@ -53,7 +84,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="lg:pl-72">
             <header className="sticky top-0 z-10 border-b bg-white/85 backdrop-blur">
               <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
-                <Link href="/" className="font-extrabold lg:hidden">AI Asset Lab</Link>
+                <Link
+                  href="/"
+                  className="font-extrabold focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-100 lg:hidden"
+                >
+                  AI Asset Lab
+                </Link>
                 <div className="hidden lg:block">
                   <p className="text-sm font-bold text-slate-500">AIで、資産形成をもっとシンプルに。</p>
                 </div>

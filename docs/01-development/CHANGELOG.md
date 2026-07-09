@@ -2,6 +2,31 @@
 
 ## 2026-07-09
 
+### Sprint 26 - Version1 Release Review
+
+#### Added
+
+- App Routerの`robots.ts`と`sitemap.ts`を追加
+- Root metadataにcanonical、OGP、Twitter card、robots設定を追加
+- 主要ページにページ別metadataを追加
+
+#### Changed
+
+- PageContainerから重複していた独自Header / Footerを削除し、共通layoutナビへ統一
+- 共通Buttonの最小高さを統一し、モバイルで押しやすく改善
+- FeatureNavigationと資産一覧ボタンにfocus-visibleリングを追加
+- 資産一覧の編集・削除ボタンにaria-labelを追加
+
+#### Removed
+
+- 未使用になっていたAppHeader / AppFooterを削除
+
+#### Notes
+
+- 新機能は追加せず、Version1公開前のSEO、アクセシビリティ、UI一貫性、cleanupに限定
+
+## 2026-07-09
+
 ### Sprint 25 - Version1.0 Release Candidate Review
 
 #### Changed
