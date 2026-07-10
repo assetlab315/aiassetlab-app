@@ -209,7 +209,7 @@ export default function DiagnosisPage() {
               </Link>
 
               <Link className="aal-button-secondary" href="/">
-                TOPへ戻る
+                ホームへ戻る
               </Link>
             </div>
           </>

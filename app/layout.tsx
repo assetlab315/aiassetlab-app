@@ -64,7 +64,7 @@ export const metadata: Metadata = {
 };
 
 const nav = [
-  { href: "/", label: "TOP", icon: Home },
+  { href: "/", label: "ホーム", icon: Home },
   { href: "/diagnosis", label: "診断する", icon: Gauge },
   { href: "/portfolio", label: "資産を見る", icon: BarChart3 },
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },

@@ -2,6 +2,26 @@
 
 ## 2026-07-10
 
+### Version 1.1 Sprint 5 - Launch Ready
+
+#### Changed
+
+- 全ページの主要導線、内部リンク、404 / Error導線を公開前に確認
+- グローバルナビの「TOP」表記を「ホーム」へ統一
+- 診断画面と診断結果画面の戻り導線を「ホームへ戻る」へ統一
+- Portfolio内のDashboard戻り導線をNext Linkへ整理
+- root layoutの共通Headerと重複していたPageContainer内Headerを削除
+
+#### Removed
+
+- 未使用になった旧AppHeaderコンポーネントを削除
+
+#### Notes
+
+- 新機能追加は行わず、公開前のBroken Link、Copy、Mobile、Accessibility、Cleanup確認に限定
+
+## 2026-07-10
+
 ### Version 1.1 Sprint 4 - Release Management Foundation
 
 #### Added

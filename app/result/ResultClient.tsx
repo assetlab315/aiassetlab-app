@@ -281,7 +281,7 @@ export default function ResultClient() {
             href="/"
             className="rounded-full border border-gray-300 px-5 py-3 text-center font-semibold text-gray-700 hover:bg-gray-100 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-100"
           >
-            TOPへ戻る
+            ホームへ戻る
           </Link>
         </div>
       </div>

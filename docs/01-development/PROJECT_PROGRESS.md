@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Version 1.1 Sprint 4
+### Version 1.1 Sprint 5
 
 **Status**
 
@@ -12,7 +12,7 @@
 
 ## Current Goal
 
-Release Management Foundation
+Launch Ready
 
 ---
 
@@ -197,18 +197,27 @@ Release Management Foundation
 - OpenAI、GA4、Clarity、Search Consoleの環境変数一覧と用途を整理
 - ROADMAPをVersion1.1、Version2 AI Coach、Version3 資産形成OSの流れへ更新
 
+### Version 1.1 Launch Ready
+
+- TOP、Diagnosis、Portfolio、Dashboard、Chat、Simulator、Result、Privacy、Terms、404、Errorの主要導線を確認
+- 内部リンクを確認し、Portfolio内のDashboard戻り導線をNext Linkへ整理
+- 「TOP」表記を「ホーム」へ統一
+- root layoutの共通Headerと重複していたPageContainer内Headerを削除
+- button、aria-label、focus-visible、モバイル余白、スクロール量を公開前観点で確認
+- 未使用になった旧AppHeaderコンポーネントを削除
+
 ## Next Sprint
 
-Version 1.1 Sprint 5
+Version 1.1 Sprint 6
 
-Public Release Final Check
+Production Release
 
 予定
 
-- 公開URLでのmetadata / OGP表示確認
-- スマホ実機相当の最終表示確認
-- README / HANDOFF の公開直前確認
-- 既知の未実装範囲とMVP完了範囲の再確認
+- production環境変数設定
+- Vercel production deploy
+- Search Console sitemap送信
+- GA4 / Clarity 初回計測確認
 
 ---
 
