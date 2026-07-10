@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Script from "next/script";
+import AppFooter from "../components/layout/AppFooter";
 import { BarChart3, Bot, Gauge, Home, LayoutDashboard } from "lucide-react";
 
 const siteUrl = "https://aiassetlab.jp";
@@ -175,6 +176,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </nav>
             </header>
             {children}
+            <AppFooter />
           </div>
         </div>
       </body>

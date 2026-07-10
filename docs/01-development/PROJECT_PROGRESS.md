@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Version 1.1 Sprint 2
+### Version 1.1 Sprint 3
 
 **Status**
 
@@ -12,7 +12,7 @@
 
 ## Current Goal
 
-Analytics Foundation
+Launch Readiness
 
 ---
 
@@ -179,11 +179,21 @@ Analytics Foundation
 - Cookieバナーは追加せず、公開後の最低限の計測基盤に限定
 - HANDOFFにGA、Clarity、OpenAI、Search Consoleの環境変数一覧を追加
 
+### Version 1.1 Launch Readiness
+
+- 全体Footerに利用規約、プライバシーポリシー、お問い合わせ、Copyright、Version1.1表示を追加
+- 最低限の利用規約ページとプライバシーポリシーページを追加
+- お問い合わせ導線を `mailto:contact@aiassetlab.jp` としてFooterとLegalページへ追加
+- App Routerの500相当エラー画面を追加
+- 404ページの最低限の復帰導線を確認
+- sitemapにLegalページを追加
+- Footerをroot layout配下の共通表示へ整理
+
 ## Next Sprint
 
-Version 1.1 Sprint 3
+Version 1.1 Sprint 4
 
-Public Release Final Verification
+Public Release Final Check
 
 予定
 

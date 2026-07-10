@@ -9,6 +9,8 @@ const routes = [
   "/dashboard",
   "/chat",
   "/simulator",
+  "/terms",
+  "/privacy",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

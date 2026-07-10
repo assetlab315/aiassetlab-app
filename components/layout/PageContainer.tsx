@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import AppFooter from "./AppFooter";
 import AppHeader from "./AppHeader";
 
 type Props = {
@@ -22,7 +21,6 @@ export default function PageContainer({ children, size = "xl" }: Props) {
           {children}
         </div>
       </main>
-      <AppFooter />
     </div>
   );
 }

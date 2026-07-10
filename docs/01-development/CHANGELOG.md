@@ -2,6 +2,27 @@
 
 ## 2026-07-10
 
+### Version 1.1 Sprint 3 - Launch Readiness
+
+#### Added
+
+- 全体Footerに利用規約、プライバシーポリシー、お問い合わせ、Copyright、Version1.1表示を追加
+- 最低限の利用規約ページを追加
+- 最低限のプライバシーポリシーページを追加
+- App Routerの500相当エラー画面を追加
+
+#### Changed
+
+- sitemapに利用規約とプライバシーポリシーを追加
+- Footerをroot layout配下の共通表示へ整理
+- 404と500の最低限の復帰導線を確認
+
+#### Notes
+
+- 新機能追加は行わず、公開に必要なLegal / Contact / Error導線の準備に限定
+
+## 2026-07-10
+
 ### Version 1.1 Sprint 2 - Analytics Foundation
 
 #### Added
