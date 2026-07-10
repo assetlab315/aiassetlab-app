@@ -3,8 +3,11 @@ import ResultClient from "./ResultClient";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "診断結果",
-  description: "AI資産形成診断の結果と、次に進む行動を確認できます。",
+  title: "AI資産形成診断の結果",
+  description: "AI資産形成診断の結果から、資産登録、Dashboard、AI相談へ進む次の行動を確認できます。",
+  alternates: {
+    canonical: "/result",
+  },
   robots: {
     index: false,
     follow: true,

@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Sprint 27
+### Version 1.1 Sprint 1
 
 **Status**
 
@@ -12,7 +12,7 @@
 
 ## Current Goal
 
-AI Chat Reliability Fix
+Public Release Foundation
 
 ---
 
@@ -160,18 +160,29 @@ AI Chat Reliability Fix
 - Chat UIでfallback回答時に「現在は簡易回答です。」を小さく表示
 - HANDOFFに `OPENAI_API_KEY` と外部HTTPS通信許可の注意を追記
 
+### Version 1.1 Public Release Foundation
+
+- Version1.1の開始を記録
+- 全主要ページのmetadata title / descriptionを公開向けに整理
+- Root metadataにOG image、Twitter large image、icons、manifest設定を追加
+- favicon、icon、apple-touch-icon、OGP画像用の公開アセットを追加
+- 最低限のWeb App Manifestを追加
+- robotsは公開向けにindex/followを維持し、APIのみdisallowを確認
+- sitemapは公開導線ページを維持し、noindexの診断結果ページは除外方針を確認
+- 未使用の旧Chatモック返信ロジックを削除
+
 ## Next Sprint
 
-Sprint 28
+Version 1.1 Sprint 2
 
-Version 1.0 Launch Handoff / Documentation Finalization
+Public Release Final Verification
 
 予定
 
-- README / UI_COMPONENTS / design docs の最終確認
-- Version 1.0公開前の引き継ぎ情報整理
-- 既知の未実装範囲とMVP完了範囲の明確化
-- 必要に応じた軽微な文言整理
+- 公開URLでのmetadata / OGP表示確認
+- スマホ実機相当の最終表示確認
+- README / HANDOFF の公開直前確認
+- 既知の未実装範囲とMVP完了範囲の再確認
 
 ---
 

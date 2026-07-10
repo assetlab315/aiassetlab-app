@@ -2,6 +2,30 @@
 
 ## 2026-07-10
 
+### Version 1.1 Sprint 1 - Public Release Foundation
+
+#### Added
+
+- 最低限のWeb App Manifestを追加
+- favicon、icon、apple-touch-icon、OGP画像用の公開アセットを追加
+
+#### Changed
+
+- 全主要ページのmetadata title / descriptionを公開向けに見直し、重複しない内容へ整理
+- Root metadataにOG image、Twitter large image、icons、manifest設定を追加
+- 診断結果ページにcanonicalを追加し、個別結果ページはnoindexを維持
+- 公開向けrobotsとsitemapの方針を確認
+
+#### Removed
+
+- 未使用の旧Chatモック返信ロジックを削除
+
+#### Notes
+
+- 新機能追加は行わず、Version1.0公開品質に向けたSEO、OGP、manifest、cleanupに限定
+
+## 2026-07-10
+
 ### Sprint 27 - AI Chat Reliability Fix
 
 #### Changed

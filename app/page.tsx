@@ -2,9 +2,9 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "TOP",
+  title: "AI資産形成診断の入口",
   description:
-    "AI Asset Labの入口です。診断から資産登録、Dashboard、AI相談まで迷わず進めます。",
+    "AI Asset Labで5つの質問から資産形成の現在地を整理し、資産登録、Dashboard、AI相談へ迷わず進めます。",
   alternates: {
     canonical: "/",
   },

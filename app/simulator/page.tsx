@@ -5,8 +5,8 @@ import SimulatorClient from "../../components/simulator/SimulatorClient";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "将来のお金を計算する",
-  description: "毎月の積立額から、将来の資産額・元本・運用益を確認できます。",
+  title: "積立シミュレーター",
+  description: "毎月の積立額と運用年数から、将来の資産額、元本、運用益をかんたんに試算できます。",
   alternates: {
     canonical: "/simulator",
   },

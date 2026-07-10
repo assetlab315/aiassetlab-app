@@ -8,27 +8,42 @@ const siteUrl = "https://aiassetlab.jp";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "AI Asset Lab | AIで資産形成をシンプルに",
+    default: "AI Asset Lab | AIで資産形成の次の一歩を整理",
     template: "%s | AI Asset Lab",
   },
   description:
-    "AI Asset Labは、診断、資産登録、Dashboard、AI相談で資産形成の次の一歩を整理するサービスです。",
+    "AI Asset Labは、AI診断、資産登録、Dashboard、AI相談で資産形成の現在地と今日やることを整理するサービスです。",
   alternates: {
     canonical: "/",
   },
+  manifest: "/manifest.webmanifest",
+  icons: {
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    shortcut: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+    apple: [{ url: "/apple-touch-icon.svg", type: "image/svg+xml" }],
+  },
   openGraph: {
-    title: "AI Asset Lab",
+    title: "AI Asset Lab | AIで資産形成の次の一歩を整理",
     description:
-      "AIで、資産形成をもっとシンプルに。診断からDashboard、AI相談まで迷わず進めます。",
+      "AI診断、資産登録、Dashboard、AI相談で、今日やることを迷わず決められます。",
     url: siteUrl,
     siteName: "AI Asset Lab",
+    images: [
+      {
+        url: "/og-image.svg",
+        width: 1200,
+        height: 630,
+        alt: "AI Asset Lab",
+      },
+    ],
     locale: "ja_JP",
     type: "website",
   },
   twitter: {
-    card: "summary",
-    title: "AI Asset Lab",
-    description: "AIで、資産形成をもっとシンプルに。",
+    card: "summary_large_image",
+    title: "AI Asset Lab | AIで資産形成の次の一歩を整理",
+    description: "AI診断からDashboard、AI相談まで迷わず進めます。",
+    images: ["/og-image.svg"],
   },
   robots: {
     index: true,

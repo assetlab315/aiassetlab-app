@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "診断する",
-  description: "5つの質問で資産形成の現在地を整理し、今日の一歩を決めます。",
+  title: "AI資産形成診断",
+  description: "5つの質問で投資経験、リスク許容度、積立額を整理し、資産形成で今日やることを決めます。",
   alternates: {
     canonical: "/diagnosis",
   },
