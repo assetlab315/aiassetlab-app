@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Version 1.1 Sprint 3
+### Version 1.1 Sprint 4
 
 **Status**
 
@@ -12,7 +12,7 @@
 
 ## Current Goal
 
-Launch Readiness
+Release Management Foundation
 
 ---
 
@@ -189,9 +189,17 @@ Launch Readiness
 - sitemapにLegalページを追加
 - Footerをroot layout配下の共通表示へ整理
 
+### Version 1.1 Release Management Foundation
+
+- `docs/04-release/RELEASE_CHECKLIST.md` を追加
+- `docs/04-release/ENVIRONMENT.md` を追加
+- AI、Analytics、Domain、Legal、Release、Post Releaseの公開前チェック項目を整理
+- OpenAI、GA4、Clarity、Search Consoleの環境変数一覧と用途を整理
+- ROADMAPをVersion1.1、Version2 AI Coach、Version3 資産形成OSの流れへ更新
+
 ## Next Sprint
 
-Version 1.1 Sprint 4
+Version 1.1 Sprint 5
 
 Public Release Final Check
 

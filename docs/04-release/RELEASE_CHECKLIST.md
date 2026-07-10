@@ -1,0 +1,65 @@
+# AI Asset Lab - Release Checklist
+
+Version1.1公開前に確認する項目です。
+
+---
+
+## AI
+
+- [ ] `OPENAI_API_KEY` が本番環境に設定されている
+- [ ] OpenAI APIの課金設定と利用上限を確認している
+- [ ] AI ChatがOpenAI APIで回答することを確認している
+- [ ] OpenAI接続失敗時にfallback回答へ切り替わることを確認している
+- [ ] 本番ログにAPIキーやOpenAI response bodyが出ないことを確認している
+
+---
+
+## Analytics
+
+- [ ] `NEXT_PUBLIC_GA_MEASUREMENT_ID` が設定されている
+- [ ] GA4でアクセス計測が開始されている
+- [ ] `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` が設定されている
+- [ ] Google Search Consoleで所有権確認が完了している
+- [ ] `NEXT_PUBLIC_CLARITY_ID` が設定されている
+- [ ] Microsoft Clarityでセッション計測が開始されている
+
+---
+
+## Domain
+
+- [ ] 独自ドメインが本番環境に接続されている
+- [ ] HTTPSでアクセスできる
+- [ ] OGP画像、title、descriptionが共有時に表示される
+- [ ] favicon / icon / apple-touch-icon が表示される
+- [ ] `robots.txt` が公開向けになっている
+- [ ] `sitemap.xml` に公開ページのURL漏れがない
+
+---
+
+## Legal
+
+- [ ] Privacy Policyページを確認している
+- [ ] Termsページを確認している
+- [ ] FooterからPrivacy Policyへ移動できる
+- [ ] FooterからTermsへ移動できる
+- [ ] contactメールリンクが動作する
+
+---
+
+## Release
+
+- [ ] `npm run build` が成功している
+- [ ] release tagを作成する
+- [ ] GitHub Releaseを作成する
+- [ ] Vercel production deployを実行する
+- [ ] production URLでTOP / Dashboard / Portfolio / Chat / Diagnosisを確認する
+
+---
+
+## Post Release
+
+- [ ] GA4で初回アクセスを確認する
+- [ ] Search Consoleへsitemapを送信する
+- [ ] Clarityで初回セッションを確認する
+- [ ] 初回ユーザーとしてTOPからDiagnosis、Portfolio、Dashboard、AI Chatまで進める
+- [ ] 問い合わせ導線、Legal導線、404 / 500相当画面を確認する

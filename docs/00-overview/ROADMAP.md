@@ -1,115 +1,100 @@
 # AI Asset Lab - Roadmap
 
-## Version 1.0 (MVP)
-
-### Epic 1
-
-AI診断
-
-- AI診断画面
-- Supabase保存
-- AI Dashboard
-
-Status
-
-🟢 開発中
+AI Asset Labは、AIを活用して資産形成の現在地と次の一歩を整理するサービスです。
 
 ---
 
-### Epic 2
+## Version 1.0 - MVP
 
-Portfolio
+Status: Completed
 
-- 資産一覧
-- 資産配分
-- 推奨ポートフォリオ
+目的:
+診断、資産登録、Dashboard、AI相談を通じて、初回ユーザーが迷わず資産形成の入口に立てる状態を作る。
 
-Status
+主な範囲:
 
-⚪ 未着手
-
----
-
-### Epic 3
-
-Simulator
-
+- AI資産形成診断
+- 診断結果ページ
+- Portfolio
+- Dashboard
 - 積立シミュレーター
-- 利回りシミュレーション
-
-Status
-
-⚪ 未着手
+- AI Chat
+- Supabase保存
+- MVP Navigation
 
 ---
 
-### Epic 4
+## Version 1.1 - Public Release Foundation
 
-AI Chat
+Status: In Progress
 
-- AI相談
-- AI資産形成アドバイス
+目的:
+Version1.0を公開できる品質へ整え、公開後の運営と計測を開始できる状態にする。
 
-Status
+主な範囲:
 
-⚪ 未着手
+- Metadata / OGP / favicon / manifest
+- robots / sitemap / canonical
+- GA4 / Search Console / Microsoft Clarity
+- Privacy Policy / Terms / contact導線
+- 404 / 500相当の最低限エラー導線
+- Release Checklist
+- Environment Checklist
 
----
-
-## Version 1.1
-
-- AI分析強化
-- AIロードマップ
-- 今日のミッション
-- Dashboard改善
-
----
-
-## Version 1.2
-
-- ログイン
-- ユーザー管理
-- 資産履歴
+Version1.1では新機能追加よりも、公開準備、品質確認、運営ドキュメント整備を優先する。
 
 ---
 
-## Version 2.0
+## Version 2 - AI Coach
 
-- AI Premium
-- AIコーチ
+Status: Planned
+
+目的:
+ユーザーの資産状況と行動履歴をもとに、継続的に資産形成を支援するAI Coachへ進化させる。
+
+候補範囲:
+
+- ログイン / ユーザー管理
+- ユーザー別資産履歴
+- AI Coach
+- AIによる行動提案
+- 週次 / 月次レビュー
+- AI Chatの履歴保存
+- Premium導線の検証
+
+---
+
+## Version 3 - 資産形成OS
+
+Status: Future
+
+目的:
+AI Asset Labを、診断や相談を超えて日々の資産形成を管理するOSへ拡張する。
+
+候補範囲:
+
+- 複数口座 / 複数資産の統合管理
+- ライフイベント別の資産計画
 - AI資産分析
-- AI副業サポート
+- AI副業 / 収入アップ支援
+- 家計、投資、収入改善の統合Dashboard
+- 長期ロードマップと自動レビュー
 
 ---
 
-# 開発方針
+## Success Metrics
 
-MVP完成まで
+Version1.1で確認する指標:
 
-新機能追加より
-
-完成度を優先する。
-
----
-
-# Success Metrics
-
-MVPで計測する指標
-
+- 診断開始率
 - 診断完了率
+- Portfolio登録率
 - Dashboard閲覧率
-- Simulator利用率
-- Portfolio利用率
 - AI Chat利用率
+- Legal / contact導線の到達確認
 
 ---
 
-# Current Phase
+## Current Phase
 
-Phase
-
-MVP開発
-
-現在
-
-Epic1
+Version1.1 Public Release Foundation

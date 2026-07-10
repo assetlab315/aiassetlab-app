@@ -2,6 +2,26 @@
 
 ## 2026-07-10
 
+### Version 1.1 Sprint 4 - Release Management Foundation
+
+#### Added
+
+- `docs/04-release/RELEASE_CHECKLIST.md` を追加
+- `docs/04-release/ENVIRONMENT.md` を追加
+- AI、Analytics、Domain、Legal、Release、Post Releaseの公開前チェック項目を整理
+- 公開環境で必要な環境変数一覧と用途を整理
+
+#### Changed
+
+- ROADMAPをVersion1.1、Version2 AI Coach、Version3 資産形成OSの流れへ整理
+- PROJECT_PROGRESSにVersion1.1 Sprint4の完了内容を記録
+
+#### Notes
+
+- 新機能追加は行わず、公開前チェックリストと運営ドキュメント整備に限定
+
+## 2026-07-10
+
 ### Version 1.1 Sprint 3 - Launch Readiness
 
 #### Added
