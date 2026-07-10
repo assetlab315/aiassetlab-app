@@ -1,9 +1,13 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import Link from "next/link";
+import Script from "next/script";
 import { BarChart3, Bot, Gauge, Home, LayoutDashboard } from "lucide-react";
 
 const siteUrl = "https://aiassetlab.jp";
+const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+const clarityId = process.env.NEXT_PUBLIC_CLARITY_ID;
+const googleSiteVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -49,6 +53,13 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  ...(googleSiteVerification
+    ? {
+        verification: {
+          google: googleSiteVerification,
+        },
+      }
+    : {}),
 };
 
 const nav = [
@@ -59,10 +70,46 @@ const nav = [
   { href: "/chat", label: "AIに相談する", icon: Bot },
 ];
 
+function AnalyticsScripts() {
+  return (
+    <>
+      {gaMeasurementId ? (
+        <>
+          <Script
+            src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}
+            strategy="afterInteractive"
+          />
+          <Script id="ga4-init" strategy="afterInteractive">
+            {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){window.dataLayer.push(arguments);}
+              gtag("js", new Date());
+              gtag("config", "${gaMeasurementId}");
+            `}
+          </Script>
+        </>
+      ) : null}
+
+      {clarityId ? (
+        <Script id="microsoft-clarity" strategy="afterInteractive">
+          {`
+            (function(c,l,a,r,i,t,y){
+              c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+              t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+              y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", "${clarityId}");
+          `}
+        </Script>
+      ) : null}
+    </>
+  );
+}
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja">
       <body>
+        <AnalyticsScripts />
         <div className="min-h-screen bg-slate-50">
           <aside className="hidden border-r bg-white lg:fixed lg:inset-y-0 lg:flex lg:w-72 lg:flex-col">
             <div className="flex h-16 items-center border-b px-6">

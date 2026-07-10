@@ -63,3 +63,17 @@ AI Chat運用メモ
 ・APIキー未設定時、またはOpenAI接続失敗時は簡易回答にfallbackします。
 
 ・本番ログにはAPIキーやOpenAI response bodyを出力しないでください。
+
+---
+
+環境変数
+
+| Name | Purpose | Required |
+|------|---------|----------|
+| `OPENAI_API_KEY` | AI ChatでOpenAI APIを利用するためのサーバー側APIキー | 任意 |
+| `OPENAI_MODEL` | AI Chatで利用するOpenAIモデル名。未設定時は `gpt-4o-mini` | 任意 |
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Google Analytics 4 のMeasurement ID。未設定時はGA無効 | 任意 |
+| `NEXT_PUBLIC_CLARITY_ID` | Microsoft Clarity のProject ID。未設定時はClarity無効 | 任意 |
+| `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Google Search Console のHTMLタグverification値 | 任意 |
+
+公開環境では、OpenAI API利用時に外部HTTPS通信が許可されていることも確認してください。

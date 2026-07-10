@@ -2,6 +2,22 @@
 
 ## 2026-07-10
 
+### Version 1.1 Sprint 2 - Analytics Foundation
+
+#### Added
+
+- `NEXT_PUBLIC_GA_MEASUREMENT_ID` によるGoogle Analytics 4計測コードの出し分けを追加
+- `NEXT_PUBLIC_CLARITY_ID` によるMicrosoft Clarity計測コードの出し分けを追加
+- `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` によるGoogle Search Console verification設定を追加
+- HANDOFFにGA、Clarity、OpenAI、Search Console向けの環境変数一覧を追加
+
+#### Notes
+
+- 環境変数が未設定の場合、GA / Clarityは自動で無効
+- Cookieバナーは追加せず、Version1.1では公開後の最低限の計測基盤に限定
+
+## 2026-07-10
+
 ### Version 1.1 Sprint 1 - Public Release Foundation
 
 #### Added

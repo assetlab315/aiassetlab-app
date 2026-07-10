@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Version 1.1 Sprint 1
+### Version 1.1 Sprint 2
 
 **Status**
 
@@ -12,7 +12,7 @@
 
 ## Current Goal
 
-Public Release Foundation
+Analytics Foundation
 
 ---
 
@@ -171,9 +171,17 @@ Public Release Foundation
 - sitemapは公開導線ページを維持し、noindexの診断結果ページは除外方針を確認
 - 未使用の旧Chatモック返信ロジックを削除
 
+### Version 1.1 Analytics Foundation
+
+- `NEXT_PUBLIC_GA_MEASUREMENT_ID` が設定されている場合のみGA4計測コードを読み込む構成を追加
+- `NEXT_PUBLIC_CLARITY_ID` が設定されている場合のみMicrosoft Clarity計測コードを読み込む構成を追加
+- `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` をmetadata verificationで管理できるよう整理
+- Cookieバナーは追加せず、公開後の最低限の計測基盤に限定
+- HANDOFFにGA、Clarity、OpenAI、Search Consoleの環境変数一覧を追加
+
 ## Next Sprint
 
-Version 1.1 Sprint 2
+Version 1.1 Sprint 3
 
 Public Release Final Verification
 
