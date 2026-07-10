@@ -65,7 +65,10 @@ export async function POST(request: Request) {
       answer,
       source: "openai",
     });
-  } catch {
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error("[api/chat] error:", message);
+
     return NextResponse.json<ChatApiResponse>({
       answer:
         "一時的に回答できませんでした。資産を見る、将来のお金を計算する、AIに相談するの順で、今日できることを1つ選びましょう。",

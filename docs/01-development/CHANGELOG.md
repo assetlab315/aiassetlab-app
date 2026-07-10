@@ -1,5 +1,21 @@
 # AI Asset Lab - Changelog
 
+## 2026-07-10
+
+### Sprint 27 - AI Chat Reliability Fix
+
+#### Changed
+
+- `/api/chat` から調査用の詳細console.logを削除
+- OpenAI接続失敗時のログを最小限のerror messageに整理
+- OpenAI APIキーやresponse bodyを本番ログに出さない方針へ整理
+- AI Chatでfallback回答時に「現在は簡易回答です。」を小さく表示
+
+#### Notes
+
+- `source: "fallback"` を返す既存仕様は維持
+- `OPENAI_API_KEY` と外部HTTPS通信許可が必要なことをHANDOFFへ追記
+
 ## 2026-07-09
 
 ### Sprint 26 - Version1 Release Review

@@ -96,6 +96,7 @@ export default function ChatClient() {
   const [messages, setMessages] = useState<ChatMessage[]>(INITIAL_CHAT_MESSAGES);
   const [input, setInput] = useState("");
   const [isSending, setIsSending] = useState(false);
+  const [isFallbackAnswer, setIsFallbackAnswer] = useState(false);
   const [context, setContext] = useState<ChatUserContext>({
     totalAssets: 0,
     monthlyContribution: 0,
@@ -144,6 +145,7 @@ export default function ChatClient() {
       });
 
       const data = (await response.json()) as ChatApiResponse;
+      setIsFallbackAnswer(data.source === "fallback");
 
       setMessages((current) => [
         ...current,
@@ -155,6 +157,7 @@ export default function ChatClient() {
         },
       ]);
     } catch {
+      setIsFallbackAnswer(true);
       setMessages((current) => [
         ...current,
         {
@@ -196,6 +199,11 @@ export default function ChatClient() {
                 onChange={setInput}
                 onSend={() => sendMessage(input)}
               />
+              {isFallbackAnswer ? (
+                <p className="mt-3 text-xs font-medium text-slate-500">
+                  現在は簡易回答です。
+                </p>
+              ) : null}
             </div>
           </div>
         </section>

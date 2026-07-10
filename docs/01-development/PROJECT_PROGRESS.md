@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Sprint 26
+### Sprint 27
 
 **Status**
 
@@ -12,7 +12,7 @@
 
 ## Current Goal
 
-Version1 Release Review
+AI Chat Reliability Fix
 
 ---
 
@@ -151,9 +151,18 @@ Version1 Release Review
 - 共通Button、FeatureNavigation、資産一覧の編集/削除ボタンのフォーカスと押しやすさを改善
 - 資産一覧ボタンにaria-labelを追加し、操作対象が分かるよう改善
 
+### AI Chat Reliability Fix
+
+- `/api/chat` から調査用の詳細console.logを削除
+- OpenAI接続失敗時は最小限のerror messageのみをconsole.errorへ出力
+- OpenAI APIキーやOpenAI response bodyを本番ログに出さない方針へ整理
+- fallback回答時も `source: "fallback"` を返す既存仕様を維持
+- Chat UIでfallback回答時に「現在は簡易回答です。」を小さく表示
+- HANDOFFに `OPENAI_API_KEY` と外部HTTPS通信許可の注意を追記
+
 ## Next Sprint
 
-Sprint 27
+Sprint 28
 
 Version 1.0 Launch Handoff / Documentation Finalization
 
@@ -180,4 +189,4 @@ Version 1.0 Launch Handoff / Documentation Finalization
 
 Last Updated
 
-2026-07-09
+2026-07-10

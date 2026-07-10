@@ -51,3 +51,15 @@ PM兼テックリードとして
 MVP完成までは
 
 設計変更禁止です。
+
+---
+
+AI Chat運用メモ
+
+・OpenAI APIを利用するには `OPENAI_API_KEY` が必要です。
+
+・実行環境から `https://api.openai.com` への外部HTTPS通信が許可されている必要があります。
+
+・APIキー未設定時、またはOpenAI接続失敗時は簡易回答にfallbackします。
+
+・本番ログにはAPIキーやOpenAI response bodyを出力しないでください。
