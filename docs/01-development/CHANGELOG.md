@@ -2,6 +2,22 @@
 
 ## 2026-07-13
 
+### Deployment Step 6 - Analytics & Post-Launch Foundation
+
+#### Changed
+
+- プライバシーポリシーを本番公開中のサービス向けに更新
+- GA4 / Microsoft Clarityの読み込みをProduction環境かつ環境変数設定時のみに制限
+- GA4の初回表示、App Router遷移計測、二重page_view確認方針をRunbookへ整理
+- Clarity導入前の資産情報・AI相談内容・診断情報のマスキング方針を整理
+- Search Console URLプレフィックス方式のverificationとsitemap送信成功を記録
+- Production監視の最小構成をRelease時、Daily、Weeklyに分けて整理
+
+#### Notes
+
+- GA4 Measurement ID、Clarity Project ID、Vercel Production環境変数は設定していません
+- Productionデプロイは実行していません
+
 ### Deployment Step 3 - Production Environment & Domain Readiness
 
 #### Added

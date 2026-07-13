@@ -9,9 +9,13 @@ const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://aiassetlab.jp").re
   /\/$/,
   "",
 );
+const vercelEnv = process.env.VERCEL_ENV;
+const isProduction = vercelEnv === "production";
 const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 const clarityId = process.env.NEXT_PUBLIC_CLARITY_ID;
 const googleSiteVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
+const shouldEnableGa = isProduction && Boolean(gaMeasurementId);
+const shouldEnableClarity = isProduction && Boolean(clarityId);
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -77,7 +81,7 @@ const nav = [
 function AnalyticsScripts() {
   return (
     <>
-      {gaMeasurementId ? (
+      {shouldEnableGa ? (
         <>
           <Script
             src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}
@@ -94,7 +98,7 @@ function AnalyticsScripts() {
         </>
       ) : null}
 
-      {clarityId ? (
+      {shouldEnableClarity ? (
         <Script id="microsoft-clarity" strategy="afterInteractive">
           {`
             (function(c,l,a,r,i,t,y){

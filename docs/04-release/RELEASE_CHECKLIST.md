@@ -18,10 +18,15 @@ Version1.1公開前に確認する項目です。
 
 - [x] 初回Production公開ではGA4を未設定にする方針を確認している
 - [x] 初回Production公開ではMicrosoft Clarityを未設定にする方針を確認している
-- [ ] GA4は公開時または公開後に、Cookie・プライバシー運用を確認したうえで導入判断する
+- [x] GA4はProduction限定ガードを通して読み込む方針を確認している
+- [ ] GA4はProduction環境だけにIDを設定する
+- [ ] GA4 Enhanced Measurementのブラウザ履歴イベント設定を確認する
+- [ ] GA4 Realtime / DebugViewで初回表示とページ遷移を確認する
+- [ ] GA4で二重page_viewがないことを確認する
 - [ ] Microsoft ClarityはProduction安定確認後の別Sprintで導入判断する
-- [ ] Google Search Console verificationは独自ドメイン疎通後に設定する
-- [ ] Google Search Consoleで所有権確認が完了している
+- [ ] Clarity導入前に資産情報とAI相談内容のマスキング方針を確認する
+- [x] Google Search Console URLプレフィックス方式のverificationが完了している
+- [x] Google Search Consoleへsitemap.xmlを送信し、成功を確認している
 
 ---
 
@@ -92,8 +97,8 @@ Version1.1公開前に確認する項目です。
 
 ## Post Release
 
-- [ ] GA4で初回アクセスを確認する
-- [ ] Search Consoleへsitemapを送信する
+- [ ] GA4導入後に初回アクセスを確認する
+- [x] Search Consoleへsitemapを送信する
 - [ ] Clarityで初回セッションを確認する
 - [ ] 初回ユーザーとしてTOPからDiagnosis、Portfolio、Dashboard、AI Chatまで進める
 - [ ] 問い合わせ導線、Legal導線、404 / 500相当画面を確認する

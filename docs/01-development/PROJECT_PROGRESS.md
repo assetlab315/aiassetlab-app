@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Deployment Step 5
+### Deployment Step 6
 
 **Status**
 
@@ -12,7 +12,7 @@
 
 ## Current Goal
 
-Production Deployment & Smoke Test
+Analytics & Post-Launch Foundation
 
 ---
 
@@ -286,17 +286,31 @@ Production Deployment & Smoke Test
 - 公開を妨げる重大不具合なし
 - Production判断はGo
 
+### Deployment Step 6 - Analytics & Post-Launch Foundation
+
+- Privacy Policyから公開準備用プレースホルダー表現を削除し、本番公開中の取り扱い方針へ更新
+- GA4 / Clarityのscript読み込みをProduction環境かつ環境変数設定時のみに制限
+- GA4はProduction環境のみID設定し、Preview / Developmentには設定しない方針を整理
+- GA4のApp Router遷移計測はEnhanced Measurement確認後に判断し、今回は明示的なpage_view送信コンポーネントを追加しない方針を整理
+- Clarityは後続Sprintで導入判断し、資産情報、AI相談内容、診断情報のマスキング方針を整理
+- Search Console URLプレフィックス方式のverificationとsitemap送信成功を記録
+- Production監視をRelease時、Daily、Weeklyの最小構成に整理
+- GA4 Measurement ID、Clarity Project ID、Vercel Production環境変数は未設定
+- Productionデプロイは未実行
+
 ## Next Sprint
 
-Post Release Operations
+Post Release Analytics Setup
 
-Monitoring & Analytics Decisions
+GA4 Introduction Decision
 
 予定
 
-- OpenAI API利用枠・Billing設定の判断
-- Search Console verification
-- GA4 / Clarity導入判断
+- GA4プロパティとWeb Streamの確認
+- Vercel Production環境へのGA4 ID設定判断
+- GA4 Realtime / DebugView確認
+- App Router遷移のpage_view確認
+- Clarity導入前のマスキング設定確認
 - Production監視
 - 必要に応じたAnalytics導入Sprint
 

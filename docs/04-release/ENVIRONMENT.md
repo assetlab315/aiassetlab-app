@@ -23,7 +23,7 @@
 | `NEXT_PUBLIC_SITE_URL` | metadataBase、canonical、sitemap、robots、外部サイトリンクに利用する公開URL | 推奨 |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Google Analytics 4 のMeasurement ID。設定時のみGA4計測コードを読み込みます | 任意 |
 | `NEXT_PUBLIC_CLARITY_ID` | Microsoft Clarity のProject ID。設定時のみClarity計測コードを読み込みます | 任意 |
-| `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Google Search Console のHTMLタグverification値。metadataで所有権確認に利用します | 任意 |
+| `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Google Search Console のHTMLタグverification値。別方式で所有権確認する場合に利用します | 任意 |
 | `NEXT_PUBLIC_SUPABASE_URL` | 診断結果保存で利用するSupabase Project URL | 必須 |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | 診断結果保存で利用するSupabase anon key | 必須 |
 
@@ -36,6 +36,10 @@
 - Supabaseのservice role keyなどの秘密情報は `NEXT_PUBLIC_SUPABASE_ANON_KEY` に入れないでください。
 - 初回Production公開ではGA4 / Clarityを未設定にし、Production安定確認後に導入を判断します。
 - GA4 / Clarityは未設定時に自動で無効になります。
+- GA4 / Clarityは公開環境変数が設定され、かつProduction環境の場合のみ読み込むコードガードがあります。
+- GA4を導入する場合はVercel Production環境だけに `NEXT_PUBLIC_GA_MEASUREMENT_ID` を設定し、Preview / Developmentには設定しません。
+- Clarityを導入する場合は、資産情報やAI相談内容のマスキング方針を確認してから `NEXT_PUBLIC_CLARITY_ID` を設定します。
+- Search ConsoleはURLプレフィックスプロパティ `https://aiassetlab.jp/` で確認済みです。`https://aiassetlab.jp/sitemap.xml` は送信済みで、サイトマップ登録は成功済みです。
 - CookieバナーはVersion1.1では追加していません。
 - `NEXT_PUBLIC_SITE_URL` が未設定の場合は `https://aiassetlab.jp` を利用します。
 - Productionでは `NEXT_PUBLIC_SITE_URL=https://aiassetlab.jp` を明示設定し、非wwwをPrimary Domainにする方針です。

@@ -94,10 +94,69 @@ PreviewとProductionでは、少なくとも `NEXT_PUBLIC_SITE_URL` を環境ご
 ## Analytics and Verification Policy
 
 - 初回Production公開ではGA4とMicrosoft Clarityを未設定にします。
-- GA4は公開時または公開後に導入を判断します。Cookie・プライバシー運用を確認したうえで `NEXT_PUBLIC_GA_MEASUREMENT_ID` を設定します。
-- Microsoft ClarityはProduction安定確認後の別Sprintで導入を判断します。設定時のみ読み込まれます。
-- Google Search Console verificationは独自ドメイン疎通後に設定します。
+- GA4を最初に導入する場合は、Vercel Production環境だけに `NEXT_PUBLIC_GA_MEASUREMENT_ID` を設定します。Preview / Developmentには設定しません。
+- GA4はコード側でもProduction環境のみ読み込むガードを持ちます。
+- GA4の初回表示は `gtag("config")` で計測します。
+- App Routerのクライアント遷移は、GA4 Enhanced Measurementのブラウザ履歴イベント設定を確認します。
+- Realtime / DebugViewで初回表示とページ遷移を確認し、二重 `page_view` がないことを確認します。
+- 計測漏れがある場合のみ、専用Client Componentで明示的な `page_view` 送信を追加します。その場合は自動計測との二重計測を避けます。
+- 将来的なGA4カスタムイベント候補は、診断開始、診断完了、資産登録、Dashboard表示、AI相談開始、シミュレーター利用です。
+- Microsoft ClarityはGA4とは分離し、後続Sprintで導入判断します。Privacy Policy更新、機微情報のマスキング確認、本番導入前の限定的確認、ConsentおよびCookie運用の再確認を先に行います。
+- Clarity導入時は、AI相談内容や資産情報を無条件に録画しない方針です。
+- Google Search Console URLプレフィックスプロパティ `https://aiassetlab.jp/` は利用可能です。
+- `https://aiassetlab.jp/sitemap.xml` は送信済みです。初回は「取得できませんでした」と表示されましたが、コードやDNSを変更せず待機し、その後「成功しました」へ変更されました。サイトマップ登録は完了扱いです。
+- ドメインプロパティ追加は現段階では必須ではありません。
+- `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` は、将来HTMLタグ方式など別方式を利用する場合の任意設定です。
 - Version1.1ではCookieバナーを実装していません。計測サービスを有効化する前に、公開地域、利用目的、Privacy Policyの記載、運用判断を確認してください。
+
+### Clarity Masking Policy
+
+Clarityは導入前にマスキング方針を確認します。まずClarity管理画面側の設定を優先し、不十分な場合のみコード側で `data-clarity-mask` などの属性追加を検討します。
+
+マスキング候補:
+
+- 資産名
+- 資産金額
+- 毎月の積立額
+- 資産メモ
+- AI相談の入力内容
+- AIの回答内容
+- 診断回答
+- 診断結果
+- その他、個人の資産状況を推測できる情報
+
+---
+
+## Production Monitoring
+
+新しい外部監視サービスは追加せず、現フェーズでは以下を最小構成とします。
+
+### Release Time
+
+- Vercel Deployment status
+- Vercel Runtime Logs
+- robots.txt / sitemap.xml / manifest.webmanifest の200確認
+- 独自ドメイン、SSL、DNS
+- Production URLの主要導線
+- `/api/chat` fallback動作
+- Supabase保存・取得
+- `contact@aiassetlab.jp` の受信
+
+### Daily
+
+- Vercel Runtime Logsの重大error
+- `/api/chat` のエラーまたはfallback増加
+- Supabase関連の保存・取得エラー
+- 問い合わせメール受信
+
+### Weekly
+
+- Search Consoleのsitemap状態
+- Search Consoleのインデックス状況
+- 404傾向
+- robots.txt / sitemap.xml / manifest.webmanifest の200確認
+- GA4導入後のアクセス有無
+- Clarity導入後の異常セッション
 
 ---
 

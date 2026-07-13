@@ -15,13 +15,15 @@ export default function TermsPage() {
         <p className="text-sm font-bold text-blue-600">AI Asset Lab</p>
         <h1 className="mt-2 text-3xl font-black">利用規約</h1>
         <p className="mt-4 leading-7 text-slate-600">
-          このページは公開準備用のプレースホルダーです。正式な規約文面は公開前に確定します。
+          AI Asset Labを利用する際の基本的な条件と注意事項を定めます。本サービスを利用する方は、本規約の内容を確認したうえで利用してください。
         </p>
         <section className="mt-8 space-y-4 leading-7 text-slate-600">
           <h2 className="text-xl font-bold text-slate-900">サービスの位置づけ</h2>
-          <p>AI Asset Labは、資産形成の現在地と次の行動を整理するための情報提供サービスです。</p>
+          <p>AI Asset Labは、資産形成の現在地と次の行動を整理するための情報提供サービスです。金融商品取引、投資助言、個別銘柄の推奨を目的とするものではありません。</p>
           <h2 className="text-xl font-bold text-slate-900">免責事項</h2>
           <p>本サービスの表示内容は投資判断を保証するものではありません。最終的な判断は利用者ご自身の責任で行ってください。</p>
+          <h2 className="text-xl font-bold text-slate-900">禁止事項</h2>
+          <p>利用者は、法令に違反する行為、第三者の権利を侵害する行為、サービスの運営を妨げる行為、AI相談へ秘密情報や第三者の個人情報を入力する行為を行わないものとします。</p>
           <h2 className="text-xl font-bold text-slate-900">お問い合わせ</h2>
           <p>
             利用規約に関するお問い合わせは{" "}
