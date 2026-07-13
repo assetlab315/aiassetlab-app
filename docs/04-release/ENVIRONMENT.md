@@ -34,8 +34,11 @@
 - `NEXT_PUBLIC_` で始まる値はブラウザへ公開されます。
 - 秘密情報は `NEXT_PUBLIC_` 付きの環境変数に入れないでください。
 - Supabaseのservice role keyなどの秘密情報は `NEXT_PUBLIC_SUPABASE_ANON_KEY` に入れないでください。
+- 初回Production公開ではGA4 / Clarityを未設定にし、Production安定確認後に導入を判断します。
 - GA4 / Clarityは未設定時に自動で無効になります。
 - CookieバナーはVersion1.1では追加していません。
 - `NEXT_PUBLIC_SITE_URL` が未設定の場合は `https://aiassetlab.jp` を利用します。
 - Productionでは `NEXT_PUBLIC_SITE_URL=https://aiassetlab.jp` を明示設定し、非wwwをPrimary Domainにする方針です。
 - PreviewとProductionで `NEXT_PUBLIC_SITE_URL` が意図したURLになっているか、canonical、robots、sitemapの出力で確認してください。
+- Productionでは `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `NEXT_PUBLIC_SITE_URL` の3項目を設定済みです。
+- Production Smoke Testでは canonical、OGP、robots、sitemap が `https://aiassetlab.jp` を参照することを確認済みです。

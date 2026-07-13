@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Deployment Step 3
+### Deployment Step 5
 
 **Status**
 
@@ -12,7 +12,7 @@
 
 ## Current Goal
 
-Production Environment & Domain Readiness
+Production Deployment & Smoke Test
 
 ---
 
@@ -247,24 +247,58 @@ Production Environment & Domain Readiness
 - Production公開手順とRollback手順を `docs/04-release/PRODUCTION_RUNBOOK.md` に整理
 - Productionデプロイは未実行
 
+### Deployment Step 4 - Production Configuration & Domain Activation
+
+- 現在ブランチ、git status、最新commit、build / start scripts、Production向け環境変数一覧を確認
+- Vercel Production環境に設定する必須環境変数と、今回設定しないOpenAI / Analytics系環境変数を整理
+- `NEXT_PUBLIC_SITE_URL=https://aiassetlab.jp` と非www Primary Domain方針を再確認
+- Vercel Dashboardでの独自ドメイン、DNS検証、SSL、Production Deployment紐付け、Preview Protection確認手順を整理
+- Vercel Production環境変数 `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `NEXT_PUBLIC_SITE_URL` の設定完了を反映
+- `aiassetlab.jp` と `www.aiassetlab.jp` のValid Configuration、SSL発行完了、Vercel Authenticationブロックなしを反映
+- `https://aiassetlab.jp` と `https://www.aiassetlab.jp` の表示確認OKを反映
+- `www.aiassetlab.jp` と `www.aiassetlab.jp/privacy` から非wwwへの308 Permanent Redirectを確認
+- 現Production上では `robots.txt`, `sitemap.xml`, `manifest.webmanifest` が404のため、最新Productionデプロイ後のSmoke Testで再確認する
+- `contact@aiassetlab.jp` の作成、外部メールからの受信、返信成功を反映
+- 初回Production公開ではGA4 / Clarityを未設定にし、Search Console verificationは独自ドメイン疎通後に設定する方針へ更新
+- OpenAI APIはProductionに設定せず、Chat fallbackを初期公開仕様として維持
+- Productionデプロイ、Promote、Production Alias切り替え、commit、pushは未実行
+
+### Deployment Step 5 - Production Deployment & Smoke Test
+
+- Step5事前Git確認を実施
+- 現在ブランチが `feature/diagnosis-save` であることを確認
+- 最新commitが `e8bf63a Deployment-Step3 Production Environment and Domain Readiness` であることを確認
+- 未コミット変更がStep4 / Step5ドキュメントのみであることを確認
+- `.env` / `.env.local` がGit管理対象外であることを確認
+- Vercel CLIがCodex環境のPATHになく、`npx vercel whoami` も認証確認でタイムアウトしたため、Codex側からのProductionデプロイは未実行
+- `.vercel/project.json` がないため、Codex側で安全なVercel Project紐付けを確認できない状態
+- Production Deployment Readyを確認
+- Production対象commit `e8bf63a` を記録
+- `https://aiassetlab.jp` の正常表示、SSL正常、Vercel Authenticationブロックなしを確認
+- `www.aiassetlab.jp` から非wwwへの308 Permanent Redirectを確認
+- `robots.txt`, `sitemap.xml`, `manifest.webmanifest` が200になり、404解消を確認
+- sitemapに主要ページと `/privacy` / `/terms` が掲載されていることを確認
+- canonical、OGP、Twitter metadataが本番ドメインを参照することを確認
+- Diagnosisは5問回答から結果表示まで完走
+- Portfolioでテスト資産登録、Dashboard合計・積立反映、削除後の復帰を確認
+- Chat fallbackを初期公開仕様として確認
+- テストデータ削除済み
+- 公開を妨げる重大不具合なし
+- Production判断はGo
+
 ## Next Sprint
 
-Deployment Step 4
+Post Release Operations
 
-Production Deploy & Smoke Test
+Monitoring & Analytics Decisions
 
 予定
 
-- Vercel Production環境変数設定
-- 独自ドメインとSSL確認
-- Vercel Production deploy
-- Production URLでSmoke Test
-- canonical / OGP / sitemap / robots再確認
-- Supabase登録・削除テストとテストデータ削除
-- Chat fallback確認
-- contactメール確認
-- Search Console sitemap送信
-- GA4 / Clarity 初回計測確認
+- OpenAI API利用枠・Billing設定の判断
+- Search Console verification
+- GA4 / Clarity導入判断
+- Production監視
+- 必要に応じたAnalytics導入Sprint
 
 ---
 

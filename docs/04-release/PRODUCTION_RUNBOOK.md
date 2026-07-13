@@ -93,10 +93,116 @@ PreviewとProductionでは、少なくとも `NEXT_PUBLIC_SITE_URL` を環境ご
 
 ## Analytics and Verification Policy
 
-- GA4は公開初日から有効化を推奨します。`NEXT_PUBLIC_GA_MEASUREMENT_ID` 設定時のみ読み込まれます。
-- Microsoft Clarityは初回ユーザー行動を確認したい場合に公開初日から有効化できます。設定時のみ読み込まれます。
-- Google Search Console verificationはProductionドメイン疎通後、早めに設定します。
+- 初回Production公開ではGA4とMicrosoft Clarityを未設定にします。
+- GA4は公開時または公開後に導入を判断します。Cookie・プライバシー運用を確認したうえで `NEXT_PUBLIC_GA_MEASUREMENT_ID` を設定します。
+- Microsoft ClarityはProduction安定確認後の別Sprintで導入を判断します。設定時のみ読み込まれます。
+- Google Search Console verificationは独自ドメイン疎通後に設定します。
 - Version1.1ではCookieバナーを実装していません。計測サービスを有効化する前に、公開地域、利用目的、Privacy Policyの記載、運用判断を確認してください。
+
+---
+
+## Deployment Step 4 Manual Setup Checklist
+
+Productionデプロイ前に、Vercel / DNS / メール管理画面で人間が確認する項目です。
+
+- [x] Vercel Production環境に `NEXT_PUBLIC_SUPABASE_URL` を設定する
+- [x] Vercel Production環境に `NEXT_PUBLIC_SUPABASE_ANON_KEY` を設定する
+- [x] Vercel Production環境に `NEXT_PUBLIC_SITE_URL=https://aiassetlab.jp` を設定する
+- [ ] `OPENAI_API_KEY` と `OPENAI_MODEL` をProductionへ設定しない
+- [ ] GA4 / Clarityは未設定のままにする
+- [ ] Search Console verificationは独自ドメイン疎通後に設定する
+- [x] `aiassetlab.jp` をVercel Domainsへ追加する
+- [x] 必要に応じて `www.aiassetlab.jp` をVercel Domainsへ追加する
+- [x] `https://aiassetlab.jp` をPrimary Domainに設定する
+- [x] Vercel Dashboardに表示されたDNS設定をDNS管理画面へ反映する
+- [x] DNS検証状態を確認する
+- [x] SSL Certificate状態を確認する
+- [ ] Production Deploymentへ独自ドメインが割り当てられることを確認する
+- [x] Preview ProtectionがProductionドメインを遮断しないことを確認する
+- [ ] `contact@aiassetlab.jp` のメールボックスまたは転送先を確認する
+- [ ] 外部アドレスからテストメールを送信し、受信と返信を確認する
+
+Production環境変数を変更した後は、Production Deploymentの再デプロイが必要です。今回はProductionデプロイを実行しません。
+
+### Deployment Step 4 Result
+
+2026-07-13時点で、Vercel Production環境と独自ドメイン設定は以下の状態です。
+
+- `aiassetlab.jp`: Valid Configuration
+- `www.aiassetlab.jp`: Valid Configuration
+- SSL Certificate: 発行完了
+- `https://aiassetlab.jp`: 表示確認OK
+- `https://www.aiassetlab.jp`: 表示確認OK
+- Vercel Authenticationによるブロックなし
+- Production環境変数 `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `NEXT_PUBLIC_SITE_URL` は設定済み
+- `www.aiassetlab.jp` から `https://aiassetlab.jp` への308 Permanent Redirectを確認済み
+- `www.aiassetlab.jp/privacy` から `https://aiassetlab.jp/privacy` への308 Permanent Redirectを確認済み
+- `contact@aiassetlab.jp` は作成済み、外部メールからの受信と返信を確認済み
+
+Productionデプロイ未実行のため、現Production上では `robots.txt`, `sitemap.xml`, `manifest.webmanifest` が404です。最新commitをProductionへデプロイした後、Production Smoke Testで再確認してください。
+
+---
+
+## Deployment Step 5 Pre-Deploy Status
+
+2026-07-13時点のProductionデプロイ直前状態です。
+
+- Branch: `feature/diagnosis-save`
+- Latest committed baseline: `e8bf63a Deployment-Step3 Production Environment and Domain Readiness`
+- Uncommitted changes: Step4 / Step5 documentation only
+- Vercel CLI: Codex環境のPATHでは利用不可。`npx vercel --version` は利用可能だが、`npx vercel whoami` は認証確認でタイムアウト
+- Vercel project link: `.vercel/project.json` 未作成
+- Production deploy: 未実行
+- Production Smoke Test: 未実行
+- Current blocker before Go judgment: 最新ProductionデプロイとProduction Smoke Test
+
+Codex側で安全にProductionデプロイを実行できないため、Vercel Dashboardで次の手順を実施してください。
+
+1. GitHubにStep4 / Step5ドキュメント変更をcommit / pushする必要があるか、デプロイ対象に含める運用を確認する。
+2. Vercel Dashboardで対象Projectを開く。
+3. Deploymentsから `feature/diagnosis-save` の最新Deploymentを確認する。
+4. ProductionへPromoteする場合は、対象commit hashが意図したものか確認する。
+5. Production Branchへmerge / pushして自動Productionデプロイする場合は、merge対象と環境変数を確認する。
+6. Productionデプロイ完了後、Production Deployment URLとcommit hashを記録する。
+7. `https://aiassetlab.jp` でSmoke Testを実施する。
+
+### Deployment Step 5 Result
+
+2026-07-13時点で、ProductionデプロイとSmoke Testは完了しました。
+
+- Production Deployment: Ready
+- Production target commit: `e8bf63a`
+- Production URL: `https://aiassetlab.jp`
+- Production Deployment URL: Vercel Dashboardで確認
+- Rollback target: Production公開前の直前正常Deployment
+- `https://aiassetlab.jp`: 正常表示
+- `https://www.aiassetlab.jp` から `https://aiassetlab.jp`: 308 Permanent Redirect確認済み
+- SSL: 正常
+- Vercel Authenticationによるブロックなし
+- `robots.txt`: 200、`https://aiassetlab.jp/sitemap.xml` を参照
+- `sitemap.xml`: 200、主要ページと `/privacy` / `/terms` 掲載確認
+- `manifest.webmanifest`: 200、内容取得確認
+- Top metadata: title / description / canonical確認済み
+- canonical: `https://aiassetlab.jp`
+- OGP image: `https://aiassetlab.jp/og-image.svg`
+- Twitter metadata: `summary_large_image`
+- Diagnosis: 5問回答から結果表示まで完走
+- Portfolio: テスト資産登録・表示確認
+- Dashboard: 合計・積立反映確認
+- Portfolio削除: Portfolio / Dashboardとも元の状態へ復帰
+- Chat: fallbackを初期公開仕様として維持
+- Simulator: Preview QA済み、Production主要導線で重大問題なし
+- Test data: 削除済み
+- Major blocker: なし
+- Production judgment: Go
+
+残タスク:
+
+- OpenAI API利用枠・Billing設定
+- Search Console verification
+- GA4 / Clarity導入判断
+- Production監視
+- 必要に応じたAnalytics導入Sprint
 
 ---
 
@@ -106,7 +212,7 @@ PreviewとProductionでは、少なくとも `NEXT_PUBLIC_SITE_URL` を環境ご
 2. `NEXT_PUBLIC_SITE_URL` に `https://aiassetlab.jp` を設定する。
 3. `NEXT_PUBLIC_SUPABASE_URL` と `NEXT_PUBLIC_SUPABASE_ANON_KEY` を設定する。
 4. 初回公開では `OPENAI_API_KEY` を設定しない。
-5. GA4 / Clarity / Search Console verificationを有効化するか判断し、必要な環境変数を設定する。
+5. 初回Production公開ではGA4 / Clarityを未設定にし、Search Console verificationは独自ドメイン疎通後に設定する。
 6. Vercelで `aiassetlab.jp` と必要に応じて `www.aiassetlab.jp` を設定する。
 7. DNSとSSLの状態を確認する。
 8. `npm run build` を実行する。

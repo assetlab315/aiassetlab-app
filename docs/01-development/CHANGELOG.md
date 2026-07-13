@@ -19,6 +19,44 @@
 - Productionデプロイは実行せず、公開前の運用準備とドキュメント整備に限定
 - 秘密情報や実際の環境変数値は記載していません
 
+### Deployment Step 4 - Production Configuration & Domain Activation
+
+#### Changed
+
+- Production直前のVercel環境変数、独自ドメイン、DNS、SSL、contactメール確認手順をRunbookへ追記
+- 初回Production公開ではGA4 / Microsoft Clarityを未設定とし、計測導入は公開時または公開後に判断する方針へ更新
+- Release ChecklistにProduction環境変数設定、再デプロイ必要性、Search Console設定タイミングを追加
+- Vercel Production環境変数、独自ドメイン、DNS、SSL、Vercel Authentication解除の完了結果を反映
+- 現Production上で `robots.txt`, `sitemap.xml`, `manifest.webmanifest` が404であり、最新Productionデプロイ後に再確認する必要があることを記録
+- `www.aiassetlab.jp` から非wwwへの308 Permanent Redirect確認結果を反映
+- `contact@aiassetlab.jp` の受信・返信確認完了を反映
+
+#### Notes
+
+- Productionデプロイ、Promote、Production Alias切り替え、commit、pushは実行していません
+- 環境変数の実値、DNS認証情報、APIキーは記載していません
+- Codex環境ではVercel CLIがPATHになく、Productionデプロイ操作は未実行です
+
+### Deployment Step 5 - Production Deployment & Smoke Test
+
+#### Changed
+
+- Production Deployment ReadyとProduction対象commit `e8bf63a` を記録
+- `robots.txt`, `sitemap.xml`, `manifest.webmanifest` の404解消と200応答を確認
+- Production実URLでcanonical、OGP、Twitter metadataが本番ドメインを参照することを確認
+- Diagnosis、Portfolio、Dashboard、Chat fallback、主要導線のProduction Smoke Test完了を記録
+- テストデータ削除済みとProduction Go判断を記録
+
+#### Notes
+
+- Step5事前Git確認を実施し、未コミット変更がStep4 / Step5ドキュメントのみであることを確認
+- `.env` / `.env.local` はGit管理対象外であることを確認
+- Productionデプロイ前の現Productionでは `robots.txt`, `sitemap.xml`, `manifest.webmanifest` が404であることを再確認
+- Vercel CLIがCodex環境のPATHになく、`npx vercel whoami` も認証確認でタイムアウトしたため、Productionデプロイは未実行
+- `.vercel/project.json` がないため、Codex側からの安全なProject紐付け済みProductionデプロイは未確認
+- ProductionデプロイはVercel側で完了済み。公開を妨げる重大不具合はありません
+- 残タスクはOpenAI API利用枠・Billing、Search Console verification、GA4 / Clarity導入判断、Production監視
+
 ### Deployment Step 2 - Preview QA & Production Readiness
 
 #### Changed

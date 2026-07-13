@@ -16,38 +16,38 @@ Version1.1公開前に確認する項目です。
 
 ## Analytics
 
-- [ ] `NEXT_PUBLIC_GA_MEASUREMENT_ID` が設定されている
-- [ ] GA4でアクセス計測が開始されている
-- [ ] `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` が設定されている
+- [x] 初回Production公開ではGA4を未設定にする方針を確認している
+- [x] 初回Production公開ではMicrosoft Clarityを未設定にする方針を確認している
+- [ ] GA4は公開時または公開後に、Cookie・プライバシー運用を確認したうえで導入判断する
+- [ ] Microsoft ClarityはProduction安定確認後の別Sprintで導入判断する
+- [ ] Google Search Console verificationは独自ドメイン疎通後に設定する
 - [ ] Google Search Consoleで所有権確認が完了している
-- [ ] `NEXT_PUBLIC_CLARITY_ID` が設定されている
-- [ ] Microsoft Clarityでセッション計測が開始されている
 
 ---
 
 ## Domain
 
-- [ ] 独自ドメインが本番環境に接続されている
-- [ ] `NEXT_PUBLIC_SITE_URL` が公開URLに設定されている
-- [ ] `https://aiassetlab.jp` をPrimary Domainに設定している
-- [ ] `www.aiassetlab.jp` を追加する場合は非wwwへリダイレクトされる
-- [ ] HTTPSでアクセスできる
-- [ ] OGP画像、title、descriptionが共有時に表示される
-- [ ] favicon / icon / apple-touch-icon が表示される
-- [ ] `robots.txt` が公開向けになっている
-- [ ] `sitemap.xml` に公開ページのURL漏れがない
+- [x] 独自ドメインが本番環境に接続されている
+- [x] `NEXT_PUBLIC_SITE_URL` が公開URLに設定されている
+- [x] `https://aiassetlab.jp` をPrimary Domainに設定している
+- [x] `www.aiassetlab.jp` を追加する場合は非wwwへリダイレクトされる
+- [x] HTTPSでアクセスできる
+- [x] OGP画像、title、descriptionが共有時に表示される
+- [x] favicon / icon / apple-touch-icon が表示される
+- [x] `robots.txt` が公開向けになっている
+- [x] `sitemap.xml` に公開ページのURL漏れがない
 
 ---
 
 ## Legal
 
-- [ ] Privacy Policyページを確認している
-- [ ] Termsページを確認している
-- [ ] FooterからPrivacy Policyへ移動できる
-- [ ] FooterからTermsへ移動できる
-- [ ] contactメールリンクが動作する
-- [ ] `contact@aiassetlab.jp` が外部アドレスから受信できる
-- [ ] `contact@aiassetlab.jp` が返信元として使用できる
+- [x] Privacy Policyページを確認している
+- [x] Termsページを確認している
+- [x] FooterからPrivacy Policyへ移動できる
+- [x] FooterからTermsへ移動できる
+- [x] contactメールリンクが動作する
+- [x] `contact@aiassetlab.jp` が外部アドレスから受信できる
+- [x] `contact@aiassetlab.jp` が返信元として使用できる
 
 ---
 
@@ -55,7 +55,11 @@ Version1.1公開前に確認する項目です。
 
 - [x] `npm run build` が成功している
 - [ ] VercelのNode.jsが20系で動作する
-- [ ] Vercelに必要な環境変数を設定している
+- [x] Vercelに必要な環境変数を設定している
+- [x] Vercel Production環境に `NEXT_PUBLIC_SUPABASE_URL` を設定している
+- [x] Vercel Production環境に `NEXT_PUBLIC_SUPABASE_ANON_KEY` を設定している
+- [x] Vercel Production環境に `NEXT_PUBLIC_SITE_URL=https://aiassetlab.jp` を設定している
+- [x] Production環境変数変更後に再デプロイが必要なことを確認している
 - [x] Preview Protectionを解除する、またはQA可能な共有URLを用意する
 - [x] Shareable Preview URLでSSOに止まらずアプリ本体へ到達できる
 - [x] Vercel Preview URLでTOP / Diagnosis / Portfolio / Dashboard / Chat / Simulator / Privacy / Terms / 404をHTTP応答で確認する
@@ -66,20 +70,23 @@ Version1.1公開前に確認する項目です。
 - [x] Vercel Preview URLでDiagnosis結果遷移とChat fallback表示を確認する
 - [x] Vercel Preview URLでSimulator入力と結果表示を確認する
 - [x] Vercel Preview URLで375px前後のモバイル表示を確認する
-- [ ] Production公開前に `NEXT_PUBLIC_SITE_URL` が `https://aiassetlab.jp` であることを確認する
-- [ ] Production公開前に独自ドメイン設定を確認する
-- [ ] Production公開前に `contact@aiassetlab.jp` の受信確認を行う
+- [x] Production公開前に `NEXT_PUBLIC_SITE_URL` が `https://aiassetlab.jp` であることを確認する
+- [x] Production公開前に独自ドメイン設定を確認する
+- [x] Production公開前に `contact@aiassetlab.jp` の受信確認を行う
 - [ ] Production公開前にOpenAI API利用枠・請求設定の最終判断を行う
 - [ ] Production公開前にGA4 / Clarity / Google Search Console verificationの設定判断を行う
+- [x] Production公開前にGA4 / Clarityを未設定にする方針を確認している
+- [ ] Search Console verificationは独自ドメイン疎通後に設定する
 - [ ] Productionデプロイ後Smoke Testを実施する
 - [ ] release tagを作成する
 - [ ] GitHub Releaseを作成する
-- [ ] Vercel production deployを実行する
-- [ ] production URLでTOP / Dashboard / Portfolio / Chat / Diagnosisを確認する
-- [ ] production URLでcanonical / OGP / sitemap.xml / robots.txtを再確認する
-- [ ] production URLでSupabase登録・削除テスト後、テストデータを削除する
-- [ ] production URLでChat fallback表示を確認する
-- [ ] 重大問題時のVercel rollback手順を確認している
+- [x] Vercel production deployを実行する
+- [x] production URLでTOP / Dashboard / Portfolio / Chat / Diagnosisを確認する
+- [x] production URLでcanonical / OGP / sitemap.xml / robots.txtを再確認する
+- [x] Productionデプロイ後に `robots.txt`, `sitemap.xml`, `manifest.webmanifest` の404が解消されていることを確認する
+- [x] production URLでSupabase登録・削除テスト後、テストデータを削除する
+- [x] production URLでChat fallback表示を確認する
+- [x] 重大問題時のVercel rollback手順を確認している
 
 ---
 
