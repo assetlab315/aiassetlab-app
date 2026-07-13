@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Deployment Step 2
+### Deployment Step 3
 
 **Status**
 
@@ -12,7 +12,7 @@
 
 ## Current Goal
 
-Preview QA & Production Readiness
+Production Environment & Domain Readiness
 
 ---
 
@@ -235,17 +235,34 @@ Preview QA & Production Readiness
 - Browser Consoleで重大なerror / warningが出ないことを確認
 - Production公開判断はPreview QA観点ではGo。ただし本番環境変数、独自ドメイン、contactメール、OpenAI利用枠、Analytics設定、Production Smoke Test完了後に公開する
 
+### Deployment Step 3 - Production Environment & Domain Readiness
+
+- Production環境変数を必須、本番公開時に設定、任意に分類
+- Supabase、OpenAI、Analytics、Search Console、公開URLの参照箇所と未設定時の動作を確認
+- `NEXT_PUBLIC_SITE_URL=https://aiassetlab.jp` と非www Primary Domain方針を整理
+- Vercel独自ドメイン設定、DNS、SSL、Production Deployment紐付け、Preview Protection確認手順を整理
+- `contact@aiassetlab.jp` の受信、迷惑メール、Footer / Legal記載整合、返信元確認を公開前項目として整理
+- 初回Production公開では `OPENAI_API_KEY` を設定せず、Chat fallbackを正常仕様として扱う方針を確認
+- GA4 / Clarity / Search Console verificationの公開初日設定方針とCookieバナー未実装時の注意事項を整理
+- Production公開手順とRollback手順を `docs/04-release/PRODUCTION_RUNBOOK.md` に整理
+- Productionデプロイは未実行
+
 ## Next Sprint
 
-Deployment Step 3
+Deployment Step 4
 
-Production Smoke Test Preparation
+Production Deploy & Smoke Test
 
 予定
 
-- NEXT_PUBLIC_SITE_URLの本番URL設定、独自ドメイン、contactメール受信、OpenAI利用枠、GA4 / Clarity / Search Console verificationを確認
+- Vercel Production環境変数設定
+- 独自ドメインとSSL確認
 - Vercel Production deploy
 - Production URLでSmoke Test
+- canonical / OGP / sitemap / robots再確認
+- Supabase登録・削除テストとテストデータ削除
+- Chat fallback確認
+- contactメール確認
 - Search Console sitemap送信
 - GA4 / Clarity 初回計測確認
 

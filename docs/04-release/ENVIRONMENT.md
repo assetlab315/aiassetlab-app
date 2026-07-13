@@ -12,6 +12,7 @@
 | `OPENAI_MODEL` | AI Chatで利用するOpenAIモデル名。未設定時は `gpt-4o-mini` | 任意 |
 
 `OPENAI_API_KEY` が未設定の場合、AI Chatは簡易回答にfallbackします。設定する場合は、実行環境から `https://api.openai.com` への外部HTTPS通信が許可されていることも確認してください。
+初回Production公開では `OPENAI_API_KEY` をまだ設定せず、fallbackを正常仕様として扱います。
 
 ---
 
@@ -32,6 +33,9 @@
 
 - `NEXT_PUBLIC_` で始まる値はブラウザへ公開されます。
 - 秘密情報は `NEXT_PUBLIC_` 付きの環境変数に入れないでください。
+- Supabaseのservice role keyなどの秘密情報は `NEXT_PUBLIC_SUPABASE_ANON_KEY` に入れないでください。
 - GA4 / Clarityは未設定時に自動で無効になります。
 - CookieバナーはVersion1.1では追加していません。
 - `NEXT_PUBLIC_SITE_URL` が未設定の場合は `https://aiassetlab.jp` を利用します。
+- Productionでは `NEXT_PUBLIC_SITE_URL=https://aiassetlab.jp` を明示設定し、非wwwをPrimary Domainにする方針です。
+- PreviewとProductionで `NEXT_PUBLIC_SITE_URL` が意図したURLになっているか、canonical、robots、sitemapの出力で確認してください。

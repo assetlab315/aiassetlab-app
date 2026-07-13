@@ -6,9 +6,9 @@ Version1.1公開前に確認する項目です。
 
 ## AI
 
-- [ ] `OPENAI_API_KEY` が本番環境に設定されている
-- [ ] OpenAI APIの課金設定と利用上限を確認している
-- [ ] AI ChatがOpenAI APIで回答することを確認している
+- [x] 初回Production公開では `OPENAI_API_KEY` を設定しない方針を確認している
+- [ ] OpenAI APIを有効化する場合の課金設定と利用上限を確認している
+- [ ] OpenAI APIを有効化する場合、AI ChatがOpenAI APIで回答することを確認している
 - [ ] OpenAI接続失敗時にfallback回答へ切り替わることを確認している
 - [ ] 本番ログにAPIキーやOpenAI response bodyが出ないことを確認している
 
@@ -29,6 +29,8 @@ Version1.1公開前に確認する項目です。
 
 - [ ] 独自ドメインが本番環境に接続されている
 - [ ] `NEXT_PUBLIC_SITE_URL` が公開URLに設定されている
+- [ ] `https://aiassetlab.jp` をPrimary Domainに設定している
+- [ ] `www.aiassetlab.jp` を追加する場合は非wwwへリダイレクトされる
 - [ ] HTTPSでアクセスできる
 - [ ] OGP画像、title、descriptionが共有時に表示される
 - [ ] favicon / icon / apple-touch-icon が表示される
@@ -44,6 +46,8 @@ Version1.1公開前に確認する項目です。
 - [ ] FooterからPrivacy Policyへ移動できる
 - [ ] FooterからTermsへ移動できる
 - [ ] contactメールリンクが動作する
+- [ ] `contact@aiassetlab.jp` が外部アドレスから受信できる
+- [ ] `contact@aiassetlab.jp` が返信元として使用できる
 
 ---
 
@@ -72,6 +76,10 @@ Version1.1公開前に確認する項目です。
 - [ ] GitHub Releaseを作成する
 - [ ] Vercel production deployを実行する
 - [ ] production URLでTOP / Dashboard / Portfolio / Chat / Diagnosisを確認する
+- [ ] production URLでcanonical / OGP / sitemap.xml / robots.txtを再確認する
+- [ ] production URLでSupabase登録・削除テスト後、テストデータを削除する
+- [ ] production URLでChat fallback表示を確認する
+- [ ] 重大問題時のVercel rollback手順を確認している
 
 ---
 

@@ -2,6 +2,23 @@
 
 ## 2026-07-13
 
+### Deployment Step 3 - Production Environment & Domain Readiness
+
+#### Added
+
+- `docs/04-release/PRODUCTION_RUNBOOK.md` を追加
+- Production環境変数、独自ドメイン、contactメール、OpenAI fallback、Analytics、Production公開手順、Rollback手順を整理
+
+#### Changed
+
+- Environment Guideに初回Production公開時の `OPENAI_API_KEY` 未設定方針と非www Primary Domain方針を追記
+- Release ChecklistにProductionドメイン、contactメール、Production Smoke Test、Rollback確認項目を追加
+
+#### Notes
+
+- Productionデプロイは実行せず、公開前の運用準備とドキュメント整備に限定
+- 秘密情報や実際の環境変数値は記載していません
+
 ### Deployment Step 2 - Preview QA & Production Readiness
 
 #### Changed
