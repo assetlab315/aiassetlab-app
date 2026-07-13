@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Deployment Step 1
+### Deployment Step 2
 
 **Status**
 
@@ -12,7 +12,7 @@
 
 ## Current Goal
 
-Vercel Preview Readiness
+Preview QA & Production Readiness
 
 ---
 
@@ -216,16 +216,36 @@ Vercel Preview Readiness
 - サーバー専用のOpenAI環境変数と `NEXT_PUBLIC_*` の分離を確認
 - Release ChecklistとEnvironment GuideにVercel Preview前の環境変数確認項目を追記
 
+### Deployment Step 2 - Preview QA & Production Readiness
+
+- `npm run build` が成功することを確認
+- ビルド成果物でTOP、Diagnosis、Portfolio、Dashboard、Chat、Simulator、Privacy、Terms、404の生成を確認
+- `sitemap.xml`、`robots.txt`、`manifest.webmanifest` の生成を確認
+- metadata / OGP / canonical がビルド成果物へ出力されることを確認
+- Shareable Preview URLでVercel SSOに止まらずアプリ本体へ到達できることを確認
+- Shareable Preview URL上でTOP、Diagnosis、Portfolio、Dashboard、Chat、Simulator、Privacy、Terms、404、sitemap.xml、robots.txt、manifest.webmanifestのHTTP応答を確認
+- Chat APIがPreview環境で `source: "fallback"` を200で返すことを確認
+- canonical、robots、sitemapは `https://aiassetlab.jp` を出力し、OG imageはPreview URL配下の `og-image.svg` を出力することを確認
+- 実ブラウザで主要ページ、404、ヘッダー、フッター、内部リンク、横スクロール有無を確認
+- 375px相当のモバイル表示で主要ページの横スクロールなしを確認
+- Diagnosisを最初から実行し、`/result?id=...` への遷移、結果表示、次アクション導線を確認
+- Portfolioにテスト資産を登録し、Dashboardの合計・積立額へ反映されることを確認後、テスト資産を削除
+- Chatでメッセージ送信後、fallback回答と「現在は簡易回答です。」の表示を確認
+- Simulatorで入力値変更、計算結果表示、空/不正値での重大な崩れなしを確認
+- Browser Consoleで重大なerror / warningが出ないことを確認
+- Production公開判断はPreview QA観点ではGo。ただし本番環境変数、独自ドメイン、contactメール、OpenAI利用枠、Analytics設定、Production Smoke Test完了後に公開する
+
 ## Next Sprint
 
-Version 1.1 Sprint 6
+Deployment Step 3
 
-Production Release
+Production Smoke Test Preparation
 
 予定
 
-- production環境変数設定
-- Vercel production deploy
+- NEXT_PUBLIC_SITE_URLの本番URL設定、独自ドメイン、contactメール受信、OpenAI利用枠、GA4 / Clarity / Search Console verificationを確認
+- Vercel Production deploy
+- Production URLでSmoke Test
 - Search Console sitemap送信
 - GA4 / Clarity 初回計測確認
 
@@ -245,4 +265,4 @@ Production Release
 
 Last Updated
 
-2026-07-10
+2026-07-13

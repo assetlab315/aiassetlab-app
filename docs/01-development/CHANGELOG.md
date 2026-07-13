@@ -1,5 +1,24 @@
 # AI Asset Lab - Changelog
 
+## 2026-07-13
+
+### Deployment Step 2 - Preview QA & Production Readiness
+
+#### Changed
+
+- Vercel Preview QAで確認する対象ページと挙動をRelease Checklistへ追加
+- Shareable Preview URLでVercel SSOに止まらずアプリ本体へ到達できることを確認
+- Shareable Preview URL上で主要ページ、404、sitemap.xml、robots.txt、manifest.webmanifest、metadata / OGP / canonicalの実出力を確認
+- Chat APIがPreview環境でfallback回答を200で返すことを確認
+- 実ブラウザでDiagnosis、Portfolio登録・削除、Dashboard反映、Chat fallback、Simulator、375px相当のモバイル表示を確認
+- Production公開前の残タスクとして本番URL、独自ドメイン、contactメール、OpenAI、Analytics、Production Smoke Testを整理
+
+#### Notes
+
+- 新機能追加は行わず、公開前QAとProduction Readiness判断に限定
+- Shareable Preview URLで公開前Preview QAは完了
+- Production公開は本番環境変数と独自ドメイン等の運用設定確認後に進める
+
 ## 2026-07-10
 
 ### Deployment Step 1 - Vercel Preview Readiness

@@ -49,9 +49,25 @@ Version1.1公開前に確認する項目です。
 
 ## Release
 
-- [ ] `npm run build` が成功している
+- [x] `npm run build` が成功している
 - [ ] VercelのNode.jsが20系で動作する
 - [ ] Vercelに必要な環境変数を設定している
+- [x] Preview Protectionを解除する、またはQA可能な共有URLを用意する
+- [x] Shareable Preview URLでSSOに止まらずアプリ本体へ到達できる
+- [x] Vercel Preview URLでTOP / Diagnosis / Portfolio / Dashboard / Chat / Simulator / Privacy / Terms / 404をHTTP応答で確認する
+- [x] Vercel Preview URLでsitemap.xml / robots.txt / manifest.webmanifestを確認する
+- [x] Vercel Preview URLでChat fallback APIが200で返ることを確認する
+- [x] Vercel Preview URLでConsole errorとNetwork errorを確認する
+- [x] Vercel Preview URLでPortfolio登録・削除・Dashboard反映を確認する
+- [x] Vercel Preview URLでDiagnosis結果遷移とChat fallback表示を確認する
+- [x] Vercel Preview URLでSimulator入力と結果表示を確認する
+- [x] Vercel Preview URLで375px前後のモバイル表示を確認する
+- [ ] Production公開前に `NEXT_PUBLIC_SITE_URL` が `https://aiassetlab.jp` であることを確認する
+- [ ] Production公開前に独自ドメイン設定を確認する
+- [ ] Production公開前に `contact@aiassetlab.jp` の受信確認を行う
+- [ ] Production公開前にOpenAI API利用枠・請求設定の最終判断を行う
+- [ ] Production公開前にGA4 / Clarity / Google Search Console verificationの設定判断を行う
+- [ ] Productionデプロイ後Smoke Testを実施する
 - [ ] release tagを作成する
 - [ ] GitHub Releaseを作成する
 - [ ] Vercel production deployを実行する
