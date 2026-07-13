@@ -2,6 +2,22 @@
 
 ## 2026-07-10
 
+### Deployment Step 1 - Vercel Preview Readiness
+
+#### Changed
+
+- `NEXT_PUBLIC_SITE_URL` でmetadataBase、canonical、sitemap、robots、外部サイトリンクのURLを切り替えられるように整理
+- Vercel向けにNode.js 20以上のengines指定を追加
+- Release ChecklistにVercel環境変数、Node.js、公開URL確認項目を追加
+- Environment GuideにVercelで必要な環境変数一覧を追記
+
+#### Notes
+
+- APIキーの値は表示・保存・コミットせず、未設定でもbuild可能な設計を維持
+- 本番公開は行わず、Vercel Preview Readiness確認に限定
+
+## 2026-07-10
+
 ### Version 1.1 Sprint 5 - Launch Ready
 
 #### Changed

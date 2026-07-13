@@ -28,6 +28,7 @@ Version1.1公開前に確認する項目です。
 ## Domain
 
 - [ ] 独自ドメインが本番環境に接続されている
+- [ ] `NEXT_PUBLIC_SITE_URL` が公開URLに設定されている
 - [ ] HTTPSでアクセスできる
 - [ ] OGP画像、title、descriptionが共有時に表示される
 - [ ] favicon / icon / apple-touch-icon が表示される
@@ -49,6 +50,8 @@ Version1.1公開前に確認する項目です。
 ## Release
 
 - [ ] `npm run build` が成功している
+- [ ] VercelのNode.jsが20系で動作する
+- [ ] Vercelに必要な環境変数を設定している
 - [ ] release tagを作成する
 - [ ] GitHub Releaseを作成する
 - [ ] Vercel production deployを実行する

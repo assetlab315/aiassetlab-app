@@ -5,7 +5,10 @@ import Script from "next/script";
 import AppFooter from "../components/layout/AppFooter";
 import { BarChart3, Bot, Gauge, Home, LayoutDashboard } from "lucide-react";
 
-const siteUrl = "https://aiassetlab.jp";
+const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://aiassetlab.jp").replace(
+  /\/$/,
+  "",
+);
 const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 const clarityId = process.env.NEXT_PUBLIC_CLARITY_ID;
 const googleSiteVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
@@ -157,7 +160,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <p className="text-sm font-bold text-slate-500">AIで、資産形成をもっとシンプルに。</p>
                 </div>
                 <a
-                  href="https://aiassetlab.jp"
+                  href={siteUrl}
                   className="rounded-xl border px-4 py-2 text-sm font-bold hover:bg-slate-50 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-100"
                 >
                   Webサイトへ

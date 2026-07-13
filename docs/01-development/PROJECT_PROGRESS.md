@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Version 1.1 Sprint 5
+### Deployment Step 1
 
 **Status**
 
@@ -12,7 +12,7 @@
 
 ## Current Goal
 
-Launch Ready
+Vercel Preview Readiness
 
 ---
 
@@ -205,6 +205,16 @@ Launch Ready
 - root layoutの共通Headerと重複していたPageContainer内Headerを削除
 - button、aria-label、focus-visible、モバイル余白、スクロール量を公開前観点で確認
 - 未使用になった旧AppHeaderコンポーネントを削除
+
+### Deployment Step 1 - Vercel Preview Readiness
+
+- package.jsonのbuild / start scriptsを確認
+- Next.js設定がVercel標準で動作することを確認
+- Node.js 20以上のengines指定を追加
+- `.env.local` がgitignoreされていることを確認
+- `NEXT_PUBLIC_SITE_URL` でmetadataBase、canonical、sitemap、robots、外部サイトリンクのURLを切り替えられるように整理
+- サーバー専用のOpenAI環境変数と `NEXT_PUBLIC_*` の分離を確認
+- Release ChecklistとEnvironment GuideにVercel Preview前の環境変数確認項目を追記
 
 ## Next Sprint
 
