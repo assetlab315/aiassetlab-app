@@ -1,5 +1,26 @@
 # AI Asset Lab - Changelog
 
+## 2026-07-14
+
+### Deployment Step 7-A - Chat Safety & Cost Controls
+
+#### Changed
+
+- Chat APIでmessage / history / portfolio文脈をサーバー側で検証し、過大な入力をOpenAIへ送らないように制限
+- Chat Completions API requestに `max_tokens: 500` を追加
+- OpenAI fetchに15秒timeoutを追加し、timeout時はfallback回答へ切り替え
+- OpenAI non-OK、timeout、invalid JSON、malformed responseを安全な分類ログへ整理
+- OpenAI responseに有効な回答がない場合も `source: "fallback"` を返すように修正
+- IP単位のbest-effort in-memory rate limitを追加
+- Chat UIで1,000文字超過、rate limit、連続送信抑止、AI回答の注意表示を追加
+- Privacy Policyに外部AIサービス利用時の送信情報と機密情報入力禁止を明記
+- Runbook / Environment / Release Checklist / HANDOFFへStep7-Aの安全対策と残タスクを反映
+
+#### Notes
+
+- OpenAI Billing、APIキー作成、Vercel環境変数設定、Productionデプロイは実行していません
+- in-memory rate limitはServerless複数インスタンス間では完全共有されないため、OpenAI側Budget / Usage Limitとの併用が必須
+
 ## 2026-07-13
 
 ### Deployment Step 6 - Analytics & Post-Launch Foundation

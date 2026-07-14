@@ -13,6 +13,7 @@
 
 `OPENAI_API_KEY` が未設定の場合、AI Chatは簡易回答にfallbackします。設定する場合は、実行環境から `https://api.openai.com` への外部HTTPS通信が許可されていることも確認してください。
 初回Production公開では `OPENAI_API_KEY` をまだ設定せず、fallbackを正常仕様として扱います。
+Productionで正式なAI回答を有効化する前に、OpenAI Billing、低い月額Budget、Usage Alert、APIキー管理、Production再デプロイ手順を確認してください。APIキー値はGit、ドキュメント、ログへ記録しません。
 
 ---
 
@@ -48,3 +49,5 @@
 - PreviewとProductionで `NEXT_PUBLIC_SITE_URL` が意図したURLになっているか、canonical、robots、sitemapの出力で確認してください。
 - Productionでは `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `NEXT_PUBLIC_SITE_URL` の3項目を設定済みです。
 - Production Smoke Testでは canonical、OGP、robots、sitemap が `https://aiassetlab.jp` を参照することを確認済みです。
+- Chat APIはAPIキー設定前の安全対策として、message 1,000文字制限、history最大6件、portfolio最大8件、OpenAI出力上限、15秒timeout、best-effort rate limitを持ちます。
+- Chat APIのrate limitはin-memoryのbest-effortです。Vercel Serverlessの複数インスタンス間では完全共有されないため、OpenAI側Budget / Usage Limitと併用してください。

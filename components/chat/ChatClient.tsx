@@ -19,6 +19,7 @@ const STORAGE_KEYS = [
   "aiAssetLabPortfolioAssets",
   "portfolioAssets",
 ];
+const MAX_CHAT_MESSAGE_LENGTH = 1000;
 
 function createId() {
   return `${Date.now()}-${Math.random().toString(36).slice(2)}`;
@@ -97,6 +98,7 @@ export default function ChatClient() {
   const [input, setInput] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [isFallbackAnswer, setIsFallbackAnswer] = useState(false);
+  const [noticeMessage, setNoticeMessage] = useState("");
   const [context, setContext] = useState<ChatUserContext>({
     totalAssets: 0,
     monthlyContribution: 0,
@@ -104,6 +106,7 @@ export default function ChatClient() {
     assets: [],
   });
   const bottomRef = useRef<HTMLDivElement | null>(null);
+  const isSendingRef = useRef(false);
 
   useEffect(() => {
     setContext(readPortfolioContext());
@@ -113,11 +116,24 @@ export default function ChatClient() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isSending]);
 
-  const canSend = useMemo(() => input.trim().length > 0 && !isSending, [input, isSending]);
+  const inputLength = input.trim().length;
+  const inputError =
+    inputLength > MAX_CHAT_MESSAGE_LENGTH
+      ? "相談内容は1,000文字以内で入力してください。"
+      : "";
+  const canSend = useMemo(
+    () => inputLength > 0 && !inputError && !isSending,
+    [inputError, inputLength, isSending],
+  );
 
   const sendMessage = async (text: string) => {
     const trimmed = text.trim();
-    if (!trimmed || isSending) return;
+    if (!trimmed || trimmed.length > MAX_CHAT_MESSAGE_LENGTH || isSendingRef.current) {
+      if (trimmed.length > MAX_CHAT_MESSAGE_LENGTH) {
+        setNoticeMessage("相談内容は1,000文字以内で入力してください。");
+      }
+      return;
+    }
 
     const userMessage: ChatMessage = {
       id: createId(),
@@ -127,9 +143,11 @@ export default function ChatClient() {
     };
 
     const nextMessages = [...messages, userMessage];
+    isSendingRef.current = true;
     setMessages(nextMessages);
     setInput("");
     setIsSending(true);
+    setNoticeMessage("");
 
     try {
       const response = await fetch("/api/chat", {
@@ -145,7 +163,8 @@ export default function ChatClient() {
       });
 
       const data = (await response.json()) as ChatApiResponse;
-      setIsFallbackAnswer(data.source === "fallback");
+      setIsFallbackAnswer(data.source === "fallback" && data.status !== "rate_limited");
+      setNoticeMessage(data.status === "rate_limited" ? data.answer : "");
 
       setMessages((current) => [
         ...current,
@@ -158,6 +177,7 @@ export default function ChatClient() {
       ]);
     } catch {
       setIsFallbackAnswer(true);
+      setNoticeMessage("");
       setMessages((current) => [
         ...current,
         {
@@ -169,6 +189,7 @@ export default function ChatClient() {
         },
       ]);
     } finally {
+      isSendingRef.current = false;
       setIsSending(false);
     }
   };
@@ -185,6 +206,9 @@ export default function ChatClient() {
             <p className="mt-3 leading-7 text-slate-600">
               登録した資産状況を踏まえて、次に確認することを短く整理します。
             </p>
+            <p className="mt-3 rounded-2xl bg-slate-50 px-4 py-3 text-xs leading-6 text-slate-500">
+              AIの回答は参考情報です。投資助言や利益保証ではありません。パスワード、秘密鍵、カード番号などは入力しないでください。
+            </p>
           </div>
 
           <div className="flex h-[68vh] min-h-[560px] flex-col lg:h-[620px]">
@@ -199,6 +223,12 @@ export default function ChatClient() {
                 onChange={setInput}
                 onSend={() => sendMessage(input)}
               />
+              {inputError ? (
+                <p className="mt-3 text-xs font-medium text-red-600">{inputError}</p>
+              ) : null}
+              {noticeMessage ? (
+                <p className="mt-3 text-xs font-medium text-slate-600">{noticeMessage}</p>
+              ) : null}
               {isFallbackAnswer ? (
                 <p className="mt-3 text-xs font-medium text-slate-500">
                   現在は簡易回答です。

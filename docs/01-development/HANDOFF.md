@@ -64,6 +64,12 @@ AI Chat運用メモ
 
 ・本番ログにはAPIキーやOpenAI response bodyを出力しないでください。
 
+・Chat APIはAPIキー設定前の安全対策として、message 1,000文字制限、history最大6件、portfolio最大8件、出力token上限、15秒timeout、best-effort rate limitを持ちます。
+
+・rate limitはin-memoryのbest-effortです。Vercel Serverlessの複数インスタンス間では完全共有されないため、OpenAI側Budget / Usage Limit / Usage Alertと併用してください。
+
+・OpenAI APIをProductionで有効化する前に、Billing、低い月額Budget、Usage Alert、Production API key、Vercel Production環境変数、Production再デプロイ、Smoke Testを確認してください。
+
 ---
 
 環境変数

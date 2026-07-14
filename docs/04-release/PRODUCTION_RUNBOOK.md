@@ -78,13 +78,31 @@ PreviewとProductionでは、少なくとも `NEXT_PUBLIC_SITE_URL` を環境ご
 - fallback時も `source: "fallback"` を返す
 - Chat UIはfallback時に「現在は簡易回答です。」を表示する
 - catch時のログは最小限のerror messageのみで、APIキーやOpenAI response bodyを出さない
+- messageは最大1,000文字、historyは最大6件、portfolio文脈は最大8件に制限する
+- OpenAI Chat Completions APIの出力は `max_tokens: 500` に制限する
+- OpenAI通信は15秒でtimeoutし、timeout時はfallback回答へ切り替える
+- OpenAI non-OK、timeout、invalid JSON、malformed responseは安全な分類ログのみを残し、本文・資産情報・APIキーはログへ出さない
+- OpenAI responseに有効な回答がない場合は `source: "fallback"` を返す
+- Chat APIは10分10回のIP単位best-effort in-memory rate limitを持つ
+
+Rate limitの制約:
+
+- 現在のrate limitはmodule scopeのMapを使うbest-effort実装です。
+- Vercel Serverlessでは複数インスタンス間でMapが完全共有されないため、完全な濫用防止ではありません。
+- Mapは古いentryの削除と最大件数制限でメモリ肥大化を抑えます。
+- OpenAI APIを有効化する場合は、OpenAI Platform側のBudget / Usage Limit / Usage Alertと併用してください。
+- 利用増加時は永続ストア型rate limitの導入を検討します。
 
 正式なAI回答を有効化する前の残タスク:
 
 - OpenAI API利用枠の確認
 - Billing設定
-- 利用上限設定
+- 低い月額BudgetとUsage Alert設定
+- Production API key作成
+- Vercel Production環境変数 `OPENAI_API_KEY` 設定
 - `OPENAI_MODEL` の最終判断
+- Production再デプロイ
+- 本来AI応答のSmoke Test
 - エラー監視
 - APIコスト監視
 - OpenAI障害時もfallbackが継続することの確認

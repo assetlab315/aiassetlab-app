@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Deployment Step 6
+### Deployment Step 7-A
 
 **Status**
 
@@ -12,7 +12,7 @@
 
 ## Current Goal
 
-Analytics & Post-Launch Foundation
+Chat Safety & Cost Controls
 
 ---
 
@@ -302,15 +302,35 @@ Analytics & Post-Launch Foundation
 - Clarity Project IDは未設定で、Clarity計測は未開始
 - Deployment Step6は正式完了
 
+### Deployment Step 7-A - Chat Safety & Cost Controls
+
+- OpenAI Billing / Production APIキー設定前の最低限の安全対策を実装
+- Chat APIでmessageを最大1,000文字に制限し、historyは最大6件、各content最大1,000文字、roleはuser / assistantのみ許可
+- portfolio文脈は最大8件に制限し、文字列フィールドを切り詰め、金額は有限の非負数のみ利用
+- 過大なpayload、1,000文字超過、rate limit超過時はOpenAIを呼ばず、既存UIと整合するfallback系応答を返す
+- Chat Completions API requestに `max_tokens: 500` を追加
+- OpenAI fetchに15秒timeoutを追加し、timerを確実に解除
+- OpenAI non-OK、timeout、invalid JSON、malformed responseを安全な分類ログへ整理し、本文・資産情報・APIキーはログへ出さない
+- OpenAI responseに有効な回答がない場合も `source: "fallback"` を保証
+- 10分10回のIP単位best-effort in-memory rate limitを追加
+- Chat UIで1,000文字超過表示、rate limit表示、連続送信抑止、AI回答の注意表示を追加
+- Privacy Policyに外部AIサービス利用時の送信情報と機密情報入力禁止を明記
+- OpenAI Billing、APIキー作成、Vercel Production環境変数設定、Productionデプロイは未実行
+
 ## Next Sprint
 
-Production AI Response Preparation
+OpenAI Production Setup
 
 OpenAI API Billing / Production AI Response
 
 予定
 
 - OpenAI API利用枠とBilling設定の最終判断
+- 低い月額BudgetとUsage Alertの設定
+- Production API key作成
+- Vercel Production環境変数 `OPENAI_API_KEY` / 必要に応じて `OPENAI_MODEL` 設定
+- Production再デプロイ
+- Chatの本来AI応答Smoke Test
 - Production環境での正式AI回答有効化方針
 - OpenAI API有効化後のfallback継続確認
 - Clarity導入前のマスキング設定確認

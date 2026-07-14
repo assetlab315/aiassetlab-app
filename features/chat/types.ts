@@ -30,4 +30,5 @@ export type ChatApiRequest = {
 export type ChatApiResponse = {
   answer: string;
   source: "openai" | "fallback";
+  status?: "ok" | "fallback" | "rate_limited" | "validation_error";
 };

@@ -7,7 +7,17 @@ Version1.1公開前に確認する項目です。
 ## AI
 
 - [x] 初回Production公開では `OPENAI_API_KEY` を設定しない方針を確認している
+- [x] APIキー設定前にChat APIの入力制限、出力上限、timeout、fallback整合性を実装している
+- [x] APIキー設定前にbest-effort rate limitを実装している
+- [x] Chat画面にAI回答は参考情報であり機密情報を入力しない旨を表示している
+- [x] Privacy Policyに外部AIサービス利用時の送信情報と機密情報入力禁止を明記している
+- [x] rate limitはServerless複数インスタンス間で完全共有されない制約をRunbookに記録している
 - [ ] OpenAI APIを有効化する場合の課金設定と利用上限を確認している
+- [ ] OpenAI Platformで低い月額BudgetとUsage Alertを設定している
+- [ ] Production用OpenAI API keyを作成している
+- [ ] Vercel Production環境に `OPENAI_API_KEY` を設定している
+- [ ] Vercel Production環境に必要に応じて `OPENAI_MODEL` を設定している
+- [ ] OpenAI環境変数設定後にProduction再デプロイを実施している
 - [ ] OpenAI APIを有効化する場合、AI ChatがOpenAI APIで回答することを確認している
 - [ ] OpenAI接続失敗時にfallback回答へ切り替わることを確認している
 - [ ] 本番ログにAPIキーやOpenAI response bodyが出ないことを確認している
