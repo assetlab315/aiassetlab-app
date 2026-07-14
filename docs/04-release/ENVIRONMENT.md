@@ -34,10 +34,12 @@
 - `NEXT_PUBLIC_` で始まる値はブラウザへ公開されます。
 - 秘密情報は `NEXT_PUBLIC_` 付きの環境変数に入れないでください。
 - Supabaseのservice role keyなどの秘密情報は `NEXT_PUBLIC_SUPABASE_ANON_KEY` に入れないでください。
-- 初回Production公開ではGA4 / Clarityを未設定にし、Production安定確認後に導入を判断します。
+- `NEXT_PUBLIC_GA_MEASUREMENT_ID` は公開環境変数であり秘密鍵ではありませんが、計測混入を避けるためProduction環境だけに設定します。
+- Productionでは `NEXT_PUBLIC_GA_MEASUREMENT_ID=G-BB1DMLMD15` を設定済みです。Preview / Developmentには設定していません。
+- `NEXT_PUBLIC_CLARITY_ID` は未設定で、Clarity計測は開始していません。
 - GA4 / Clarityは未設定時に自動で無効になります。
-- GA4 / Clarityは公開環境変数が設定され、かつProduction環境の場合のみ読み込むコードガードがあります。
-- GA4を導入する場合はVercel Production環境だけに `NEXT_PUBLIC_GA_MEASUREMENT_ID` を設定し、Preview / Developmentには設定しません。
+- GA4 / Clarityは公開環境変数が設定され、かつ `VERCEL_ENV=production` の場合のみ読み込むコードガードがあります。
+- 環境変数変更後はProduction再デプロイが必要です。
 - Clarityを導入する場合は、資産情報やAI相談内容のマスキング方針を確認してから `NEXT_PUBLIC_CLARITY_ID` を設定します。
 - Search ConsoleはURLプレフィックスプロパティ `https://aiassetlab.jp/` で確認済みです。`https://aiassetlab.jp/sitemap.xml` は送信済みで、サイトマップ登録は成功済みです。
 - CookieバナーはVersion1.1では追加していません。

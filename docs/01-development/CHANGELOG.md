@@ -12,11 +12,14 @@
 - Clarity導入前の資産情報・AI相談内容・診断情報のマスキング方針を整理
 - Search Console URLプレフィックス方式のverificationとsitemap送信成功を記録
 - Production監視の最小構成をRelease時、Daily、Weeklyに分けて整理
+- 既存GA4プロパティ「AI Asset Lab」のWeb Streamを利用し、Production限定で `NEXT_PUBLIC_GA_MEASUREMENT_ID=G-BB1DMLMD15` を設定
+- Production再デプロイ後、GA4 Realtimeで初回ページビューとApp Router遷移後のDashboard page_viewを確認
+- 今回の確認範囲では二重page_viewは発生していないため、明示的なpage_view送信コンポーネントは未追加
 
 #### Notes
 
-- GA4 Measurement ID、Clarity Project ID、Vercel Production環境変数は設定していません
-- Productionデプロイは実行していません
+- GA4 Production計測は正常稼働として完了扱い
+- Clarity Project IDは未設定で、Clarity計測は未開始
 
 ### Deployment Step 3 - Production Environment & Domain Readiness
 

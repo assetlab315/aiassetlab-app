@@ -93,13 +93,16 @@ PreviewとProductionでは、少なくとも `NEXT_PUBLIC_SITE_URL` を環境ご
 
 ## Analytics and Verification Policy
 
-- 初回Production公開ではGA4とMicrosoft Clarityを未設定にします。
-- GA4を最初に導入する場合は、Vercel Production環境だけに `NEXT_PUBLIC_GA_MEASUREMENT_ID` を設定します。Preview / Developmentには設定しません。
+- GA4は既存プロパティ「AI Asset Lab」と既存Web Streamを利用します。
+- GA4 Web Stream URLは `https://aiassetlab.jp`、Stream IDは `15218177688`、Measurement IDは `G-BB1DMLMD15` です。
+- GA4 Enhanced Measurementとページビュー計測は有効です。
+- Vercel Production環境だけに `NEXT_PUBLIC_GA_MEASUREMENT_ID` を設定します。Preview / Developmentには設定しません。
 - GA4はコード側でもProduction環境のみ読み込むガードを持ちます。
-- GA4の初回表示は `gtag("config")` で計測します。
-- App Routerのクライアント遷移は、GA4 Enhanced Measurementのブラウザ履歴イベント設定を確認します。
-- Realtime / DebugViewで初回表示とページ遷移を確認し、二重 `page_view` がないことを確認します。
-- 計測漏れがある場合のみ、専用Client Componentで明示的な `page_view` 送信を追加します。その場合は自動計測との二重計測を避けます。
+- GA4 Measurement ID設定後はProduction再デプロイを行います。
+- Production再デプロイ後、Realtimeで初回ページ `AI資産形成診断の入口` のpage_viewを確認済みです。
+- App Routerのクライアント遷移後、`資産形成Dashboard` が別のpage_viewとして1回計測されることを確認済みです。
+- 今回の確認範囲では二重 `page_view` は発生していません。
+- 計測漏れまたは二重計測が確認された場合のみ、専用Client Componentで明示的な `page_view` 送信を検討します。その場合は自動計測との二重計測を避けます。
 - 将来的なGA4カスタムイベント候補は、診断開始、診断完了、資産登録、Dashboard表示、AI相談開始、シミュレーター利用です。
 - Microsoft ClarityはGA4とは分離し、後続Sprintで導入判断します。Privacy Policy更新、機微情報のマスキング確認、本番導入前の限定的確認、ConsentおよびCookie運用の再確認を先に行います。
 - Clarity導入時は、AI相談内容や資産情報を無条件に録画しない方針です。
@@ -155,7 +158,10 @@ Clarityは導入前にマスキング方針を確認します。まずClarity管
 - Search Consoleのインデックス状況
 - 404傾向
 - robots.txt / sitemap.xml / manifest.webmanifest の200確認
-- GA4導入後のアクセス有無
+- GA4でアクセスが継続していること
+- GA4で主要ページのpage_viewが取得できていること
+- GA4上の急激な計測停止または異常増加
+- GA4確認は自分のテストアクセスだけで判断しないこと
 - Clarity導入後の異常セッション
 
 ---
@@ -271,7 +277,7 @@ Codex側で安全にProductionデプロイを実行できないため、Vercel D
 2. `NEXT_PUBLIC_SITE_URL` に `https://aiassetlab.jp` を設定する。
 3. `NEXT_PUBLIC_SUPABASE_URL` と `NEXT_PUBLIC_SUPABASE_ANON_KEY` を設定する。
 4. 初回公開では `OPENAI_API_KEY` を設定しない。
-5. 初回Production公開ではGA4 / Clarityを未設定にし、Search Console verificationは独自ドメイン疎通後に設定する。
+5. 初回Production公開時点ではGA4 / Clarityを未設定にし、Search Console verificationは独自ドメイン疎通後に設定する。
 6. Vercelで `aiassetlab.jp` と必要に応じて `www.aiassetlab.jp` を設定する。
 7. DNSとSSLの状態を確認する。
 8. `npm run build` を実行する。
@@ -283,7 +289,7 @@ Codex側で安全にProductionデプロイを実行できないため、Vercel D
 14. Portfolio登録・削除・Dashboard反映を確認し、テストデータを削除する。
 15. Chat fallbackと「現在は簡易回答です。」表示を確認する。
 16. `contact@aiassetlab.jp` の受信と返信元利用を確認する。
-17. GA4 / Clarity / Search Consoleを有効化した場合は初回計測を確認する。
+17. GA4 / Clarity / Search Consoleを有効化した場合は初回計測を確認する。GA4はProduction限定で導入済み、Clarityは未導入。
 
 ---
 

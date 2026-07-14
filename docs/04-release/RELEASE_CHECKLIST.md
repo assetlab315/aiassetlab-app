@@ -16,14 +16,18 @@ Version1.1公開前に確認する項目です。
 
 ## Analytics
 
-- [x] 初回Production公開ではGA4を未設定にする方針を確認している
-- [x] 初回Production公開ではMicrosoft Clarityを未設定にする方針を確認している
+- [x] 初回Production公開時点ではGA4を未設定にする方針を確認している
+- [x] 初回Production公開時点ではMicrosoft Clarityを未設定にする方針を確認している
 - [x] GA4はProduction限定ガードを通して読み込む方針を確認している
-- [ ] GA4はProduction環境だけにIDを設定する
-- [ ] GA4 Enhanced Measurementのブラウザ履歴イベント設定を確認する
-- [ ] GA4 Realtime / DebugViewで初回表示とページ遷移を確認する
-- [ ] GA4で二重page_viewがないことを確認する
-- [ ] Microsoft ClarityはProduction安定確認後の別Sprintで導入判断する
+- [x] GA4 Measurement IDを取得している
+- [x] GA4はProduction環境だけにIDを設定する
+- [x] GA4はPreview / DevelopmentにIDを設定していない
+- [x] GA4 Enhanced Measurementのブラウザ履歴イベント設定を確認する
+- [x] GA4 Realtimeで初回表示とページ遷移を確認する
+- [x] GA4で二重page_viewがないことを確認する
+- [x] Privacy Policy更新済み
+- [x] Microsoft Clarityは未導入として後続Sprintへ分離している
+- [ ] Microsoft Clarityはマスキング方針確定後の別Sprintで導入判断する
 - [ ] Clarity導入前に資産情報とAI相談内容のマスキング方針を確認する
 - [x] Google Search Console URLプレフィックス方式のverificationが完了している
 - [x] Google Search Consoleへsitemap.xmlを送信し、成功を確認している
@@ -79,10 +83,10 @@ Version1.1公開前に確認する項目です。
 - [x] Production公開前に独自ドメイン設定を確認する
 - [x] Production公開前に `contact@aiassetlab.jp` の受信確認を行う
 - [ ] Production公開前にOpenAI API利用枠・請求設定の最終判断を行う
-- [ ] Production公開前にGA4 / Clarity / Google Search Console verificationの設定判断を行う
-- [x] Production公開前にGA4 / Clarityを未設定にする方針を確認している
-- [ ] Search Console verificationは独自ドメイン疎通後に設定する
-- [ ] Productionデプロイ後Smoke Testを実施する
+- [x] Production公開前にGA4 / Clarity / Google Search Console verificationの設定判断を行う
+- [x] Production公開時点ではGA4 / Clarityを未設定にする方針を確認している
+- [x] Search Console verificationは独自ドメイン疎通後に設定する
+- [x] Productionデプロイ後Smoke Testを実施する
 - [ ] release tagを作成する
 - [ ] GitHub Releaseを作成する
 - [x] Vercel production deployを実行する
@@ -97,7 +101,7 @@ Version1.1公開前に確認する項目です。
 
 ## Post Release
 
-- [ ] GA4導入後に初回アクセスを確認する
+- [x] GA4導入後に初回アクセスを確認する
 - [x] Search Consoleへsitemapを送信する
 - [ ] Clarityで初回セッションを確認する
 - [ ] 初回ユーザーとしてTOPからDiagnosis、Portfolio、Dashboard、AI Chatまで進める

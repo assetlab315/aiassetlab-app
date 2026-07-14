@@ -295,24 +295,27 @@ Analytics & Post-Launch Foundation
 - Clarityは後続Sprintで導入判断し、資産情報、AI相談内容、診断情報のマスキング方針を整理
 - Search Console URLプレフィックス方式のverificationとsitemap送信成功を記録
 - Production監視をRelease時、Daily、Weeklyの最小構成に整理
-- GA4 Measurement ID、Clarity Project ID、Vercel Production環境変数は未設定
-- Productionデプロイは未実行
+- 既存GA4プロパティ「AI Asset Lab」と既存Web Streamを利用し、Production環境のみ `NEXT_PUBLIC_GA_MEASUREMENT_ID=G-BB1DMLMD15` を設定
+- GA4 Realtimeで初回ページ `AI資産形成診断の入口` とApp Router遷移後 `資産形成Dashboard` のpage_viewを確認
+- 今回の確認範囲では二重page_viewは発生しておらず、明示的なpage_view送信コンポーネントは不要
+- GA4 Production計測開始、Search Console sitemap登録、Privacy / Terms本番反映は完了
+- Clarity Project IDは未設定で、Clarity計測は未開始
+- Deployment Step6は正式完了
 
 ## Next Sprint
 
-Post Release Analytics Setup
+Production AI Response Preparation
 
-GA4 Introduction Decision
+OpenAI API Billing / Production AI Response
 
 予定
 
-- GA4プロパティとWeb Streamの確認
-- Vercel Production環境へのGA4 ID設定判断
-- GA4 Realtime / DebugView確認
-- App Router遷移のpage_view確認
+- OpenAI API利用枠とBilling設定の最終判断
+- Production環境での正式AI回答有効化方針
+- OpenAI API有効化後のfallback継続確認
 - Clarity導入前のマスキング設定確認
 - Production監視
-- 必要に応じたAnalytics導入Sprint
+- 必要に応じたClarity導入Sprint
 
 ---
 
