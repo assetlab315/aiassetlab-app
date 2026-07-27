@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import ActionCard from "../common/ActionCard";
+import AssetHealthScoreCard from "./AssetHealthScoreCard";
 import DashboardAssetImpactCard from "./DashboardAssetImpactCard";
 import DashboardDailyCheckCard from "./DashboardDailyCheckCard";
 import DashboardInsightCard from "./DashboardInsightCard";
@@ -19,6 +20,7 @@ import { calculatePortfolioSummary } from "../../lib/portfolio/calculatePortfoli
 import { formatCurrency } from "../../lib/portfolio/formatPortfolio";
 import { loadPortfolioAssets } from "../../lib/portfolio/storage";
 import { createPortfolioInsights } from "../../lib/chat/createPortfolioInsights";
+import { createAssetHealthScore } from "../../lib/dashboard/createAssetHealthScore";
 import {
   createDashboardAssetImpact,
   createDashboardDailyCheck,
@@ -79,6 +81,10 @@ export default function DashboardClient() {
   );
   const dashboardInsights = useMemo(
     () => (isReady ? createDashboardInsights({ portfolioInsights }) : null),
+    [isReady, portfolioInsights],
+  );
+  const assetHealthScore = useMemo(
+    () => (isReady ? createAssetHealthScore({ portfolioInsights }) : null),
     [isReady, portfolioInsights],
   );
   const tasks = useMemo(() => createDashboardTasks(assets, summary), [assets, summary]);
@@ -182,6 +188,8 @@ export default function DashboardClient() {
       />
 
       <DashboardInsightCard insight={dashboardInsights} />
+
+      <AssetHealthScoreCard healthScore={assetHealthScore} />
 
       <DashboardAssetImpactCard impact={assetImpact} />
 

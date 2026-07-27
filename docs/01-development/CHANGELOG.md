@@ -2,6 +2,30 @@
 
 ## 2026-07-27
 
+### Deployment Step 8-B - Explainable Asset Health Score
+
+#### Added
+
+- Dashboardに `Asset Health` カードを追加
+- `PortfolioInsights` を入力にした決定論的ローカルスコア `createAssetHealthScore()` を追加
+- `AssetHealthScore` / `AssetHealthScoreFactor` / `AssetHealthGrade` 型を追加
+- `test:asset-health-score` を追加し、資産未登録、現金偏重、暗号資産偏重、単一資産集中、分散良好、積立未設定、同一入力の再現性、factor合計との整合性を検証
+
+#### Changed
+
+- Dashboardのデータフローを `createPortfolioInsights()` から `createDashboardInsights()` と `createAssetHealthScore()` へ分岐する構成に整理
+- Health Scoreは基準点60からfactorで加減点し、0〜100にclampする説明可能な算出へ整理
+- 改善余地は `100 - score` ではなくnegative factorの絶対値合計で表示
+
+#### Notes
+
+- Step8-AのAI Dashboard Insightsは正式完了扱いです
+- OpenAI API呼び出し、Chat API変更、DB変更、Vercel設定変更、Productionデプロイは実行していません
+- スコアは資産配分と積立状況を基にした参考指標であり、投資成果予測ではありません
+- Production反映後にAsset Health Scoreのパターン別Smoke Testが必要です
+
+## 2026-07-27
+
 ### Deployment Step 8-A - AI Dashboard Insights
 
 #### Added

@@ -33,12 +33,18 @@ Version1.1公開前に確認する項目です。
 - [x] Step8-AでDashboardが `PortfolioInsights` を再利用するAI Insight Cardを実装している
 - [x] Dashboard InsightはOpenAI APIを呼ばず、ローカル分析だけで生成している
 - [x] `npm run test:dashboard-insights` で資産未登録、現金偏重、暗号資産偏重、単一資産集中、分散良好、積立未設定を確認している
+- [x] Step8-A Production Smoke Testを完了扱いとして記録している
+- [x] Step8-BでDashboardにExplainable Asset Health Scoreを実装している
+- [x] Asset Health ScoreはOpenAI APIを呼ばず、Portfolio Insightsから決定論的に生成している
+- [x] Asset Health Scoreは資産配分と積立状況を基にした参考指標であり、投資成果予測ではないことを表示している
+- [x] `npm run test:asset-health-score` でscore、grade、factor、improvementPotential、Today Action整合性を確認している
 - [ ] Step7-B反映後にProduction再デプロイを実施している
 - [ ] Step7-B反映後に新NISA、資産未登録、情報不足、危険相談、個別銘柄、機密情報のSmoke Testを実施している
 - [ ] Step7-C反映後に現金90% / 株式10%、暗号資産70%、1銘柄100%、資産なしのSmoke Testを実施している
 - [ ] Step7-C.1反映後に同じNo-Go 3ケースをProductionで再テストしている
 - [ ] Step7-C.2反映後にNISA質問で旧制度年額が出ないことをProductionで確認している
 - [ ] Step8-A反映後にDashboardで資産未登録、現金偏重、暗号資産偏重、単一資産集中、分散良好のInsight CardをProductionで確認している
+- [ ] Step8-B反映後にDashboardで資産未登録、現金偏重、暗号資産偏重、単一資産集中、分散良好・積立あり / なしのAsset HealthをProductionで確認している
 - [ ] OpenAI接続失敗時にfallback回答へ切り替わることを確認している
 - [ ] 本番ログにAPIキーやOpenAI response bodyが出ないことを確認している
 

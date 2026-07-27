@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Deployment Step 8-A
+### Deployment Step 8-B
 
 **Status**
 
@@ -12,7 +12,7 @@
 
 ## Current Goal
 
-AI Dashboard Insights
+Explainable Asset Health Score
 
 ---
 
@@ -73,7 +73,19 @@ AI Dashboard Insights
 - Dashboard Insight CardはOpenAI APIを呼ばず、ローカル分析だけで「今日のまとめ」「良い点」「注意点」「今日やること」を表示
 - hydration前に未登録Insightを一瞬表示しないよう読み込み中skeletonを表示
 - `npm run test:dashboard-insights` でDashboard Insightの主要ケースを検証
-- Productionデプロイは未実行。反映後にDashboard Insight Smoke Testが必要
+- Step8-A Production Smoke Testを完了扱いとし、Dashboard Insightを正式完了
+
+### Dashboard v3.3 / Explainable Asset Health Score
+
+- Dashboardに `Asset Health` カードを追加
+- `PortfolioInsights` を再利用し、OpenAI APIを使わない決定論的ローカルスコアを生成
+- 基準点60から、分散、暗号資産比率、現金比率、単一資産集中、積立状況のfactorで加減点
+- 同一原因の二重減点を避け、factor impact合計でscoreの理由を説明できる構成へ整理
+- 資産未登録時はscore / gradeを非表示にし、未算出状態として表示
+- improvementPotentialはnegative factorの絶対値合計として算出
+- スコアは資産配分と積立状況を基にした参考指標であり、投資成果予測ではないことをカード内に明記
+- `npm run test:asset-health-score` でスコア、factor、Today Action整合性、再現性を検証
+- Productionデプロイは未実行。反映後にAsset Health Score Smoke Testが必要
 
 ### Dashboard v3.1 / Monetization Foundation
 

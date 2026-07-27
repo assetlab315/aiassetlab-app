@@ -171,6 +171,29 @@ Step8-A反映後のSmoke Test:
 - 375px前後のMobileでカード、CTA、折り返し、Dashboard既存カードとの余白を確認する
 - Light / Dark modeで文字の可読性とFocus表示を確認する
 
+### Step8-B Explainable Asset Health Score
+
+- Dashboardの `Asset Health` はOpenAI APIを呼ばず、`PortfolioInsights` から決定論的に生成する
+- 経路は `loadPortfolioAssets()` → `createPortfolioInsights()` → `createAssetHealthScore()` → `AssetHealthScoreCard`
+- scoreは基準点60からfactor impactで加減し、0〜100にclampする
+- gradeは A: 85〜100、B: 70〜84、C: 50〜69、D: 0〜49
+- 資産未登録時は `score: null` / `grade: null` とし、スコア未算出で表示する
+- improvementPotentialは `100 - score` ではなくnegative factorの絶対値合計で表示する
+- 単一資産集中、暗号資産偏重、現金偏重、特定資産集中は同一原因の二重減点を避ける
+- スコアは資産配分と積立状況を基にした参考指標であり、投資成果予測ではない
+
+Step8-B反映後のSmoke Test:
+
+- 資産未登録: スコア未算出、gradeなし、Insight CardとのCTA重複が過剰でない
+- 現金90% / 株式10% / 積立なし: 現金偏重と積立未設定が主な改善理由として表示される
+- 現金90% / 株式10% / 積立あり: 積立ありでスコアが上がり、暗号資産減点がない
+- 暗号資産70% / 現金30%: 暗号資産集中が主な改善理由となり、同一原因で特定資産集中を重複表示しない
+- 単一株式100%: 単一資産集中が大きめの改善理由となり、暗号資産・現金偏重の誤減点がない
+- 分散良好・積立あり: AまたはB gradeで、100点固定にならず、不要な改善理由がない
+- 分散良好・積立なし: 積立未設定が主な改善理由となり、分散の良い点は維持される
+- Dashboard InsightのToday ActionとHealth Scoreの最大negative factorが大きく矛盾しない
+- Mobile / Desktop / Light / Dark modeでscore、factor、改善余地の折り返しと可読性を確認する
+
 ---
 
 ## Analytics and Verification Policy

@@ -92,6 +92,12 @@ AI Chat運用メモ
 
 ・Dashboard Insightの検証は `npm run test:dashboard-insights` で行います。Production反映後は、資産未登録、現金偏重、暗号資産偏重、単一資産集中、分散良好のカード表示を確認してください。
 
+・Step8-BではDashboardに `Asset Health` カードを追加しました。`createPortfolioInsights()` の結果を `createAssetHealthScore()` へ渡し、基準点60からfactorで加減点する決定論的ローカルスコアです。OpenAI APIは呼びません。
+
+・Asset Health Scoreは資産配分と積立状況を基にした参考指標で、投資成果予測ではありません。単一資産集中、暗号資産偏重、現金偏重は同一原因の二重減点を避けます。
+
+・Asset Health Scoreの検証は `npm run test:asset-health-score` で行います。Production反映後は、資産未登録、現金90% / 株式10%、暗号資産70% / 現金30%、単一株式100%、分散良好・積立あり / なしを確認してください。
+
 ---
 
 環境変数
