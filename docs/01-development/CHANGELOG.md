@@ -2,6 +2,27 @@
 
 ## 2026-07-27
 
+### Deployment Step 8-A - AI Dashboard Insights
+
+#### Added
+
+- DashboardにPortfolio Insightsを再利用した `AI Insight` カードを追加
+- `createDashboardInsights()` を追加し、資産未登録、現金偏重、暗号資産偏重、単一資産集中、分散良好、積立未設定のDashboard向け短文Insightを生成
+- `DashboardInsights` 型と `test:dashboard-insights` を追加
+
+#### Changed
+
+- Dashboardの旧AIインサイトを、独自集計ではなく `createPortfolioInsights()` 由来の分析結果から生成する構成へ変更
+- hydration前に資産未登録Insightを一瞬表示しないよう、Dashboard Insight Cardに読み込み中skeletonを追加
+- CTAを最大1つにし、実在するPortfolio / Simulator導線だけへ限定
+
+#### Notes
+
+- OpenAI API呼び出し、Chat API変更、DB変更、Vercel設定変更、Productionデプロイは実行していません
+- Production反映後に、資産未登録、現金偏重、暗号資産偏重、単一資産集中、分散良好のDashboard Smoke Testが必要です
+
+## 2026-07-27
+
 ### Deployment Step 7-C.2 - Portfolio Insight Enforcement & Financial Fact Guard
 
 #### Added

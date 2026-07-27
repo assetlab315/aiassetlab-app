@@ -86,6 +86,12 @@ AI Chat運用メモ
 
 ・旧つみたてNISAの年額上限を現行制度として案内しない方針です。Production反映後はNISA質問で旧制度年額が出ないことを必ず確認してください。
 
+・Step8-Aでは、Step7の `PortfolioInsights` をDashboardでも再利用する `AI Insight` カードを追加しました。OpenAI APIは呼ばず、ローカル分析だけで「今日のまとめ」「良い点」「注意点」「今日やること」を生成します。
+
+・Dashboard Insightは `createPortfolioInsights()` → `createDashboardInsights()` → `DashboardInsightCard` の経路です。Dashboard側で別集計を増やさない方針です。
+
+・Dashboard Insightの検証は `npm run test:dashboard-insights` で行います。Production反映後は、資産未登録、現金偏重、暗号資産偏重、単一資産集中、分散良好のカード表示を確認してください。
+
 ---
 
 環境変数

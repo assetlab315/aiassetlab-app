@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Deployment Step 7-C.2
+### Deployment Step 8-A
 
 **Status**
 
@@ -12,7 +12,7 @@
 
 ## Current Goal
 
-Portfolio Insight Enforcement & Financial Fact Guard
+AI Dashboard Insights
 
 ---
 
@@ -64,6 +64,16 @@ Portfolio Insight Enforcement & Financial Fact Guard
 - 資産状況に応じた今日のAIアドバイスを表示
 - 次にやることを登録状況に応じて自動出し分け
 - 習慣化UIの土台として今日のチェックカードを追加
+
+### Dashboard v3.2 / AI Dashboard Insights
+
+- Step7で整備した `PortfolioInsights` をDashboardでも再利用
+- Dashboard独自集計ではなく `createPortfolioInsights()` から `createDashboardInsights()` へ渡す構成へ整理
+- 資産未登録、現金偏重、暗号資産偏重、単一資産集中、分散良好、積立未設定に応じて短いDashboard Insightを生成
+- Dashboard Insight CardはOpenAI APIを呼ばず、ローカル分析だけで「今日のまとめ」「良い点」「注意点」「今日やること」を表示
+- hydration前に未登録Insightを一瞬表示しないよう読み込み中skeletonを表示
+- `npm run test:dashboard-insights` でDashboard Insightの主要ケースを検証
+- Productionデプロイは未実行。反映後にDashboard Insight Smoke Testが必要
 
 ### Dashboard v3.1 / Monetization Foundation
 

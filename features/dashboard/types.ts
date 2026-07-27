@@ -1,15 +1,15 @@
 export type DashboardTone = "blue" | "emerald" | "violet";
 
-export type DashboardInsight = {
-  label: string;
-  title: string;
-  description: string;
-  impactLabel: string;
-  impactLevel: 0 | 1 | 2 | 3;
-  primaryPoint: string;
-  secondaryPoint: string;
-  ctaLabel: string;
-  ctaHref: string;
+export type DashboardInsightState = "empty" | "warning" | "positive" | "neutral";
+
+export type DashboardInsights = {
+  summary: string;
+  strength: string | null;
+  warning: string | null;
+  todayAction: string;
+  actionLabel?: string;
+  actionHref?: string;
+  state: DashboardInsightState;
 };
 
 export type DashboardAssetImpact = {

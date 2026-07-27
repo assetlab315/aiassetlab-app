@@ -153,6 +153,24 @@ Step7-C Production Smoke TestはNo-Goでした。資産未登録、現金90% / �
 - 旧つみたてNISAの年額上限を現行制度として案内しない
 - Production反映後、NISA質問で旧制度年額が出ないことを確認する
 
+### Step8-A AI Dashboard Insights
+
+- Dashboardの `AI Insight` はOpenAI APIを呼ばず、登録済みPortfolioから生成した `PortfolioInsights` を再利用する
+- 経路は `loadPortfolioAssets()` → `createPortfolioInsights()` → `createDashboardInsights()` → `DashboardInsightCard`
+- Dashboard側で独自のPortfolio集計を増やさない
+- hydration前は未登録Insightを表示せず、読み込み中skeletonを表示する
+- CTAは最大1つとし、存在するPortfolioまたはSimulator画面へ限定する
+
+Step8-A反映後のSmoke Test:
+
+- 資産未登録: 「まだ資産情報が登録されていません」とPortfolio登録CTAが表示される
+- 現金偏重: 現金の良い面と長期資産形成の注意点が表示され、売買を断定しない
+- 暗号資産偏重: 価格変動・集中の注意と分散型資産を優先するToday Actionが表示される
+- 単一資産集中: 1資産集中の注意と次の積立先で分散するToday Actionが表示される
+- 分散良好: 不要な変更を勧めず、無理のない積立継続が表示される
+- 375px前後のMobileでカード、CTA、折り返し、Dashboard既存カードとの余白を確認する
+- Light / Dark modeで文字の可読性とFocus表示を確認する
+
 ---
 
 ## Analytics and Verification Policy

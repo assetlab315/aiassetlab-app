@@ -18,11 +18,12 @@ import type { PortfolioAsset } from "../../features/portfolio/types";
 import { calculatePortfolioSummary } from "../../lib/portfolio/calculatePortfolio";
 import { formatCurrency } from "../../lib/portfolio/formatPortfolio";
 import { loadPortfolioAssets } from "../../lib/portfolio/storage";
+import { createPortfolioInsights } from "../../lib/chat/createPortfolioInsights";
 import {
   createDashboardAssetImpact,
   createDashboardDailyCheck,
   createDashboardHabit,
-  createDashboardInsight,
+  createDashboardInsights,
   createDashboardPremiumPreview,
   createDashboardTasks,
   createDashboardTodayAi,
@@ -64,10 +65,6 @@ export default function DashboardClient() {
     () => createDashboardDailyCheck(assets, summary),
     [assets, summary],
   );
-  const insight = useMemo(
-    () => createDashboardInsight(assets, summary),
-    [assets, summary],
-  );
   const assetImpact = useMemo(
     () => createDashboardAssetImpact(assets, summary),
     [assets, summary],
@@ -75,6 +72,14 @@ export default function DashboardClient() {
   const todayAi = useMemo(
     () => createDashboardTodayAi(assets, summary),
     [assets, summary],
+  );
+  const portfolioInsights = useMemo(
+    () => (isReady ? createPortfolioInsights(assets) : null),
+    [assets, isReady],
+  );
+  const dashboardInsights = useMemo(
+    () => (isReady ? createDashboardInsights({ portfolioInsights }) : null),
+    [isReady, portfolioInsights],
   );
   const tasks = useMemo(() => createDashboardTasks(assets, summary), [assets, summary]);
   const habit = useMemo(() => createDashboardHabit(assets, summary), [assets, summary]);
@@ -176,7 +181,7 @@ export default function DashboardClient() {
         onCheck={handleDailyCheck}
       />
 
-      <DashboardInsightCard insight={insight} />
+      <DashboardInsightCard insight={dashboardInsights} />
 
       <DashboardAssetImpactCard impact={assetImpact} />
 

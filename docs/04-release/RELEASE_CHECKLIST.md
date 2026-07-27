@@ -30,11 +30,15 @@ Version1.1公開前に確認する項目です。
 - [x] Step7-C.2でPortfolio Insightsを回答へ最低1点以上反映するprompt制御を追加している
 - [x] Step7-C.2で新NISAの固定知識ガードを追加している
 - [x] `npm run test:portfolio-context` でNISA固定知識と旧制度年額を含めないことを確認している
+- [x] Step8-AでDashboardが `PortfolioInsights` を再利用するAI Insight Cardを実装している
+- [x] Dashboard InsightはOpenAI APIを呼ばず、ローカル分析だけで生成している
+- [x] `npm run test:dashboard-insights` で資産未登録、現金偏重、暗号資産偏重、単一資産集中、分散良好、積立未設定を確認している
 - [ ] Step7-B反映後にProduction再デプロイを実施している
 - [ ] Step7-B反映後に新NISA、資産未登録、情報不足、危険相談、個別銘柄、機密情報のSmoke Testを実施している
 - [ ] Step7-C反映後に現金90% / 株式10%、暗号資産70%、1銘柄100%、資産なしのSmoke Testを実施している
 - [ ] Step7-C.1反映後に同じNo-Go 3ケースをProductionで再テストしている
 - [ ] Step7-C.2反映後にNISA質問で旧制度年額が出ないことをProductionで確認している
+- [ ] Step8-A反映後にDashboardで資産未登録、現金偏重、暗号資産偏重、単一資産集中、分散良好のInsight CardをProductionで確認している
 - [ ] OpenAI接続失敗時にfallback回答へ切り替わることを確認している
 - [ ] 本番ログにAPIキーやOpenAI response bodyが出ないことを確認している
 

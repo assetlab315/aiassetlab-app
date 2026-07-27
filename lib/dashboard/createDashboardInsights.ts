@@ -4,11 +4,12 @@ import type {
   DashboardAssetImpact,
   DashboardDailyCheck,
   DashboardHabit,
-  DashboardInsight,
+  DashboardInsights,
   DashboardPremiumPreview,
   DashboardTask,
   DashboardTodayAi,
 } from "../../features/dashboard/types";
+import type { PortfolioInsights } from "../../features/chat/types";
 
 function getMainAssetCategory(assets: PortfolioAsset[], summary: PortfolioSummary) {
   const grouped = assets.reduce<Record<PortfolioAsset["category"], number>>(
@@ -119,69 +120,126 @@ export function createDashboardTodayAi(
   };
 }
 
-export function createDashboardInsight(
-  assets: PortfolioAsset[],
-  summary: PortfolioSummary,
-): DashboardInsight {
-  if (assets.length === 0 || summary.totalAmount === 0) {
+type CreateDashboardInsightsInput = {
+  portfolioInsights: PortfolioInsights | null;
+};
+
+export function createDashboardInsights({
+  portfolioInsights,
+}: CreateDashboardInsightsInput): DashboardInsights {
+  if (!portfolioInsights) {
     return {
-      label: "今日のAIインサイト",
-      title: "まずは資産を1つ登録すると、AIがあなた向けに整理できます。",
-      description:
-        "今はまだ分析する材料がありません。金額はざっくりで大丈夫なので、預金・NISA・投資信託などを1つ登録しましょう。",
-      impactLabel: "未分析",
-      impactLevel: 0,
-      primaryPoint: "最初の目的は、正確さよりも現在地を見える化することです。",
-      secondaryPoint: "Portfolioで1つ登録すると、Dashboardの提案があなた向けになります。",
-      ctaLabel: "資産を登録する",
-      ctaHref: "/portfolio",
+      summary: "まだ資産情報が登録されていません。",
+      strength: null,
+      warning: null,
+      todayAction: "現在の資産を登録して、配分を確認しましょう。",
+      actionLabel: "資産を登録する",
+      actionHref: "/portfolio",
+      state: "empty",
     };
   }
 
-  const mainCategory = getMainAssetCategory(assets, summary);
-  const mainCategoryLabel = ASSET_CATEGORY_LABELS[mainCategory.category];
+  if (
+    portfolioInsights.cryptoLevel === "high" ||
+    (portfolioInsights.investmentCount === 1 && portfolioInsights.concentration !== "none")
+  ) {
+    if (portfolioInsights.cryptoLevel === "high") {
+      return {
+        summary: "暗号資産への偏りが大きく、価格変動の影響を受けやすい状態です。",
+        strength: "成長性の高い資産を保有しています。",
+        warning: portfolioInsights.warnings[0] ?? "特定カテゴリへの集中が見られます。",
+        todayAction: "今後の積立では分散型資産を優先しましょう。",
+        actionLabel: "資産を見る",
+        actionHref: "/portfolio",
+        state: "warning",
+      };
+    }
 
-  if (summary.totalMonthlyContribution === 0) {
     return {
-      label: "今日のAIインサイト",
-      title: `${mainCategoryLabel}が中心です。次は毎月の積立を見える化しましょう。`,
-      description:
-        "資産の登録はできています。次に積立額を入れると、今の資産形成が続けやすい形かどうかを判断しやすくなります。",
-      impactLabel: "中",
-      impactLevel: 2,
-      primaryPoint: `現在は${mainCategoryLabel}の比率が高めです。まずは資産の全体像を把握しましょう。`,
-      secondaryPoint: "積立額を入れると、将来の見通しと次の行動が具体化します。",
-      ctaLabel: "積立額を入力する",
-      ctaHref: "/portfolio",
+      summary: "1つの資産への集中が大きい状態です。",
+      strength: null,
+      warning: portfolioInsights.warnings[0] ?? "その資産の値動きが全体へ強く影響します。",
+      todayAction: "次の積立先は異なる資産や地域から検討しましょう。",
+      actionLabel: "資産を見る",
+      actionHref: "/portfolio",
+      state: "warning",
     };
   }
 
-  if (mainCategory.category === "crypto" || mainCategory.rate >= 70) {
+  if (portfolioInsights.cashLevel === "high") {
     return {
-      label: "今日のAIインサイト",
-      title: `${mainCategoryLabel}の比率が高めです。今日は増やすより確認を優先しましょう。`,
-      description:
-        "特定の資産に寄っている場合、短期の値動きに気持ちが左右されやすくなります。今日は売買判断よりも、積立を続けられる形かを確認しましょう。",
-      impactLabel: "高",
-      impactLevel: 3,
-      primaryPoint: `中心資産は${mainCategoryLabel}です。全体の約${Math.round(mainCategory.rate)}%を占めています。`,
-      secondaryPoint: "不安がある場合は、AIにリスクと見直しポイントを聞きましょう。",
-      ctaLabel: "AIに相談する",
-      ctaHref: "/chat",
+      summary: "現金の比率が高めで、投資資産の割合が低い状態です。",
+      strength: "急な支出に備えやすい配分です。",
+      warning: "長期の資産形成に回る資金が少なめです。",
+      todayAction: "生活防衛資金を残し、毎月の積立額を決めましょう。",
+      actionLabel: "資産を見る",
+      actionHref: "/portfolio",
+      state: "neutral",
+    };
+  }
+
+  if (
+    portfolioInsights.concentration === "over90" ||
+    portfolioInsights.concentration === "over70"
+  ) {
+    return {
+      summary: "1つの資産への集中が大きい状態です。",
+      strength: null,
+      warning: portfolioInsights.warnings[0] ?? "その資産の値動きが全体へ強く影響します。",
+      todayAction: "次の積立先は異なる資産や地域から検討しましょう。",
+      actionLabel: "資産を見る",
+      actionHref: "/portfolio",
+      state: "warning",
+    };
+  }
+
+  if (portfolioInsights.diversification === "Poor") {
+    return {
+      summary: "資産カテゴリの分散がまだ少ない状態です。",
+      strength: portfolioInsights.strengths[0] ?? null,
+      warning: portfolioInsights.warnings[0] ?? "特定資産への依存が残っています。",
+      todayAction: "次の積立では低コストの分散型資産を検討しましょう。",
+      actionLabel: "資産を見る",
+      actionHref: "/portfolio",
+      state: "warning",
+    };
+  }
+
+  if (portfolioInsights.monthlyInvestment <= 0) {
+    return {
+      summary: "資産は登録されていますが、毎月の積立額がまだ見えていません。",
+      strength: portfolioInsights.strengths[0] ?? null,
+      warning: null,
+      todayAction: "毎月の積立額を設定しましょう。",
+      actionLabel: "積立額を入力する",
+      actionHref: "/portfolio",
+      state: "neutral",
+    };
+  }
+
+  if (
+    portfolioInsights.diversification === "Excellent" ||
+    portfolioInsights.diversification === "Good"
+  ) {
+    return {
+      summary: "資産は複数のカテゴリに分散されています。",
+      strength: portfolioInsights.strengths[0] ?? "特定の資産だけに依存しにくい配分です。",
+      warning: portfolioInsights.warnings[0] ?? null,
+      todayAction: "今月も無理のない積立を継続しましょう。",
+      actionLabel: "将来のお金を計算する",
+      actionHref: "/simulator",
+      state: "positive",
     };
   }
 
   return {
-    label: "今日のAIインサイト",
-    title: "資産と積立が見えています。今日は大きく変えず、続けることを優先しましょう。",
-    description:
-      "資産形成では、毎日大きな判断をする必要はありません。登録内容を確認し、必要なときだけAIに相談できる状態を保ちましょう。",
-    impactLabel: "低〜中",
-    impactLevel: 1,
-    primaryPoint: `中心資産は${mainCategoryLabel}です。全体の約${Math.round(mainCategory.rate)}%です。`,
-    secondaryPoint: "将来シミュレーションで、今の積立ペースを一度確認しましょう。",
-    ctaLabel: "将来のお金を計算する",
-    ctaHref: "/simulator",
+    summary: "資産と積立が見えています。",
+    strength: portfolioInsights.strengths[0] ?? "資産形成を続ける土台ができています。",
+    warning: portfolioInsights.warnings[0] ?? null,
+    todayAction: "今日は大きく変えず、無理のない積立を続けましょう。",
+    actionLabel: "資産を見る",
+    actionHref: "/portfolio",
+    state: "neutral",
   };
 }
 

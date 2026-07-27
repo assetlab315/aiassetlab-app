@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "test:portfolio-context": "node scripts/verify-portfolio-context.js",
+    "test:dashboard-insights": "node scripts/verify-dashboard-insights.js",
     "start": "next start"
   },
   "engines": {
