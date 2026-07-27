@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Deployment Step 7-C.1
+### Deployment Step 7-C.2
 
 **Status**
 
@@ -12,7 +12,7 @@
 
 ## Current Goal
 
-Portfolio Context Delivery Fix
+Portfolio Insight Enforcement & Financial Fact Guard
 
 ---
 
@@ -359,20 +359,34 @@ Portfolio Context Delivery Fix
 - Productionデプロイ、Vercel設定変更、OpenAI設定変更、モデル変更、DB変更は未実行
 - 修正後、同じ3ケースでProduction Smoke Testが必要
 
+### Deployment Step 7-C.2 - Portfolio Insight Enforcement & Financial Fact Guard
+
+- Step7-C.1でPortfolio Insightsがpromptへ届くことは確認済みだが、Production Smoke Testでは回答への反映不足が残った
+- 資産未登録時に一般論のみで回答する問題を防ぐため、資産情報未登録なら冒頭2文以内に具体的な資産配分分析ができないことを明示する指示を強化
+- 「私の資産」「今の資産」「現在の資産状況」「私の場合」「今後どうすべき」「資産配分」などの質問では、Portfolio Insightsがある場合に最低1項目以上反映する指示を追加
+- warningsがある場合、質問に関係するwarningを最低1つ反映する方針を補強
+- 登録済みportfolioがある場合に「まず現在の資産を確認してください」で終わらせない制御を整理
+- 新NISAの固定知識を `lib/chat/financialKnowledge.ts` へ分離し、NISA質問時のみpromptへ追加
+- 現行新NISAのつみたて投資枠 年120万円、成長投資枠 年240万円、生涯非課税保有限度額 1800万円を固定知識として保持
+- 旧つみたてNISAの年額上限を現行制度として案内しない金融制度ガードを追加
+- `npm run test:portfolio-context` にNISA固定知識と旧制度年額を含めない検証を追加
+- Productionデプロイ、Vercel設定変更、OpenAI設定変更、モデル変更は未実行
+
 ## Next Sprint
 
-Step7-C.1 Production Smoke Test
+Step7-C.2 Production Smoke Test
 
 Portfolio-Aware AI Verification
 
 予定
 
-- Step7-C.1 commitをProductionへ反映
+- Step7-C.2 commitをProductionへ反映
 - 新NISA、資産未登録、情報不足、危険相談、個別銘柄、会話継続、機密情報の最小Smoke Test
 - 現金90% / 株式10%で、現金比率高めと積立提案が自然に出ることを確認
 - 暗号資産70%で、集中と暗号資産比率への警告が出ることを確認
 - 1銘柄100%で、集中投資の注意が出ることを確認
 - 資産なしで、一般回答になることを確認
+- 新NISA質問で年120万円、年240万円、1800万円が反映され、旧制度年額が出ないことを確認
 - OpenAI responseが `source: "openai"` で返ることを確認
 - fallback継続、rate limit、timeout時の表示確認
 - Runtime LogsにAPIキーや本文が出ないことを確認

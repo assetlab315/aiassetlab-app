@@ -2,6 +2,29 @@
 
 ## 2026-07-27
 
+### Deployment Step 7-C.2 - Portfolio Insight Enforcement & Financial Fact Guard
+
+#### Added
+
+- 新NISAの固定知識を `lib/chat/financialKnowledge.ts` へ分離
+- 現行新NISAのつみたて投資枠 年120万円、成長投資枠 年240万円、生涯非課税保有限度額 1800万円をpromptへ必要時のみ渡す構成を追加
+- `test:portfolio-context` にNISA固定知識と旧制度年額を含めない検証を追加
+
+#### Changed
+
+- Portfolio分析を求める質問では、Portfolio Insightsがある場合に最低1点以上反映する指示を強化
+- 資産情報未登録時は、具体的な資産配分分析ができないことを冒頭で明示する指示を強化
+- Warningsがある場合、質問に関係するwarningを最低1つ反映する方針を補強
+- 登録済みportfolioがある場合に「まず現在の資産を確認」で終わらせない制御を整理
+- 旧つみたてNISAの年額上限を現行制度として案内しないよう金融制度ガードを追加
+
+#### Notes
+
+- Productionデプロイ、Vercel設定変更、OpenAI設定変更、モデル変更は実行していません
+- Step7-C.2反映後に、同じPortfolio-aware No-GoケースとNISA制度回答のProduction Smoke Testが必要です
+
+## 2026-07-27
+
 ### Deployment Step 7-C.1 - Portfolio Context Delivery Fix
 
 #### Fixed

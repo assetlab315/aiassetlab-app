@@ -42,6 +42,7 @@ function assertIncludes(value, expected, label) {
 
 const noAssetsPrompt = getPrompt("今の資産配分をどう見直せばいいですか？", []);
 assertIncludes(noAssetsPrompt, "資産情報未登録", "no assets");
+assertIncludes(noAssetsPrompt, "具体的な資産配分分析はできない", "no assets");
 
 const cashHeavyPrompt = getPrompt(
   "毎月3万円を新NISAで積み立てるなら、今の資産状況ではどう考えればいいですか？",
@@ -72,5 +73,14 @@ assert.strictEqual(messages[0].role, "system");
 assert.strictEqual(messages[1].role, "user");
 assertIncludes(messages[1].content, "Portfolio Insights:", "openai messages");
 assertIncludes(messages[1].content, "現金比率高め", "openai messages");
+
+const nisaPrompt = getPrompt(
+  "新NISAで毎月3万円を積み立てるなら何がおすすめですか？",
+  [],
+);
+assertIncludes(nisaPrompt, "年120万円", "nisa knowledge");
+assertIncludes(nisaPrompt, "年240万円", "nisa knowledge");
+assertIncludes(nisaPrompt, "1800万円", "nisa knowledge");
+assert(!nisaPrompt.includes("年間40万円"), "nisa knowledge: should not include old annual 400k");
 
 console.log("Portfolio context delivery checks passed.");

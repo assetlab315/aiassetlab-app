@@ -143,6 +143,16 @@ Step7-C Production Smoke TestはNo-Goでした。資産未登録、現金90% / �
 - OpenAI messagesのuser contentに `Portfolio Insights:` が含まれることを確認する
 - Production再反映後、同じ3ケースでSmoke Testを再実施する
 
+### Step7-C.2 Portfolio Insight Enforcement & Financial Fact Guard
+
+- Portfolio分析を求める質問では、Portfolio Insightsがある場合に最低1点以上回答へ反映する
+- 資産情報未登録の場合は、冒頭2文以内に具体的な資産配分分析ができないことを明示する
+- Warningsがある場合、質問に関係するwarningを最低1つ反映する
+- 登録済みportfolioがある場合に「まず現在の資産を確認してください」で終わらせない
+- 新NISAは固定知識を優先し、つみたて投資枠 年120万円、成長投資枠 年240万円、生涯非課税保有限度額 1800万円を案内する
+- 旧つみたてNISAの年額上限を現行制度として案内しない
+- Production反映後、NISA質問で旧制度年額が出ないことを確認する
+
 ---
 
 ## Analytics and Verification Policy

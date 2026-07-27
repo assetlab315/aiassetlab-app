@@ -82,6 +82,10 @@ AI Chat運用メモ
 
 ・Portfolio context deliveryは `npm run test:portfolio-context` で確認できます。OpenAI APIは呼ばず、最終promptとOpenAI messagesにInsightsが含まれることを検証します。
 
+・Step7-C.2ではPortfolio Insights反映をさらに強制し、NISA制度の固定知識を `lib/chat/financialKnowledge.ts` へ分離しました。現行新NISAは、つみたて投資枠 年120万円、成長投資枠 年240万円、生涯非課税保有限度額 1800万円を優先します。
+
+・旧つみたてNISAの年額上限を現行制度として案内しない方針です。Production反映後はNISA質問で旧制度年額が出ないことを必ず確認してください。
+
 ---
 
 環境変数
