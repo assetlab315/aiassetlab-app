@@ -1,5 +1,23 @@
 # AI Asset Lab - Changelog
 
+## 2026-07-27
+
+### Deployment Step 7-B - AI Response Quality Improvement
+
+#### Changed
+
+- Production AI応答の初回Smoke Test成功を受け、AI相談の回答品質改善を実施
+- Step7-A commit `f155569` がProduction反映済みであることを記録
+- OpenAI Billing有効、初回クレジット5 USD、Auto recharge OFF、Production API key設定済み、`OPENAI_MODEL=gpt-4o-mini`、本番AI応答確認済みを記録
+- system promptに、結論先出し、具体的な選択肢、生活防衛資金、分散、長期、継続、危険相談、機密情報、サービス内導線の扱いを追加
+- user prompt生成で資産配分の概況、質問シグナル、新NISA・借入投資・個別銘柄・機密情報への回答方針を補強
+- fallback回答を新NISA、資産未登録、借入投資、個別銘柄、機密情報入力へ最低限対応するよう改善
+
+#### Notes
+
+- Productionデプロイ、Vercel環境変数変更、OpenAI外部設定変更、モデル変更は実行していません
+- Step7-B反映後にProduction AI応答のSmoke Testが必要です
+
 ## 2026-07-14
 
 ### Deployment Step 7-A - Chat Safety & Cost Controls

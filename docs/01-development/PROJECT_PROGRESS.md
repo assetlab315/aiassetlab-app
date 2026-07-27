@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Deployment Step 7-A
+### Deployment Step 7-B
 
 **Status**
 
@@ -12,7 +12,7 @@
 
 ## Current Goal
 
-Chat Safety & Cost Controls
+AI Response Quality Improvement
 
 ---
 
@@ -317,22 +317,33 @@ Chat Safety & Cost Controls
 - Privacy Policyに外部AIサービス利用時の送信情報と機密情報入力禁止を明記
 - OpenAI Billing、APIキー作成、Vercel Production環境変数設定、Productionデプロイは未実行
 
+### Deployment Step 7-B - AI Response Quality Improvement
+
+- Step7-A commit `f155569 Deployment-Step7A Chat Safety and Cost Controls` がProduction反映済み
+- OpenAI Billingは有効、初回クレジット5 USD、Auto recharge OFF
+- Production API key設定済み、`OPENAI_MODEL=gpt-4o-mini`
+- Production AI responseは本番で動作確認済み
+- 初回Production質問「新NISAを始めたいです。毎月3万円積み立てるなら何がおすすめですか？」でOpenAI応答が返ることを確認
+- Step7-Bでは、一般論に寄りすぎる回答を改善するためprompt品質を調整
+- system promptに、結論先出し、質問への直接回答、具体的な選択肢、生活防衛資金、分散、長期、継続、危険相談、機密情報入力への方針を追加
+- user prompt生成に資産配分の概況と質問シグナルを追加し、portfolio contextとhistoryを自然に活用しやすく整理
+- fallback回答を新NISA、資産未登録、借入投資、個別銘柄、機密情報入力へ最低限対応するよう改善
+- Productionデプロイ、Vercel環境変数変更、OpenAI外部設定変更、モデル変更は未実行
+- Step7-B反映後にProduction AI応答のSmoke Testが必要
+
 ## Next Sprint
 
-OpenAI Production Setup
+Step7-B Production Smoke Test
 
-OpenAI API Billing / Production AI Response
+AI Response Quality Verification
 
 予定
 
-- OpenAI API利用枠とBilling設定の最終判断
-- 低い月額BudgetとUsage Alertの設定
-- Production API key作成
-- Vercel Production環境変数 `OPENAI_API_KEY` / 必要に応じて `OPENAI_MODEL` 設定
-- Production再デプロイ
-- Chatの本来AI応答Smoke Test
-- Production環境での正式AI回答有効化方針
-- OpenAI API有効化後のfallback継続確認
+- Step7-B commitをProductionへ反映
+- 新NISA、資産未登録、情報不足、危険相談、個別銘柄、会話継続、機密情報の最小Smoke Test
+- OpenAI responseが `source: "openai"` で返ることを確認
+- fallback継続、rate limit、timeout時の表示確認
+- Runtime LogsにAPIキーや本文が出ないことを確認
 - Clarity導入前のマスキング設定確認
 - Production監視
 - 必要に応じたClarity導入Sprint

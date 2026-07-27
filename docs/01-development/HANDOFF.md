@@ -70,6 +70,10 @@ AI Chat運用メモ
 
 ・OpenAI APIをProductionで有効化する前に、Billing、低い月額Budget、Usage Alert、Production API key、Vercel Production環境変数、Production再デプロイ、Smoke Testを確認してください。
 
+・2026-07-27時点でOpenAI Billingは有効、初回クレジット5 USD、Auto recharge OFF、Production API key設定済み、`OPENAI_MODEL=gpt-4o-mini`、本番AI応答確認済みです。キー値は記録しません。
+
+・Step7-BではAI相談のprompt品質を改善しました。Productionデプロイは未実行のため、反映後に新NISA、資産未登録、危険相談、個別銘柄、機密情報のSmoke Testを実施してください。
+
 ---
 
 環境変数

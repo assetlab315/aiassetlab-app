@@ -12,13 +12,17 @@ Version1.1公開前に確認する項目です。
 - [x] Chat画面にAI回答は参考情報であり機密情報を入力しない旨を表示している
 - [x] Privacy Policyに外部AIサービス利用時の送信情報と機密情報入力禁止を明記している
 - [x] rate limitはServerless複数インスタンス間で完全共有されない制約をRunbookに記録している
-- [ ] OpenAI APIを有効化する場合の課金設定と利用上限を確認している
-- [ ] OpenAI Platformで低い月額BudgetとUsage Alertを設定している
-- [ ] Production用OpenAI API keyを作成している
-- [ ] Vercel Production環境に `OPENAI_API_KEY` を設定している
-- [ ] Vercel Production環境に必要に応じて `OPENAI_MODEL` を設定している
-- [ ] OpenAI環境変数設定後にProduction再デプロイを実施している
-- [ ] OpenAI APIを有効化する場合、AI ChatがOpenAI APIで回答することを確認している
+- [x] OpenAI Billingが有効であることを確認している
+- [x] 初回クレジット5 USD、Auto recharge OFFを確認している
+- [x] Production用OpenAI API keyを設定している
+- [x] Vercel Production環境に `OPENAI_API_KEY` を設定している
+- [x] Vercel Production環境に `OPENAI_MODEL=gpt-4o-mini` を設定している
+- [x] OpenAI環境変数設定後にProduction再デプロイを実施している
+- [x] AI ChatがProductionでOpenAI API回答を返すことを確認している
+- [x] Step7-A commit `f155569` がProduction反映済みであることを確認している
+- [x] Step7-BでAI回答品質改善promptを実装している
+- [ ] Step7-B反映後にProduction再デプロイを実施している
+- [ ] Step7-B反映後に新NISA、資産未登録、情報不足、危険相談、個別銘柄、機密情報のSmoke Testを実施している
 - [ ] OpenAI接続失敗時にfallback回答へ切り替わることを確認している
 - [ ] 本番ログにAPIキーやOpenAI response bodyが出ないことを確認している
 

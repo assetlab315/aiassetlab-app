@@ -70,7 +70,7 @@ PreviewとProductionでは、少なくとも `NEXT_PUBLIC_SITE_URL` を環境ご
 
 ## OpenAI API Policy
 
-初回Production公開では `OPENAI_API_KEY` を設定しません。Chat fallbackを正常仕様として公開可能とします。
+初回Production公開では `OPENAI_API_KEY` を設定せず、Chat fallbackを正常仕様として公開しました。2026-07-27時点でOpenAI Billingは有効、初回クレジット5 USD、Auto recharge OFF、Production API key設定済み、`OPENAI_MODEL=gpt-4o-mini`、本番AI応答確認済みです。APIキー値、カード情報、秘密情報は記録しません。
 
 コード上の確認事項:
 
@@ -84,6 +84,11 @@ PreviewとProductionでは、少なくとも `NEXT_PUBLIC_SITE_URL` を環境ご
 - OpenAI non-OK、timeout、invalid JSON、malformed responseは安全な分類ログのみを残し、本文・資産情報・APIキーはログへ出さない
 - OpenAI responseに有効な回答がない場合は `source: "fallback"` を返す
 - Chat APIは10分10回のIP単位best-effort in-memory rate limitを持つ
+- AI回答は結論を先に示し、一般論だけで終わらせず、具体的な選択肢と次にやることを1つ示す
+- 新NISA相談では、つみたて投資枠、低コストの分散型インデックス、全世界株式型と米国株式型の違い、生活防衛資金、元本保証ではない点を扱う
+- 借入投資、生活費の全額投資、損失回復目的の追加投資は後押ししない
+- 個別銘柄の上昇や売買を断定しない
+- パスワード、秘密鍵、カード番号などの機密情報は再掲しない
 
 Rate limitの制約:
 
@@ -95,17 +100,28 @@ Rate limitの制約:
 
 正式なAI回答を有効化する前の残タスク:
 
-- OpenAI API利用枠の確認
-- Billing設定
-- 低い月額BudgetとUsage Alert設定
-- Production API key作成
-- Vercel Production環境変数 `OPENAI_API_KEY` 設定
+- OpenAI API利用枠の継続確認
+- Billing残高とAuto recharge OFFの継続確認
+- 低い月額BudgetとUsage Alert設定の継続確認
+- Production API keyの安全な管理
+- Vercel Production環境変数 `OPENAI_API_KEY` の安全な管理
 - `OPENAI_MODEL` の最終判断
-- Production再デプロイ
-- 本来AI応答のSmoke Test
+- Step7-B反映後のProduction再デプロイ
+- Step7-B反映後の本来AI応答Smoke Test
 - エラー監視
 - APIコスト監視
 - OpenAI障害時もfallbackが継続することの確認
+
+Step7-B反映後のSmoke Test:
+
+- 新NISA初心者: つみたて投資枠、分散型インデックス、全世界株式型と米国株式型、生活防衛資金、次の行動が含まれる
+- 資産未登録: 配分判断には登録が必要と説明し、一般的な確認観点も示す
+- 情報不足: 答えられる範囲を先に示し、追加質問は最大1つ
+- 危険な相談: 借入投資を推奨せず、安全な代替行動を示す
+- 個別銘柄: 上昇を断定せず、判断材料と分散を示す
+- 会話継続: 直近履歴を踏まえ、同じ説明を繰り返しすぎない
+- 機密情報: パスワード等を再掲せず、入力しないよう伝える
+- Runtime LogsにAPIキー、Authorization header、相談本文、資産情報、OpenAI response body全文が出ないことを確認する
 
 ---
 
