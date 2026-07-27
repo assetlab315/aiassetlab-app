@@ -7,6 +7,7 @@ import ChatMessageList from "./ChatMessageList";
 import ChatSuggestions from "./ChatSuggestions";
 import ChatContextPanel from "./ChatContextPanel";
 import { INITIAL_CHAT_MESSAGES } from "../../features/chat/constants";
+import { loadPortfolioAssets } from "../../lib/portfolio/storage";
 import type {
   ChatApiResponse,
   ChatMessage,
@@ -14,11 +15,6 @@ import type {
   PortfolioContextAsset,
 } from "../../features/chat/types";
 
-const STORAGE_KEYS = [
-  "aiassetlab_portfolio_assets",
-  "aiAssetLabPortfolioAssets",
-  "portfolioAssets",
-];
 const MAX_CHAT_MESSAGE_LENGTH = 1000;
 
 function createId() {
@@ -51,28 +47,10 @@ function readPortfolioContext(): ChatUserContext {
     };
   }
 
-  const raw = STORAGE_KEYS.map((key) => window.localStorage.getItem(key)).find(Boolean);
-
-  if (!raw) {
-    return {
-      totalAssets: 0,
-      monthlyContribution: 0,
-      assetCount: 0,
-      assets: [],
-    };
-  }
-
   try {
-    const parsed = JSON.parse(raw);
-    const sourceAssets = Array.isArray(parsed)
-      ? parsed
-      : Array.isArray(parsed.assets)
-        ? parsed.assets
-        : [];
-
-    const assets = sourceAssets
-      .filter((asset): asset is Record<string, unknown> => Boolean(asset))
-      .map(normalizeAsset);
+    const assets = loadPortfolioAssets()
+      .filter(Boolean)
+      .map((asset) => normalizeAsset(asset as unknown as Record<string, unknown>));
 
     return {
       totalAssets: assets.reduce((sum, asset) => sum + (asset.amount || 0), 0),
@@ -99,6 +77,7 @@ export default function ChatClient() {
   const [isSending, setIsSending] = useState(false);
   const [isFallbackAnswer, setIsFallbackAnswer] = useState(false);
   const [noticeMessage, setNoticeMessage] = useState("");
+  const [isContextReady, setIsContextReady] = useState(false);
   const [context, setContext] = useState<ChatUserContext>({
     totalAssets: 0,
     monthlyContribution: 0,
@@ -110,6 +89,7 @@ export default function ChatClient() {
 
   useEffect(() => {
     setContext(readPortfolioContext());
+    setIsContextReady(true);
   }, []);
 
   useEffect(() => {
@@ -122,13 +102,18 @@ export default function ChatClient() {
       ? "相談内容は1,000文字以内で入力してください。"
       : "";
   const canSend = useMemo(
-    () => inputLength > 0 && !inputError && !isSending,
-    [inputError, inputLength, isSending],
+    () => inputLength > 0 && !inputError && !isSending && isContextReady,
+    [inputError, inputLength, isContextReady, isSending],
   );
 
   const sendMessage = async (text: string) => {
     const trimmed = text.trim();
-    if (!trimmed || trimmed.length > MAX_CHAT_MESSAGE_LENGTH || isSendingRef.current) {
+    if (
+      !trimmed ||
+      trimmed.length > MAX_CHAT_MESSAGE_LENGTH ||
+      isSendingRef.current ||
+      !isContextReady
+    ) {
       if (trimmed.length > MAX_CHAT_MESSAGE_LENGTH) {
         setNoticeMessage("相談内容は1,000文字以内で入力してください。");
       }
@@ -143,7 +128,9 @@ export default function ChatClient() {
     };
 
     const nextMessages = [...messages, userMessage];
+    const latestContext = readPortfolioContext();
     isSendingRef.current = true;
+    setContext(latestContext);
     setMessages(nextMessages);
     setInput("");
     setIsSending(true);
@@ -158,7 +145,7 @@ export default function ChatClient() {
         body: JSON.stringify({
           message: trimmed,
           history: nextMessages,
-          context,
+          context: latestContext,
         }),
       });
 
@@ -239,7 +226,13 @@ export default function ChatClient() {
         </section>
 
         <aside className="space-y-4">
-          <ChatContextPanel context={context} onRefresh={() => setContext(readPortfolioContext())} />
+          <ChatContextPanel
+            context={context}
+            onRefresh={() => {
+              setContext(readPortfolioContext());
+              setIsContextReady(true);
+            }}
+          />
 
           <div className="rounded-3xl bg-white p-5 shadow-sm">
             <h2 className="text-lg font-bold text-slate-900">次に進む場所</h2>

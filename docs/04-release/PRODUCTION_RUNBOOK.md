@@ -128,6 +128,21 @@ Step7-B反映後のSmoke Test:
 - Portfolio-aware: 現金90% / 株式10%、暗号資産70%、1銘柄100%、資産なしの4ケースを確認する
 - Runtime LogsにAPIキー、Authorization header、相談本文、資産情報、OpenAI response body全文が出ないことを確認する
 
+### Step7-C.1 Portfolio Context Delivery Fix
+
+Step7-C Production Smoke TestはNo-Goでした。資産未登録、現金90% / 株式10%、暗号資産70%の3ケースでPortfolio-aware回答が反映されませんでした。
+
+原因:
+
+- Portfolioの実保存キーは `aiassetlab_portfolio_assets_v1`
+- ChatClientは古い候補キーだけを読んでおり、実際のPortfolioデータを `/api/chat` へ送れていませんでした
+
+修正後の確認:
+
+- `npm run test:portfolio-context` で、資産なし、現金90% / 株式10%、暗号資産70%、1資産100%の最終promptを確認する
+- OpenAI messagesのuser contentに `Portfolio Insights:` が含まれることを確認する
+- Production再反映後、同じ3ケースでSmoke Testを再実施する
+
 ---
 
 ## Analytics and Verification Policy

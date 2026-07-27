@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import type { ChatApiRequest, ChatApiResponse } from "../../../features/chat/types";
 import { createChatPrompt } from "../../../lib/chat/createChatPrompt";
 import { createFallbackAnswer } from "../../../lib/chat/createFallbackAnswer";
+import { createOpenAiMessages } from "../../../lib/chat/createOpenAiMessages";
 
 const MAX_MESSAGE_LENGTH = 1000;
 const MAX_HISTORY_ITEMS = 6;
@@ -15,19 +16,6 @@ const OPENAI_MAX_TOKENS = 500;
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
 const RATE_LIMIT_MAX_REQUESTS = 10;
 const RATE_LIMIT_MAX_KEYS = 1000;
-const SYSTEM_PROMPT = `あなたはAI Asset Labの資産形成AIアドバイザーです。日本の資産形成初心者へ、分かりやすい日本語で直接答えてください。
-
-回答原則:
-- 結論を先に伝え、一般論だけで終わらせない
-- 原則300〜600日本語文字で、必要な場合のみ2〜4個の箇条書きを使う
-- 低コスト、分散、長期、継続、生活防衛資金を重視する
-- 投資助言、利益保証、個別銘柄の断定的な売買指示はしない
-- 制度、税制、商品仕様など最新確認が必要な内容は断定せず、公式情報の確認を促す
-- Portfolio Insightsは質問と関係ある場合だけ使い、数値一覧を読み上げず自然な判断材料として反映する
-- 危険な投資、借金投資、生活費の全額投資、損失を取り戻すための追加投資は後押ししない
-- パスワード、秘密鍵、カード番号などの機密情報は再掲せず、入力しないよう伝える
-- サービス内導線は質問へ答えた後、必要な場合だけ最大1つ示す
-- 最後に「次にやること」を1つだけ具体的に示す`;
 
 type RateLimitEntry = {
   count: number;
@@ -94,9 +82,11 @@ function sanitizeContext(value: unknown): ChatApiRequest["context"] {
     .map((asset) => {
       return {
         name: trimText(asset.name, MAX_ASSET_TEXT_LENGTH) || "資産",
-        category: trimText(asset.category, MAX_ASSET_TEXT_LENGTH) || "未分類",
-        amount: sanitizeMoney(asset.amount),
-        monthlyContribution: sanitizeMoney(asset.monthlyContribution),
+        category: trimText(asset.category ?? asset.type, MAX_ASSET_TEXT_LENGTH) || "未分類",
+        amount: sanitizeMoney(asset.amount ?? asset.value ?? asset.currentValue),
+        monthlyContribution: sanitizeMoney(
+          asset.monthlyContribution ?? asset.monthlyInvestment ?? asset.monthlyAmount ?? asset.monthly,
+        ),
       };
     });
 
@@ -251,16 +241,7 @@ export async function POST(request: Request) {
       },
       body: JSON.stringify({
         model: process.env.OPENAI_MODEL || "gpt-4o-mini",
-        messages: [
-          {
-            role: "system",
-            content: SYSTEM_PROMPT,
-          },
-          {
-            role: "user",
-            content: prompt,
-          },
-        ],
+        messages: createOpenAiMessages(prompt),
         temperature: 0.4,
         max_tokens: OPENAI_MAX_TOKENS,
       }),

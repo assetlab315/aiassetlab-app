@@ -78,6 +78,10 @@ AI Chat運用メモ
 
 ・AIにはInsightsを質問と関係ある場合のみ自然に使わせ、数値一覧を読み上げさせない方針です。資産未登録時は「資産情報未登録」のみ渡します。
 
+・Step7-C Production Smoke TestはNo-Goでした。原因はChatClientが実際のPortfolio保存キー `aiassetlab_portfolio_assets_v1` を読んでいなかったことです。Step7-C.1で `loadPortfolioAssets()` 経由に修正し、送信直前に最新contextを再取得するようにしました。
+
+・Portfolio context deliveryは `npm run test:portfolio-context` で確認できます。OpenAI APIは呼ばず、最終promptとOpenAI messagesにInsightsが含まれることを検証します。
+
 ---
 
 環境変数

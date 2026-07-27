@@ -30,31 +30,29 @@ function toPercent(value: number) {
 }
 
 function normalizeCategory(asset: PortfolioContextAsset): PortfolioInsightCategory {
-  const source = `${asset.category || ""} ${asset.name || ""}`.toLowerCase();
+  const category = `${asset.category || ""}`.toLowerCase();
+  const name = `${asset.name || ""}`.toLowerCase();
 
-  if (source.includes("cash") || source.includes("現金") || source.includes("預金")) {
+  if (category === "cash" || category.includes("現金") || category.includes("預金")) {
     return "cash";
   }
-  if (source.includes("crypto") || source.includes("暗号") || source.includes("仮想通貨")) {
+  if (category === "crypto" || category.includes("暗号") || category.includes("仮想通貨")) {
     return "crypto";
   }
-  if (source.includes("reit") || source.includes("リート")) {
-    return "reit";
+  if (category === "stock" || category.includes("株式") || category.includes("個別株")) {
+    return "stock";
   }
-  if (source.includes("etf")) {
-    return "etf";
-  }
-  if (source.includes("bond") || source.includes("債券")) {
-    return "bond";
-  }
-  if (source.includes("gold") || source.includes("金")) {
-    return "gold";
-  }
-  if (source.includes("fund") || source.includes("投資信託") || source.includes("nisa")) {
+  if (category === "fund" || category.includes("投資信託") || category.includes("nisa")) {
     return "fund";
   }
-  if (source.includes("stock") || source.includes("株")) {
-    return "stock";
+  if (category === "other" || category === "pension" || category === "未分類") {
+    if (name.includes("reit") || name.includes("リート")) return "reit";
+    if (name.includes("etf")) return "etf";
+    if (name.includes("bond") || name.includes("債券")) return "bond";
+    if (name.includes("gold") || name.includes("金")) return "gold";
+    if (name.includes("暗号") || name.includes("仮想通貨")) return "crypto";
+    if (name.includes("投資信託") || name.includes("nisa")) return "fund";
+    if (name.includes("株")) return "stock";
   }
 
   return "other";
@@ -184,8 +182,8 @@ export function createPortfolioInsights(
   }
 
   if (cashLevel === "high") {
-    strengths.push("現金比率が高く余力があります");
-    recommendations.push("長期積立を少しずつ検討できます");
+    strengths.push("現金比率が高めです");
+    recommendations.push("積立投資を段階的に検討できます");
   }
   if (cashLevel === "low") {
     warnings.push("現金比率が低めです");
@@ -193,7 +191,7 @@ export function createPortfolioInsights(
   }
   if (cryptoLevel === "high") {
     warnings.push("暗号資産比率が高めです");
-    recommendations.push("値動きの大きい資産への偏りを抑えましょう");
+    recommendations.push("新規積立では分散を優先しましょう");
   }
   if (diversification === "Excellent" || diversification === "Good") {
     strengths.push("分散投資が進んでいます");

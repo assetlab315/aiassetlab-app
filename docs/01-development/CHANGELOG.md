@@ -2,6 +2,25 @@
 
 ## 2026-07-27
 
+### Deployment Step 7-C.1 - Portfolio Context Delivery Fix
+
+#### Fixed
+
+- Step7-C Production Smoke TestはNo-Go。資産未登録、現金90% / 株式10%、暗号資産70%の3ケースでPortfolio-aware回答が反映されませんでした
+- ChatClientが実際のPortfolio保存キー `aiassetlab_portfolio_assets_v1` を読んでおらず、登録済みportfolioが `/api/chat` へ送られていない問題を修正
+- ChatClientをPortfolio / Dashboardと同じ `loadPortfolioAssets()` 経由で読み込む構成へ変更
+- 送信直前に最新portfolio contextを再取得し、hydration完了前の送信を抑止
+- API validationで `amount/value/currentValue` と `monthlyContribution/monthlyInvestment/monthlyAmount/monthly` を扱えるように修正
+- Portfolio Insightsのカテゴリ推定を正式category優先へ修正し、資産名推定は補助に限定
+- 最終promptとOpenAI messagesへPortfolio Insightsが含まれることを検証する `test:portfolio-context` を追加
+
+#### Notes
+
+- Productionデプロイ、Vercel設定変更、OpenAI設定変更は実行していません
+- 修正後、同じ3ケースでProduction Smoke Testが必要です
+
+## 2026-07-27
+
 ### Deployment Step 7-C - Portfolio-Aware AI
 
 #### Added

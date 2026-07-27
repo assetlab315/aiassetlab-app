@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "test:portfolio-context": "node scripts/verify-portfolio-context.js",
     "start": "next start"
   },
   "engines": {

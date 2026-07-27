@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Deployment Step 7-C
+### Deployment Step 7-C.1
 
 **Status**
 
@@ -12,7 +12,7 @@
 
 ## Current Goal
 
-Portfolio-Aware AI
+Portfolio Context Delivery Fix
 
 ---
 
@@ -345,15 +345,29 @@ Portfolio-Aware AI
 - Productionデプロイ、Vercel設定変更、OpenAI設定変更、モデル変更、DB変更は未実行
 - Step7-C反映後にPortfolio-aware回答のProduction Smoke Testが必要
 
+### Deployment Step 7-C.1 - Portfolio Context Delivery Fix
+
+- Step7-C Production Smoke TestはNo-Go
+- 資産未登録、現金90% / 株式10%、暗号資産70%の3ケースでPortfolio-aware回答が反映されなかった
+- 根本原因は、ChatClientが実際のPortfolio保存キー `aiassetlab_portfolio_assets_v1` を読んでおらず、古い候補キーだけを見ていたこと
+- ChatClientをPortfolio / Dashboardと同じ `loadPortfolioAssets()` 経由で読み込む構成へ変更
+- 送信直前に最新portfolio contextを再取得し、asset編集後のstale stateを避けるように修正
+- portfolio hydration完了前は送信不可にし、読み込み前の空データ送信を抑止
+- API validationで実データ構造に合わせ、`amount/value/currentValue` と `monthlyContribution/monthlyInvestment/monthlyAmount/monthly` を許可
+- `createPortfolioInsights` は正式categoryを最優先し、ETF / REIT / 債券 / 金などは資産名推定を補助に限定
+- 最終promptとOpenAI messagesへPortfolio Insightsが含まれることを確認する `scripts/verify-portfolio-context.js` と `npm run test:portfolio-context` を追加
+- Productionデプロイ、Vercel設定変更、OpenAI設定変更、モデル変更、DB変更は未実行
+- 修正後、同じ3ケースでProduction Smoke Testが必要
+
 ## Next Sprint
 
-Step7-C Production Smoke Test
+Step7-C.1 Production Smoke Test
 
 Portfolio-Aware AI Verification
 
 予定
 
-- Step7-C commitをProductionへ反映
+- Step7-C.1 commitをProductionへ反映
 - 新NISA、資産未登録、情報不足、危険相談、個別銘柄、会話継続、機密情報の最小Smoke Test
 - 現金90% / 株式10%で、現金比率高めと積立提案が自然に出ることを確認
 - 暗号資産70%で、集中と暗号資産比率への警告が出ることを確認
