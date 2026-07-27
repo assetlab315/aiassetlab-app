@@ -74,6 +74,10 @@ AI Chat運用メモ
 
 ・Step7-BではAI相談のprompt品質を改善しました。Productionデプロイは未実行のため、反映後に新NISA、資産未登録、危険相談、個別銘柄、機密情報のSmoke Testを実施してください。
 
+・Step7-CではAI相談へPortfolio Summaryではなく `PortfolioInsights` を渡すようにしました。Insightsは総資産、カテゴリ比率、集中度、分散状態、warnings / strengths / recommendationsを持ちます。
+
+・AIにはInsightsを質問と関係ある場合のみ自然に使わせ、数値一覧を読み上げさせない方針です。資産未登録時は「資産情報未登録」のみ渡します。
+
 ---
 
 環境変数

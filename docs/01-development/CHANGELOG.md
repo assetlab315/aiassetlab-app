@@ -2,6 +2,26 @@
 
 ## 2026-07-27
 
+### Deployment Step 7-C - Portfolio-Aware AI
+
+#### Added
+
+- `PortfolioInsights` 型と `createPortfolioInsights` utilityを追加
+- Chat AIへPortfolio Summaryではなく、総資産、カテゴリ比率、集中度、分散状態、現金/株式/暗号資産の状態、warnings / strengths / recommendationsを含む分析済みInsightsを渡す構成へ変更
+
+#### Changed
+
+- Chat promptから個別資産一覧の読み上げを削減し、300文字程度のPortfolio Insightsへ圧縮
+- system promptに、Portfolio Insightsを質問と関係ある場合のみ自然に利用し、数値一覧を読み上げない方針を追加
+- 資産未登録時はInsightsを生成せず、「資産情報未登録」のみAIへ渡す構成へ整理
+
+#### Notes
+
+- Productionデプロイ、Vercel設定変更、OpenAI設定変更、モデル変更、DB変更は実行していません
+- Step7-C反映後にPortfolio-aware回答のProduction Smoke Testが必要です
+
+## 2026-07-27
+
 ### Deployment Step 7-B - AI Response Quality Improvement
 
 #### Changed

@@ -85,6 +85,10 @@ PreviewとProductionでは、少なくとも `NEXT_PUBLIC_SITE_URL` を環境ご
 - OpenAI responseに有効な回答がない場合は `source: "fallback"` を返す
 - Chat APIは10分10回のIP単位best-effort in-memory rate limitを持つ
 - AI回答は結論を先に示し、一般論だけで終わらせず、具体的な選択肢と次にやることを1つ示す
+- Portfolio-aware回答では、個別資産一覧ではなく分析済みPortfolio InsightsをAIへ渡す
+- Portfolio Insightsは総資産、カテゴリ比率、集中度、分散状態、現金/株式系/暗号資産の状態、warnings / strengths / recommendationsを含む
+- AIはPortfolio Insightsを質問と関係ある場合のみ自然に使い、数値一覧を読み上げない
+- 資産未登録時はInsightsを生成せず、「資産情報未登録」のみ渡す
 - 新NISA相談では、つみたて投資枠、低コストの分散型インデックス、全世界株式型と米国株式型の違い、生活防衛資金、元本保証ではない点を扱う
 - 借入投資、生活費の全額投資、損失回復目的の追加投資は後押ししない
 - 個別銘柄の上昇や売買を断定しない
@@ -121,6 +125,7 @@ Step7-B反映後のSmoke Test:
 - 個別銘柄: 上昇を断定せず、判断材料と分散を示す
 - 会話継続: 直近履歴を踏まえ、同じ説明を繰り返しすぎない
 - 機密情報: パスワード等を再掲せず、入力しないよう伝える
+- Portfolio-aware: 現金90% / 株式10%、暗号資産70%、1銘柄100%、資産なしの4ケースを確認する
 - Runtime LogsにAPIキー、Authorization header、相談本文、資産情報、OpenAI response body全文が出ないことを確認する
 
 ---

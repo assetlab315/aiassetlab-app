@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Deployment Step 7-B
+### Deployment Step 7-C
 
 **Status**
 
@@ -12,7 +12,7 @@
 
 ## Current Goal
 
-AI Response Quality Improvement
+Portfolio-Aware AI
 
 ---
 
@@ -331,16 +331,34 @@ AI Response Quality Improvement
 - Productionデプロイ、Vercel環境変数変更、OpenAI外部設定変更、モデル変更は未実行
 - Step7-B反映後にProduction AI応答のSmoke Testが必要
 
+### Deployment Step 7-C - Portfolio-Aware AI
+
+- AI相談へPortfolio Summaryではなく分析済みPortfolio Insightsを渡す構成へ変更
+- `PortfolioInsights` 型を追加し、総資産、カテゴリ別比率、集中度、分散状態、現金比率、株式系比率、暗号資産比率、資産件数、毎月積立額、riskLevel、warnings、strengths、recommendationsを保持
+- `lib/chat/createPortfolioInsights.ts` を追加し、Portfolio文脈からAI向けの短い分析結果を生成
+- 現金、株式、投資信託、ETF、REIT、債券、暗号資産、金、その他のカテゴリ比率を生成
+- 1資産50% / 70% / 90%以上の集中度、Excellent / Good / Moderate / Poor の分散状態を生成
+- 現金比率、株式系比率、暗号資産比率の状態を判定
+- promptでは個別資産一覧ではなく、300文字程度のPortfolio Insightsのみを渡すように整理
+- system promptに、Insightsを必要時のみ利用し、数値一覧を読み上げない方針を追加
+- 資産未登録時はInsightsを生成せず、「資産情報未登録」のみAIへ渡す
+- Productionデプロイ、Vercel設定変更、OpenAI設定変更、モデル変更、DB変更は未実行
+- Step7-C反映後にPortfolio-aware回答のProduction Smoke Testが必要
+
 ## Next Sprint
 
-Step7-B Production Smoke Test
+Step7-C Production Smoke Test
 
-AI Response Quality Verification
+Portfolio-Aware AI Verification
 
 予定
 
-- Step7-B commitをProductionへ反映
+- Step7-C commitをProductionへ反映
 - 新NISA、資産未登録、情報不足、危険相談、個別銘柄、会話継続、機密情報の最小Smoke Test
+- 現金90% / 株式10%で、現金比率高めと積立提案が自然に出ることを確認
+- 暗号資産70%で、集中と暗号資産比率への警告が出ることを確認
+- 1銘柄100%で、集中投資の注意が出ることを確認
+- 資産なしで、一般回答になることを確認
 - OpenAI responseが `source: "openai"` で返ることを確認
 - fallback継続、rate limit、timeout時の表示確認
 - Runtime LogsにAPIキーや本文が出ないことを確認

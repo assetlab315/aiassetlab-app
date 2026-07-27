@@ -21,8 +21,12 @@ Version1.1公開前に確認する項目です。
 - [x] AI ChatがProductionでOpenAI API回答を返すことを確認している
 - [x] Step7-A commit `f155569` がProduction反映済みであることを確認している
 - [x] Step7-BでAI回答品質改善promptを実装している
+- [x] Step7-CでPortfolio SummaryではなくPortfolio InsightsをAIへ渡す構成を実装している
+- [x] Portfolio Insightsにカテゴリ比率、集中度、分散状態、warnings / strengths / recommendationsを含めている
+- [x] 資産未登録時は「資産情報未登録」のみAIへ渡す構成を確認している
 - [ ] Step7-B反映後にProduction再デプロイを実施している
 - [ ] Step7-B反映後に新NISA、資産未登録、情報不足、危険相談、個別銘柄、機密情報のSmoke Testを実施している
+- [ ] Step7-C反映後に現金90% / 株式10%、暗号資産70%、1銘柄100%、資産なしのSmoke Testを実施している
 - [ ] OpenAI接続失敗時にfallback回答へ切り替わることを確認している
 - [ ] 本番ログにAPIキーやOpenAI response bodyが出ないことを確認している
 
