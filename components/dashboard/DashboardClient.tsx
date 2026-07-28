@@ -11,6 +11,7 @@ import DashboardPremiumPreviewCard from "./DashboardPremiumPreviewCard";
 import DashboardReleaseCheckCard from "./DashboardReleaseCheckCard";
 import DashboardTodayAiCard from "./DashboardTodayAiCard";
 import PortfolioChangeCard from "./PortfolioChangeCard";
+import PortfolioReviewCard from "./PortfolioReviewCard";
 import FeatureNavigation from "../common/FeatureNavigation";
 import SectionHeader from "../common/SectionHeader";
 import PageContainer from "../layout/PageContainer";
@@ -24,6 +25,7 @@ import { loadPortfolioAssets } from "../../lib/portfolio/storage";
 import { createPortfolioInsights } from "../../lib/chat/createPortfolioInsights";
 import { createAssetHealthScore } from "../../lib/dashboard/createAssetHealthScore";
 import { createDashboardChangeSummary } from "../../lib/dashboard/createDashboardChangeSummary";
+import { createPortfolioReview } from "../../lib/dashboard/createPortfolioReview";
 import {
   createDashboardAssetImpact,
   createDashboardDailyCheck,
@@ -104,6 +106,18 @@ export default function DashboardClient() {
   const premiumPreview = useMemo(
     () => createDashboardPremiumPreview(assets, summary),
     [assets, summary],
+  );
+  const portfolioReview = useMemo(
+    () =>
+      isReady && dashboardInsights && (!portfolioInsights || changeSummary)
+        ? createPortfolioReview({
+            portfolioInsights,
+            dashboardInsights,
+            assetHealthScore,
+            portfolioChangeSummary: changeSummary,
+          })
+        : null,
+    [assetHealthScore, changeSummary, dashboardInsights, isReady, portfolioInsights],
   );
 
   useEffect(() => {
@@ -226,6 +240,23 @@ export default function DashboardClient() {
         </div>
       </Card>
 
+      <DashboardDailyCheckCard
+        dailyCheck={dailyCheck}
+        dateLabel={dateLabel || "今日"}
+        isChecked={isDailyChecked}
+        onCheck={handleDailyCheck}
+      />
+
+      <DashboardInsightCard insight={dashboardInsights} />
+
+      <AssetHealthScoreCard healthScore={assetHealthScore} />
+
+      {!isReady || portfolioInsights ? (
+        <PortfolioChangeCard changeSummary={changeSummary} />
+      ) : null}
+
+      <PortfolioReviewCard review={portfolioReview} />
+
       <section className="space-y-4">
         <SectionHeader
           eyebrow="今日やること"
@@ -246,21 +277,6 @@ export default function DashboardClient() {
           ))}
         </div>
       </section>
-
-      <DashboardDailyCheckCard
-        dailyCheck={dailyCheck}
-        dateLabel={dateLabel || "今日"}
-        isChecked={isDailyChecked}
-        onCheck={handleDailyCheck}
-      />
-
-      <DashboardInsightCard insight={dashboardInsights} />
-
-      <AssetHealthScoreCard healthScore={assetHealthScore} />
-
-      {!isReady || portfolioInsights ? (
-        <PortfolioChangeCard changeSummary={changeSummary} />
-      ) : null}
 
       <DashboardAssetImpactCard impact={assetImpact} />
 

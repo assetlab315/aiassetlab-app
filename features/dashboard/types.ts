@@ -31,6 +31,19 @@ export type AssetHealthScore = {
   state: "empty" | "warning" | "balanced" | "strong";
 };
 
+export type PortfolioReviewHighlight = {
+  tone: "positive" | "neutral" | "caution";
+  text: string;
+};
+
+export type PortfolioReview = {
+  title: string;
+  summary: string;
+  highlights: PortfolioReviewHighlight[];
+  nextAction: string;
+  confidence: "high" | "medium";
+};
+
 export type DashboardAssetImpact = {
   label: string;
   title: string;

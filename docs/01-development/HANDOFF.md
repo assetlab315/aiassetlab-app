@@ -112,6 +112,12 @@ AI Chat運用メモ
 
 ・Production UIから `デモ状態に戻す` ボタンは削除済みです。資産0件ではStep9-A baseline snapshotを作成しません。検証は `npm run test:no-demo-seeding` で行います。
 
+・Step9-BではDashboardに `AIレビュー` カードを追加しました。OpenAI APIは使わず、`PortfolioInsights`、`DashboardInsights`、`AssetHealthScore`、`DashboardChangeSummary` だけから決定論的に生成します。
+
+・AIレビューはsummary 1〜2文、highlight最大3件、next action 1件です。Today Action、AI Insight、Asset Health Scoreと矛盾しないことを優先します。検証は `npm run test:portfolio-review` で行います。
+
+・レビュー文では「絶対」「必ず」「失敗」「危険」「儲かる」「買うべき」「売るべき」「あなたは」を避けます。投資助言ではなく、現在地と次に検討する行動の整理として扱ってください。
+
 ---
 
 環境変数

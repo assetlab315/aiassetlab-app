@@ -1,5 +1,27 @@
 # AI Asset Lab - Changelog
 
+## 2026-07-28
+
+### Deployment Step 9-B - AI Portfolio Review
+
+#### Added
+
+- Dashboardに `AIレビュー` カードを追加
+- `PortfolioInsights`、`DashboardInsights`、`AssetHealthScore`、`DashboardChangeSummary` から決定論的に総評を生成する `createPortfolioReview()` を追加
+- `PortfolioReview` / `PortfolioReviewHighlight` 型を追加
+- `test:portfolio-review` を追加し、no assets、no history、improved、mixed、needs_attention、no_change、禁止語、最大highlight数、Today Action / AI Insight / Health Score整合性を検証
+
+#### Changed
+
+- Dashboardのデータフローを、Change Summary確定後にAIレビューを生成する構成へ拡張
+- ReviewはOpenAI APIを呼ばず、既存のローカル分析結果だけを使う構成に整理
+- highlightは最大3件、summaryは1〜2文、next actionは既存Today Actionと矛盾しない文言へ制御
+
+#### Notes
+
+- OpenAI API、Chat API、Supabase、DB、Vercel設定、Productionデプロイは実行していません
+- Production反映後にAIレビューの状態別Smoke Testが必要です
+
 ## 2026-07-27
 
 ### Deployment Step 9-A.1 - Remove Automatic Demo Portfolio Seeding

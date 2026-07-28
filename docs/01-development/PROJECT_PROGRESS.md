@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Deployment Step 9-A.1
+### Deployment Step 9-B
 
 **Status**
 
@@ -12,7 +12,7 @@
 
 ## Current Goal
 
-Remove Automatic Demo Portfolio Seeding
+AI Portfolio Review
 
 ---
 
@@ -113,6 +113,18 @@ Remove Automatic Demo Portfolio Seeding
 - 資産0件ではStep9-A baseline snapshotを作成しない
 - `npm run test:no-demo-seeding` でkeyなし、プライベートブラウザ相当、不正JSON、既存資産、初回snapshotを検証
 - Productionデプロイは未実行。反映後にFirefox Private / Chrome Incognito等で0件表示を確認する
+
+### Dashboard v3.5 / AI Portfolio Review
+
+- Dashboardに `AIレビュー` カードを追加
+- `PortfolioInsights`、`DashboardInsights`、`AssetHealthScore`、`DashboardChangeSummary` だけを使う決定論的レビューを生成
+- OpenAI API、Chat API、Supabase、DBは不使用
+- no assets、no history、improved、mixed、needs_attention、no_changeに応じて短いsummaryを出し分け
+- highlightは最大3件に制限し、良かった点、維持したい点、改善したい点を色だけに依存せず表示
+- next actionは既存Dashboard Today Actionと矛盾しない文言へ統一
+- AI InsightやAsset Health Scoreと矛盾する総評を避けるテストを追加
+- `npm run test:portfolio-review` で禁止語、summary長、highlight数、整合性、OpenAI未使用を検証
+- Productionデプロイは未実行。反映後にAIレビューの状態別Smoke Testが必要
 
 ### Dashboard v3.1 / Monetization Foundation
 

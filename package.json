@@ -10,6 +10,7 @@
     "test:asset-health-score": "node scripts/verify-asset-health-score.js",
     "test:portfolio-change": "node scripts/verify-portfolio-change-tracking.js",
     "test:no-demo-seeding": "node scripts/verify-no-demo-portfolio-seeding.js",
+    "test:portfolio-review": "node scripts/verify-portfolio-review.js",
     "start": "next start"
   },
   "engines": {

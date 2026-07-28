@@ -248,6 +248,28 @@ Step9-A.1反映後のSmoke Test:
 - 通常ブラウザの既存資産が削除されず維持されていることを確認する
 - 可能な範囲でChrome Incognito、Safari Privateでも同じ確認を行う
 
+### Step9-B AI Portfolio Review
+
+- Dashboardの `AIレビュー` はOpenAI APIを呼ばず、既存のローカル分析結果だけで生成する
+- 経路は `PortfolioInsights` → `DashboardInsights` → `AssetHealthScore` → `DashboardChangeSummary` → `createPortfolioReview()` → `PortfolioReviewCard`
+- summaryは1〜2文、highlightは最大3件、next actionは1件
+- next actionはDashboardのToday Actionと矛盾させない
+- AI Insightが暗号資産偏重や現金偏重を示している場合、Reviewで反対の総評を出さない
+- Health Scoreが低い場合、Reviewで非常に健全と見える表現を出さない
+- レビュー文では強い断定、売買指示、利益を想起させる表現を避ける
+
+Step9-B反映後のSmoke Test:
+
+- 資産0件: 「資産が登録されると、レビューを表示します」系のempty reviewが表示される
+- no history: 現在のPortfolioを基準に次回から変化をレビューする旨が表示される
+- improved: 積立開始や分散改善が良い変化として表示される
+- mixed: 改善点と確認点が同時に表示され、scoreだけで改善と断定しない
+- needs_attention: 配分の偏りと次の分散行動が表示される
+- no_change: 大きな変化なしと継続確認が表示される
+- highlightが最大3件で、Mobile 375pxでも横スクロールや文字切れがない
+- AI Insight、Asset Health、Portfolio Change、Today Actionと内容が矛盾しない
+- OpenAI APIや `/api/chat` が呼ばれていないことをNetworkまたはRuntime Logsで確認する
+
 ---
 
 ## Analytics and Verification Policy
