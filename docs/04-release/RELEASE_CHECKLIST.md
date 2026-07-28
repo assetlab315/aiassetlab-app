@@ -53,6 +53,11 @@ Version1.1公開前に確認する項目です。
 - [x] AIレビューはOpenAI APIを呼ばず、既存のPortfolio / Dashboard / Health / Change分析結果だけで生成している
 - [x] AIレビューのhighlightは最大3件、summaryは1〜2文、next actionは1件に制御している
 - [x] `npm run test:portfolio-review` でToday Action、AI Insight、Asset Healthとの整合性を確認している
+- [x] Step10-A1でSupabase Auth / Google OAuth開始 / Email OTP基盤 / callback / logout / Account画面を追加している
+- [x] Step10-A1でPortfolio Cloud Sync Repository、migration確認、conflict選択、二段階overwrite確認を追加している
+- [x] Step10-A1で `portfolio_assets` / `portfolio_snapshots` のRLS付きSQL migrationを作成している
+- [x] Step10-A1でService Role Keyを使用しない構成を確認している
+- [x] `npm run test:auth-foundation` / `npm run test:portfolio-sync` を追加している
 - [ ] Step7-B反映後にProduction再デプロイを実施している
 - [ ] Step7-B反映後に新NISA、資産未登録、情報不足、危険相談、個別銘柄、機密情報のSmoke Testを実施している
 - [ ] Step7-C反映後に現金90% / 株式10%、暗号資産70%、1銘柄100%、資産なしのSmoke Testを実施している
@@ -63,6 +68,10 @@ Version1.1公開前に確認する項目です。
 - [ ] Step9-A反映後にPortfolio Change Trackingの履歴なし、積立開始、積立停止、暗号資産集中発生、単一資産集中解消、mixed、小さな変化、同一内容再保存、全資産削除、不正localStorageをProductionで確認している
 - [ ] Step9-A.1反映後にFirefox Private / Chrome IncognitoでPortfolioが0件から開始し、デモ資産2件が自動保存されないことを確認している
 - [ ] Step9-B反映後にAIレビューのno assets、no history、improved、mixed、needs_attention、no_changeをProductionで確認している
+- [ ] Step10-A2でSupabase SQL migrationを実Projectへ適用している
+- [ ] Step10-A2でGoogle OAuth Providerとcallback URLを設定している
+- [ ] Step10-A2でPreview login / callback / migration / conflict / logoutを確認している
+- [ ] Step10-A2でRLS isolationをUser A / User Bで確認している
 - [ ] OpenAI接続失敗時にfallback回答へ切り替わることを確認している
 - [ ] 本番ログにAPIキーやOpenAI response bodyが出ないことを確認している
 

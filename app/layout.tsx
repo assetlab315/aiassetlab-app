@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Script from "next/script";
 import AppFooter from "../components/layout/AppFooter";
+import AuthNavItem from "../components/auth/AuthNavItem";
 import { BarChart3, Bot, Gauge, Home, LayoutDashboard } from "lucide-react";
 
 const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://aiassetlab.jp").replace(
@@ -163,12 +164,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <div className="hidden lg:block">
                   <p className="text-sm font-bold text-slate-500">AIで、資産形成をもっとシンプルに。</p>
                 </div>
-                <a
-                  href={siteUrl}
-                  className="rounded-xl border px-4 py-2 text-sm font-bold hover:bg-slate-50 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-100"
-                >
-                  Webサイトへ
-                </a>
+                <div className="flex items-center gap-2">
+                  <AuthNavItem />
+                  <a
+                    href={siteUrl}
+                    className="rounded-xl border px-4 py-2 text-sm font-bold hover:bg-slate-50 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-100"
+                  >
+                    Webサイトへ
+                  </a>
+                </div>
               </div>
               <nav className="flex gap-2 overflow-x-auto px-4 pb-3 lg:hidden">
                 {nav.map((item) => (

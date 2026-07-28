@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Deployment Step 9-B
+### Deployment Step 10-A1
 
 **Status**
 
@@ -12,7 +12,7 @@
 
 ## Current Goal
 
-AI Portfolio Review
+Supabase Authentication and Portfolio Cloud Sync Foundation
 
 ---
 
@@ -125,6 +125,20 @@ AI Portfolio Review
 - AI InsightやAsset Health Scoreと矛盾する総評を避けるテストを追加
 - `npm run test:portfolio-review` で禁止語、summary長、highlight数、整合性、OpenAI未使用を検証
 - Productionデプロイは未実行。反映後にAIレビューの状態別Smoke Testが必要
+
+### Auth and Portfolio Sync Foundation
+
+- Supabase Auth基盤、Google OAuth開始、Email OTP基盤、Auth callback、logout、Account画面を追加
+- Next.js 14.2.23では `middleware.ts` を採用し、`@supabase/ssr` でCookie session refreshを行う
+- 未ログイン時は従来どおり `localStorage` をSource of Truthとして維持
+- ログイン済みでmigration解決後はSupabaseをSource of Truthとし、保存成功後にlocalStorageへcacheする
+- localあり / cloudなしでは確認なしにuploadしない
+- localあり / cloudありでfingerprintが異なる場合は自動mergeせず、アカウント使用、端末データで置き換え、後で決めるの選択に止める
+- `この端末のデータで置き換える` は二段階確認にし、実行前にcloud件数を再取得する
+- `portfolio_assets` は既存asset idを維持するため `(user_id, id)` primary key、金額は円整数として `numeric(14, 0)`
+- `portfolio_snapshots` は `snapshot_data jsonb` と `(user_id, fingerprint)` uniqueで保存し、最大5件はapplication logicで制御
+- RLSはselect / insert / update / deleteすべて `auth.uid() = user_id`
+- Service Role Keyは未使用。SQL適用、Google OAuth、RLS実環境検証、Productionデプロイは未実行
 
 ### Dashboard v3.1 / Monetization Foundation
 

@@ -274,6 +274,30 @@ Step9-B反映後のSmoke Test:
 
 ## Analytics and Verification Policy
 
+### Step10-A1 Supabase Auth and Portfolio Sync
+
+- Productionデプロイは未実行
+- Supabase SQL migrationは未適用
+- Google OAuth Providerは未設定
+- Auth callbackは `/auth/callback`、logoutは `/auth/logout`
+- Next.js 14.2.23では `middleware.ts` を使い、`proxy.ts` は使わない
+- Session refreshは `@supabase/ssr` のserver clientとmiddlewareで行う
+- 未ログインユーザーは従来どおりlocalStorageで利用可能
+- ログイン済みでmigration解決後はSupabaseをSource of Truthにする
+- local資産を確認なしでcloudへuploadしない
+- cloud資産を確認なしでlocal資産でoverwriteしない
+- logout時はcloud由来cacheと正式Portfolio localStorageを消し、次の未ログインユーザーに前ユーザー資産を見せない
+
+Step10-A2で人間が実施すること:
+
+1. Supabase Projectを確認または作成する
+2. `supabase/migrations/20260728000000_create_portfolio_sync.sql` を適用する
+3. RLS isolationをUser A / User Bで確認する
+4. Supabase Authentication URL ConfigurationへLocal / Preview / Production callbackを登録する
+5. Google Cloud OAuth Clientを作成し、Supabase Google ProviderへClient ID / Secretを設定する
+6. Vercel Previewへ `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` を設定する
+7. Previewでlogin、callback、migration、conflict、logoutをSmoke Testする
+
 - GA4は既存プロパティ「AI Asset Lab」と既存Web Streamを利用します。
 - GA4 Web Stream URLは `https://aiassetlab.jp`、Stream IDは `15218177688`、Measurement IDは `G-BB1DMLMD15` です。
 - GA4 Enhanced Measurementとページビュー計測は有効です。

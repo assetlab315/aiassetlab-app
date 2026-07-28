@@ -2,6 +2,31 @@
 
 ## 2026-07-28
 
+### Deployment Step 10-A1 - Supabase Auth and Portfolio Sync Foundation
+
+#### Added
+
+- Supabase Auth基盤、Google OAuth開始、Email OTP基盤、Auth callback、logout、Account画面を追加
+- `@supabase/ssr` のbrowser/server client分離と `middleware.ts` によるCookie session refreshを追加
+- Portfolio cloud sync用Repository、localStorage migration判定、conflict処理、ユーザー別cloud cacheを追加
+- `portfolio_assets` / `portfolio_snapshots` のRLS付きSQL migrationを追加
+- Auth/Sync検証用 `test:auth-foundation` / `test:portfolio-sync` を追加
+- `.env.example`、Auth/Sync設計、Supabase setup手順を追加
+
+#### Changed
+
+- Portfolio画面に同期状態、migration確認、conflict選択、二段階overwrite確認を追加
+- Privacy Policy / Termsへログイン情報、資産情報のクラウド保存、外部サービス利用、削除依頼運用の注意を追記
+- Headerへログイン / アカウント導線を追加
+
+#### Notes
+
+- Productionデプロイ、Supabase SQL適用、Google OAuth設定、Vercel環境変数変更は実行していません
+- Service Role Keyは使用していません
+- 実Supabase Project、Google OAuth、RLS isolation、Preview OAuth確認はStep10-A2で実施します
+
+## 2026-07-28
+
 ### Deployment Step 9-B - AI Portfolio Review
 
 #### Added

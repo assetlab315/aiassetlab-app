@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import AssetForm from "./AssetForm";
 import AssetTable from "./AssetTable";
 import AllocationChart from "./AllocationChart";
@@ -13,9 +13,7 @@ import {
   calculateAssetAllocation,
   calculatePortfolioSummary,
 } from "../../lib/portfolio/calculatePortfolio";
-import { loadPortfolioAssets, savePortfolioAssets } from "../../lib/portfolio/storage";
-import { createPortfolioSnapshotFromAssets } from "../../lib/portfolio-history/createPortfolioSnapshot";
-import { savePortfolioSnapshot } from "../../lib/portfolio-history/portfolioSnapshotStorage";
+import { usePortfolioSync } from "../../lib/portfolio/usePortfolioSync";
 
 const emptyInput: AssetFormInput = {
   name: "",
@@ -47,56 +45,43 @@ function toInput(asset: PortfolioAsset): AssetFormInput {
   };
 }
 
-function savePortfolioChangeSnapshot(assets: PortfolioAsset[]) {
-  try {
-    savePortfolioSnapshot(createPortfolioSnapshotFromAssets(assets));
-  } catch {
-    if (process.env.NODE_ENV !== "production") {
-      console.warn("Portfolio change snapshot failed.");
-    }
-  }
-}
-
-function savePortfolioChange(assets: PortfolioAsset[]) {
-  savePortfolioAssets(assets);
-  savePortfolioChangeSnapshot(assets);
-}
-
 export default function PortfolioClient() {
-  const [assets, setAssets] = useState<PortfolioAsset[]>([]);
   const [input, setInput] = useState<AssetFormInput>(emptyInput);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [isReady, setIsReady] = useState(false);
-
-  useEffect(() => {
-    setAssets(loadPortfolioAssets());
-    setIsReady(true);
-  }, []);
+  const {
+    assets,
+    user,
+    isReady,
+    status,
+    message,
+    migrationState,
+    overwriteState,
+    saveAssets,
+    skipMigration,
+    uploadLocalToCloud,
+    useCloudData,
+    prepareOverwriteCloud,
+    confirmOverwriteCloud,
+    cancelOverwrite,
+  } = usePortfolioSync();
 
   const summary = useMemo(() => calculatePortfolioSummary(assets), [assets]);
   const allocations = useMemo(() => calculateAssetAllocation(assets), [assets]);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!input.name.trim()) return;
 
     if (editingId) {
-      setAssets((current) => {
-        const nextAssets = current.map((asset) =>
-          asset.id === editingId ? toAsset(input, editingId) : asset,
-        );
-        savePortfolioChange(nextAssets);
-        return nextAssets;
-      });
+      const nextAssets = assets.map((asset) =>
+        asset.id === editingId ? toAsset(input, editingId) : asset,
+      );
+      await saveAssets(nextAssets);
       setEditingId(null);
       setInput(emptyInput);
       return;
     }
 
-    setAssets((current) => {
-      const nextAssets = [toAsset(input), ...current];
-      savePortfolioChange(nextAssets);
-      return nextAssets;
-    });
+    await saveAssets([toAsset(input), ...assets]);
     setInput(emptyInput);
   };
 
@@ -110,12 +95,8 @@ export default function PortfolioClient() {
     setInput(emptyInput);
   };
 
-  const handleDelete = (assetId: string) => {
-    setAssets((current) => {
-      const nextAssets = current.filter((asset) => asset.id !== assetId);
-      savePortfolioChange(nextAssets);
-      return nextAssets;
-    });
+  const handleDelete = async (assetId: string) => {
+    await saveAssets(assets.filter((asset) => asset.id !== assetId));
     if (editingId === assetId) handleCancel();
   };
 
@@ -141,6 +122,115 @@ export default function PortfolioClient() {
         </section>
 
         <PortfolioSummaryCards summary={summary} />
+
+        <section className="rounded-3xl border border-slate-100 bg-white p-5 shadow-sm">
+          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <div>
+              <p className="text-sm font-black text-blue-600">
+                {user ? "アカウント同期" : "ゲスト保存"}
+              </p>
+              <p className="mt-1 text-sm font-bold leading-6 text-slate-600">
+                {message}
+              </p>
+            </div>
+            <span className="inline-flex w-fit rounded-full bg-slate-100 px-3 py-1 text-xs font-black text-slate-600">
+              {status === "saving"
+                ? "保存中…"
+                : status === "saved"
+                  ? "保存しました"
+                  : status === "error"
+                    ? "保存できませんでした"
+                    : status === "conflict"
+                      ? "選択が必要"
+                      : status === "migration_required"
+                        ? "移行確認"
+                        : "待機中"}
+            </span>
+          </div>
+
+          {migrationState?.decision === "use_local" ? (
+            <div className="mt-4 rounded-2xl bg-blue-50 p-4">
+              <p className="font-black text-blue-900">
+                このブラウザに登録されている資産{migrationState.localAssetCount}件をアカウントへ保存しますか？
+              </p>
+              <p className="mt-2 text-sm font-bold leading-6 text-blue-800">
+                アカウントへ保存すると、別の端末でも確認できるようになります。
+              </p>
+              <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+                <button
+                  type="button"
+                  onClick={skipMigration}
+                  className="min-h-11 rounded-full border border-blue-200 bg-white px-4 text-sm font-black text-blue-700"
+                >
+                  今回は保存しない
+                </button>
+                <button
+                  type="button"
+                  onClick={uploadLocalToCloud}
+                  className="min-h-11 rounded-full bg-blue-600 px-4 text-sm font-black text-white"
+                >
+                  アカウントへ保存
+                </button>
+              </div>
+            </div>
+          ) : null}
+
+          {migrationState?.decision === "conflict" ? (
+            <div className="mt-4 rounded-2xl bg-amber-50 p-4">
+              <p className="font-black text-amber-900">保存済みデータが見つかりました</p>
+              <p className="mt-2 text-sm font-bold leading-6 text-amber-800">
+                この端末のデータ: {migrationState.localAssetCount}件 / アカウントのデータ: {migrationState.cloudAssetCount}件
+              </p>
+              <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+                <button
+                  type="button"
+                  onClick={useCloudData}
+                  className="min-h-11 rounded-full bg-slate-900 px-4 text-sm font-black text-white"
+                >
+                  アカウントのデータを使用
+                </button>
+                <button
+                  type="button"
+                  onClick={prepareOverwriteCloud}
+                  className="min-h-11 rounded-full border border-amber-300 bg-white px-4 text-sm font-black text-amber-800"
+                >
+                  この端末のデータで置き換える
+                </button>
+                <button
+                  type="button"
+                  onClick={skipMigration}
+                  className="min-h-11 rounded-full border border-slate-200 bg-white px-4 text-sm font-black text-slate-700"
+                >
+                  後で決める
+                </button>
+              </div>
+            </div>
+          ) : null}
+
+          {overwriteState ? (
+            <div className="mt-4 rounded-2xl border border-red-200 bg-red-50 p-4">
+              <p className="font-black text-red-900">
+                アカウントに保存されている資産{overwriteState.cloudAssetCount}件が、この端末の資産{overwriteState.localAssets.length}件で置き換えられます。
+              </p>
+              <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+                <button
+                  type="button"
+                  onClick={cancelOverwrite}
+                  className="min-h-11 rounded-full border border-red-200 bg-white px-4 text-sm font-black text-red-800"
+                >
+                  キャンセル
+                </button>
+                <button
+                  type="button"
+                  onClick={confirmOverwriteCloud}
+                  className="min-h-11 rounded-full bg-red-600 px-4 text-sm font-black text-white"
+                >
+                  置き換える
+                </button>
+              </div>
+            </div>
+          ) : null}
+        </section>
 
         <div className="grid gap-6 lg:grid-cols-[420px_1fr]">
           <AssetForm

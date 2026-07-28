@@ -1,27 +1,6 @@
 import { PORTFOLIO_STORAGE_KEY } from "../../features/portfolio/constants";
 import type { PortfolioAsset } from "../../features/portfolio/types";
-
-const assetCategories = ["cash", "stock", "fund", "crypto", "pension", "other"];
-
-function isFiniteNumber(value: unknown): value is number {
-  return typeof value === "number" && Number.isFinite(value);
-}
-
-function isPortfolioAsset(value: unknown): value is PortfolioAsset {
-  if (!value || typeof value !== "object") return false;
-  const asset = value as PortfolioAsset;
-
-  return (
-    typeof asset.id === "string" &&
-    typeof asset.name === "string" &&
-    assetCategories.includes(asset.category) &&
-    isFiniteNumber(asset.amount) &&
-    asset.amount >= 0 &&
-    isFiniteNumber(asset.monthlyContribution) &&
-    asset.monthlyContribution >= 0 &&
-    typeof asset.updatedAt === "string"
-  );
-}
+import { sanitizePortfolioAssets } from "./portfolioValidation";
 
 export function loadPortfolioAssets(): PortfolioAsset[] {
   if (typeof window === "undefined") return [];
@@ -31,7 +10,7 @@ export function loadPortfolioAssets(): PortfolioAsset[] {
 
   try {
     const parsed = JSON.parse(stored);
-    return Array.isArray(parsed) ? parsed.filter(isPortfolioAsset) : [];
+    return sanitizePortfolioAssets(parsed);
   } catch {
     return [];
   }
@@ -40,4 +19,9 @@ export function loadPortfolioAssets(): PortfolioAsset[] {
 export function savePortfolioAssets(assets: PortfolioAsset[]) {
   if (typeof window === "undefined") return;
   window.localStorage.setItem(PORTFOLIO_STORAGE_KEY, JSON.stringify(assets));
+}
+
+export function clearPortfolioAssets() {
+  if (typeof window === "undefined") return;
+  window.localStorage.removeItem(PORTFOLIO_STORAGE_KEY);
 }

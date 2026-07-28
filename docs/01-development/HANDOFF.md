@@ -118,6 +118,16 @@ AI Chat運用メモ
 
 ・レビュー文では「絶対」「必ず」「失敗」「危険」「儲かる」「買うべき」「売るべき」「あなたは」を避けます。投資助言ではなく、現在地と次に検討する行動の整理として扱ってください。
 
+・Step10-A1ではSupabase AuthとPortfolio Cloud Sync基盤を追加しました。Next.js 14.2.23のため `middleware.ts` を採用し、`@supabase/ssr` のCookie session refreshを使います。`proxy.ts` は使いません。
+
+・未ログイン時は引き続き `aiassetlab_portfolio_assets_v1` と `aiassetlab.portfolioSnapshots.v1` を使います。ログイン済みでmigration解決後はSupabaseをSource of Truthとし、保存成功後にlocalStorageへcacheします。
+
+・local資産を確認なしでcloudへuploadしません。local/cloud競合時も自動mergeせず、cloud使用または二段階確認つきoverwriteを選ばせます。
+
+・Supabase SQLは `supabase/migrations/20260728000000_create_portfolio_sync.sql` に保存済みですが、まだ適用していません。Google OAuth、RLS実環境検証、Preview OAuth確認はStep10-A2で行います。
+
+・Service Role Keyは今回使いません。Client Component、browser bundle、`.env.example`、docsへ秘密鍵を置かない方針です。
+
 ---
 
 環境変数

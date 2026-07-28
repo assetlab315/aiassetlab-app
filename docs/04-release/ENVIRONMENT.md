@@ -25,8 +25,8 @@ Productionで正式なAI回答を有効化する前に、OpenAI Billing、低い
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Google Analytics 4 のMeasurement ID。設定時のみGA4計測コードを読み込みます | 任意 |
 | `NEXT_PUBLIC_CLARITY_ID` | Microsoft Clarity のProject ID。設定時のみClarity計測コードを読み込みます | 任意 |
 | `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Google Search Console のHTMLタグverification値。別方式で所有権確認する場合に利用します | 任意 |
-| `NEXT_PUBLIC_SUPABASE_URL` | 診断結果保存で利用するSupabase Project URL | 必須 |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | 診断結果保存で利用するSupabase anon key | 必須 |
+| `NEXT_PUBLIC_SUPABASE_URL` | 診断結果保存、Supabase Auth、Portfolio Cloud Syncで利用するSupabase Project URL | 必須 |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | 診断結果保存、Supabase Auth、Portfolio Cloud Syncで利用するSupabase anon key。RLS前提の公開key | 必須 |
 
 ---
 
@@ -35,6 +35,9 @@ Productionで正式なAI回答を有効化する前に、OpenAI Billing、低い
 - `NEXT_PUBLIC_` で始まる値はブラウザへ公開されます。
 - 秘密情報は `NEXT_PUBLIC_` 付きの環境変数に入れないでください。
 - Supabaseのservice role keyなどの秘密情報は `NEXT_PUBLIC_SUPABASE_ANON_KEY` に入れないでください。
+- Step10-A1では `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` 方式に統一し、Publishable Key方式との混在はしません。
+- Supabaseのservice role keyは今回使用しません。Client Component、browser bundle、Vercel public envへ設定しないでください。
+- Supabase環境変数を変更した場合、対象Environmentの再デプロイが必要です。
 - `NEXT_PUBLIC_GA_MEASUREMENT_ID` は公開環境変数であり秘密鍵ではありませんが、計測混入を避けるためProduction環境だけに設定します。
 - Productionでは `NEXT_PUBLIC_GA_MEASUREMENT_ID=G-BB1DMLMD15` を設定済みです。Preview / Developmentには設定していません。
 - `NEXT_PUBLIC_CLARITY_ID` は未設定で、Clarity計測は開始していません。

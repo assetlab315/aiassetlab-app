@@ -173,9 +173,9 @@ sourceChecks.forEach(({ file, source }) => {
 
 assert(
   /useState<PortfolioAsset\[\]>\(\[\]\)/.test(
-    fs.readFileSync("components/portfolio/PortfolioClient.tsx", "utf8"),
+    fs.readFileSync("lib/portfolio/usePortfolioSync.ts", "utf8"),
   ),
-  "PortfolioClient should initialize with empty assets",
+  "Portfolio sync hook should initialize with empty assets",
 );
 assert(
   /useState<PortfolioAsset\[\]>\(\[\]\)/.test(

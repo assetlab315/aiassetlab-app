@@ -11,6 +11,8 @@
     "test:portfolio-change": "node scripts/verify-portfolio-change-tracking.js",
     "test:no-demo-seeding": "node scripts/verify-no-demo-portfolio-seeding.js",
     "test:portfolio-review": "node scripts/verify-portfolio-review.js",
+    "test:auth-foundation": "node scripts/verify-auth-foundation.js",
+    "test:portfolio-sync": "node scripts/verify-portfolio-sync.js",
     "start": "next start"
   },
   "engines": {
