@@ -224,6 +224,30 @@ Step9-A反映後のSmoke Test:
 - AI Insight、Asset Health、Today Actionと内容が矛盾しない
 - 画面文言にfalseな「先月比」「運用益」断定がない
 
+### Step9-A.1 Remove Automatic Demo Portfolio Seeding
+
+- Portfolio本体の正式keyは `aiassetlab_portfolio_assets_v1`
+- keyなし、空文字、不正JSONでは `loadPortfolioAssets()` は空配列を返す
+- keyなし時にPortfolio本体やsnapshotへデモ資産・空配列を自動保存しない
+- 正常な既存資産配列は維持する
+- 不正asset schemaは有効assetのみ読み込む
+- 資産0件ではStep9-A baseline snapshotを作成しない
+- Production UIに `デモ状態に戻す` ボタンを表示しない
+- 既存ユーザーのlocalStorage資産やsnapshot履歴を自動削除しない
+
+Step9-A.1反映後のSmoke Test:
+
+- Firefox Privateで `https://aiassetlab.jp/portfolio` を開き、登録資産0件を確認する
+- Firefox Privateで `https://aiassetlab.jp/dashboard` を開き、Dashboard empty stateを確認する
+- DashboardでAsset Health Scoreが算出表示されないことを確認する
+- Portfolio Change Cardが誤比較を表示しないことを確認する
+- localStorageにデモ資産2件が保存されていないことを確認する
+- 資産を1件追加し、追加した1件だけが表示されることを確認する
+- リロード後も資産1件のままで、デモ資産が混ざらないことを確認する
+- Dashboardでbaseline / no_history表示を確認する
+- 通常ブラウザの既存資産が削除されず維持されていることを確認する
+- 可能な範囲でChrome Incognito、Safari Privateでも同じ確認を行う
+
 ---
 
 ## Analytics and Verification Policy

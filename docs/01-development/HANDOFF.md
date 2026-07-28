@@ -106,6 +106,12 @@ AI Chat運用メモ
 
 ・Portfolio Change Trackingの検証は `npm run test:portfolio-change` で行います。履歴はlocalStorageのみで、複数端末同期はありません。ブラウザデータ削除で履歴も消えます。
 
+・Step9-A.1では、新規ブラウザでデモ資産2件が自動表示される問題を修正しました。原因は `loadPortfolioAssets()` がkeyなし、不正JSON、SSR時に `DEFAULT_ASSETS` を返していたことです。
+
+・現在は `aiassetlab_portfolio_assets_v1` が存在しない場合、必ず空配列を返します。Portfolio初回表示時に空配列を自動保存せず、追加・編集・削除の確定時だけ保存します。既存ユーザー資産は削除しません。
+
+・Production UIから `デモ状態に戻す` ボタンは削除済みです。資産0件ではStep9-A baseline snapshotを作成しません。検証は `npm run test:no-demo-seeding` で行います。
+
 ---
 
 環境変数

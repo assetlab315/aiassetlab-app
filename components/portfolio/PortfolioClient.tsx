@@ -15,10 +15,7 @@ import {
 } from "../../lib/portfolio/calculatePortfolio";
 import { loadPortfolioAssets, savePortfolioAssets } from "../../lib/portfolio/storage";
 import { createPortfolioSnapshotFromAssets } from "../../lib/portfolio-history/createPortfolioSnapshot";
-import {
-  PORTFOLIO_SNAPSHOT_STORAGE_KEY,
-  savePortfolioSnapshot,
-} from "../../lib/portfolio-history/portfolioSnapshotStorage";
+import { savePortfolioSnapshot } from "../../lib/portfolio-history/portfolioSnapshotStorage";
 
 const emptyInput: AssetFormInput = {
   name: "",
@@ -60,6 +57,11 @@ function savePortfolioChangeSnapshot(assets: PortfolioAsset[]) {
   }
 }
 
+function savePortfolioChange(assets: PortfolioAsset[]) {
+  savePortfolioAssets(assets);
+  savePortfolioChangeSnapshot(assets);
+}
+
 export default function PortfolioClient() {
   const [assets, setAssets] = useState<PortfolioAsset[]>([]);
   const [input, setInput] = useState<AssetFormInput>(emptyInput);
@@ -70,11 +72,6 @@ export default function PortfolioClient() {
     setAssets(loadPortfolioAssets());
     setIsReady(true);
   }, []);
-
-  useEffect(() => {
-    if (!isReady) return;
-    savePortfolioAssets(assets);
-  }, [assets, isReady]);
 
   const summary = useMemo(() => calculatePortfolioSummary(assets), [assets]);
   const allocations = useMemo(() => calculateAssetAllocation(assets), [assets]);
@@ -87,7 +84,7 @@ export default function PortfolioClient() {
         const nextAssets = current.map((asset) =>
           asset.id === editingId ? toAsset(input, editingId) : asset,
         );
-        savePortfolioChangeSnapshot(nextAssets);
+        savePortfolioChange(nextAssets);
         return nextAssets;
       });
       setEditingId(null);
@@ -97,7 +94,7 @@ export default function PortfolioClient() {
 
     setAssets((current) => {
       const nextAssets = [toAsset(input), ...current];
-      savePortfolioChangeSnapshot(nextAssets);
+      savePortfolioChange(nextAssets);
       return nextAssets;
     });
     setInput(emptyInput);
@@ -116,16 +113,10 @@ export default function PortfolioClient() {
   const handleDelete = (assetId: string) => {
     setAssets((current) => {
       const nextAssets = current.filter((asset) => asset.id !== assetId);
-      savePortfolioChangeSnapshot(nextAssets);
+      savePortfolioChange(nextAssets);
       return nextAssets;
     });
     if (editingId === assetId) handleCancel();
-  };
-
-  const handleResetDemo = () => {
-    window.localStorage.removeItem("aiassetlab_portfolio_assets_v1");
-    window.localStorage.removeItem(PORTFOLIO_SNAPSHOT_STORAGE_KEY);
-    window.location.reload();
   };
 
   return (
@@ -178,14 +169,6 @@ export default function PortfolioClient() {
 
         <PortfolioNextActions />
 
-        <button
-          type="button"
-          onClick={handleResetDemo}
-          className="self-start rounded-full px-1 py-2 text-sm font-semibold text-slate-400 hover:text-slate-600 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-100"
-          aria-label="デモ状態に戻す"
-        >
-          デモ状態に戻す
-        </button>
       </div>
     </main>
   );

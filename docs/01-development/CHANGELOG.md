@@ -2,6 +2,30 @@
 
 ## 2026-07-27
 
+### Deployment Step 9-A.1 - Remove Automatic Demo Portfolio Seeding
+
+#### Fixed
+
+- 新規ブラウザやプライベートブラウザで、本人が登録していないデモ資産2件が自動表示される問題を修正
+- `loadPortfolioAssets()` がkeyなし、不正JSON、SSR時に `DEFAULT_ASSETS` を返していた挙動を停止
+- Portfolio画面の開発者向け `デモ状態に戻す` ボタンをProduction UIから削除
+
+#### Changed
+
+- Portfolio localStorage key `aiassetlab_portfolio_assets_v1` が存在しない場合は空配列を返す
+- 不正JSONや不正asset schemaではデモ資産へfallbackせず、安全な空状態または有効assetのみを返す
+- Portfolio本体の自動保存をやめ、追加・編集・削除の確定時だけ保存する構成へ変更
+- 資産0件ではStep9-Aのbaseline snapshotを作成しないことを検証
+
+#### Notes
+
+- Step9-A Production Smoke Testは完了扱いです
+- 既存ユーザーのlocalStorage資産やsnapshot履歴は削除しません
+- 修正後の新しいブラウザ状態でのみ、デモ資産が自動投入されないことを保証します
+- Productionデプロイは実行していません
+
+## 2026-07-27
+
 ### Deployment Step 9-A - Portfolio Change Tracking
 
 #### Added

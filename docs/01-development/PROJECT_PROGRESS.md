@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Deployment Step 9-A
+### Deployment Step 9-A.1
 
 **Status**
 
@@ -12,7 +12,7 @@
 
 ## Current Goal
 
-Portfolio Change Tracking
+Remove Automatic Demo Portfolio Seeding
 
 ---
 
@@ -99,7 +99,20 @@ Portfolio Change Tracking
 - 金額差は登録値の差であり、運用益や市場変動理由とは断定しない
 - OpenAI API、Supabase、DBは不使用。履歴はブラウザlocalStorage内のみで、複数端末同期はなし
 - `npm run test:portfolio-change` でsnapshot、storage、comparison、summaryを検証
-- Productionデプロイは未実行。反映後にPortfolio Change Tracking Smoke Testが必要
+- Step9-A Production Smoke Testを完了扱いとし、Portfolio Change Trackingを正式完了
+
+### Portfolio Hotfix / No Automatic Demo Seeding
+
+- 新規ブラウザで登録していないデモ資産2件が自動表示される問題を修正
+- 原因は `loadPortfolioAssets()` がkeyなし、不正JSON、SSR時に `DEFAULT_ASSETS` を返していたこと
+- `aiassetlab_portfolio_assets_v1` が存在しない場合は必ず空配列を返す構成へ変更
+- 不正JSONでもデモ資産へfallbackせず空配列を返す
+- 既存の正常な資産配列は維持し、不正assetは有効assetだけを読み込む
+- Portfolio初回表示時に空配列を自動保存しないよう、保存は追加・編集・削除の確定時だけに変更
+- Production UIから `デモ状態に戻す` ボタンを削除
+- 資産0件ではStep9-A baseline snapshotを作成しない
+- `npm run test:no-demo-seeding` でkeyなし、プライベートブラウザ相当、不正JSON、既存資産、初回snapshotを検証
+- Productionデプロイは未実行。反映後にFirefox Private / Chrome Incognito等で0件表示を確認する
 
 ### Dashboard v3.1 / Monetization Foundation
 

@@ -43,6 +43,12 @@ Version1.1公開前に確認する項目です。
 - [x] Portfolio snapshotはlocalStorageのみへ最大5件保存し、同一fingerprintの重複保存を防止している
 - [x] 比較対象は「前回の異なる記録」であり、厳密な月次・日次比較として表示しない
 - [x] `npm run test:portfolio-change` でsnapshot、storage、comparison、summary主要シナリオを確認している
+- [x] Step9-A Production Smoke Testを完了扱いとして記録している
+- [x] Step9-A.1で新規ブラウザにデモ資産2件が自動表示される問題を修正している
+- [x] Portfolio keyなし、不正JSON、空配列では `loadPortfolioAssets()` が空配列を返す
+- [x] Portfolio初回表示時にデモ資産や空配列を自動保存しない
+- [x] Production UIから `デモ状態に戻す` ボタンを削除している
+- [x] `npm run test:no-demo-seeding` で自動デモ投入停止を確認している
 - [ ] Step7-B反映後にProduction再デプロイを実施している
 - [ ] Step7-B反映後に新NISA、資産未登録、情報不足、危険相談、個別銘柄、機密情報のSmoke Testを実施している
 - [ ] Step7-C反映後に現金90% / 株式10%、暗号資産70%、1銘柄100%、資産なしのSmoke Testを実施している
@@ -51,6 +57,7 @@ Version1.1公開前に確認する項目です。
 - [ ] Step8-A反映後にDashboardで資産未登録、現金偏重、暗号資産偏重、単一資産集中、分散良好のInsight CardをProductionで確認している
 - [ ] Step8-B反映後にDashboardで資産未登録、現金偏重、暗号資産偏重、単一資産集中、分散良好・積立あり / なしのAsset HealthをProductionで確認している
 - [ ] Step9-A反映後にPortfolio Change Trackingの履歴なし、積立開始、積立停止、暗号資産集中発生、単一資産集中解消、mixed、小さな変化、同一内容再保存、全資産削除、不正localStorageをProductionで確認している
+- [ ] Step9-A.1反映後にFirefox Private / Chrome IncognitoでPortfolioが0件から開始し、デモ資産2件が自動保存されないことを確認している
 - [ ] OpenAI接続失敗時にfallback回答へ切り替わることを確認している
 - [ ] 本番ログにAPIキーやOpenAI response bodyが出ないことを確認している
 
