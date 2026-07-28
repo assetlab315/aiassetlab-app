@@ -2,6 +2,31 @@
 
 ## 2026-07-27
 
+### Deployment Step 9-A - Portfolio Change Tracking
+
+#### Added
+
+- Portfolio保存時にlocalStorageへ最大5件のPortfolio snapshotを保存する仕組みを追加
+- `createPortfolioSnapshot()` / `portfolioSnapshotStorage` / `comparePortfolioSnapshots()` / `createDashboardChangeSummary()` を追加
+- Dashboardに `前回からの変化` カードを追加
+- `test:portfolio-change` を追加し、snapshot生成、fingerprint、storage耐性、比較、summary主要シナリオを検証
+
+#### Changed
+
+- Dashboardのデータフローを、現在の `PortfolioInsights` / `AssetHealthScore` と前回の異なるsnapshotを比較する構成へ拡張
+- 比較表現は「前回の記録」「前回保存時」を基本とし、厳密な月次・日次比較に見える表現を避ける方針へ整理
+- empty portfolio snapshotは保存せず、全資産削除時はDashboardの資産未登録状態を優先する設計へ整理
+
+#### Notes
+
+- Step8-BのProduction Smoke Testは完了扱いです
+- OpenAI API、Supabase、DB、Chat API、Vercel設定、Productionデプロイは実行していません
+- snapshotはブラウザlocalStorage内に保存され、複数端末同期はありません
+- ブラウザデータ削除によりsnapshot履歴は消えます
+- Production反映後にPortfolio Change TrackingのSmoke Testが必要です
+
+## 2026-07-27
+
 ### Deployment Step 8-B - Explainable Asset Health Score
 
 #### Added

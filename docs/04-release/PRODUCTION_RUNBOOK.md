@@ -194,6 +194,36 @@ Step8-B反映後のSmoke Test:
 - Dashboard InsightのToday ActionとHealth Scoreの最大negative factorが大きく矛盾しない
 - Mobile / Desktop / Light / Dark modeでscore、factor、改善余地の折り返しと可読性を確認する
 
+### Step9-A Portfolio Change Tracking
+
+- Portfolio snapshotは `aiassetlab.portfolioSnapshots.v1` に保存する
+- snapshotは最大5件。同一fingerprintのsnapshotは重複保存しない
+- snapshotは `PortfolioInsights` と `AssetHealthScore` を再利用し、Dashboard側で独自集計を増やさない
+- 比較対象は現在状態と前回の異なるsnapshot
+- 初回導入時は現在状態をbaselineとして保存し、Dashboardでは「比較できる記録はまだありません」と表示する
+- empty portfolio snapshotは保存せず、全資産削除時は資産未登録状態を優先する
+- snapshotはlocalStorageのみ。複数端末同期はなく、ブラウザデータ削除で履歴は消える
+- 「先月比」「前月」「昨日」など厳密な期間比較に見える表現は使わない
+- 登録資産総額の差を運用益、市場変動、入出金理由として断定しない
+- 不正JSON、version不一致、NaN / Infinity相当、重複categoryなどの壊れたsnapshotは無視し、Dashboardをクラッシュさせない
+- 将来DB履歴へ移行する場合も、snapshot versionとfingerprintを維持できる形にする
+
+Step9-A反映後のSmoke Test:
+
+- 既存ユーザーでsnapshot履歴なし: 初回baselineが作成され、履歴なし表示になる
+- 積立開始: Health Score上昇と「毎月の積立を開始」が表示される
+- 積立停止: 注意寄りの表示になり、「毎月の積立が停止」が表示される
+- 暗号資産集中の新規発生: 暗号資産への偏りとHealth Score低下が表示され、売却指示は出ない
+- 単一資産集中の解消: 分散が進んだこととHealth Score上昇が表示される
+- 小さな配分変化: 大きな変化なしとして表示される
+- 同一Portfolio再保存: snapshot件数が増えず、不要な変化が出ない
+- asset削除、全asset削除、再登録で不自然なHealth Score急落・急上昇表示が出ない
+- Dashboard再訪、ブラウザ再起動後も比較が維持される
+- invalid localStorage時にDashboard / Portfolioがクラッシュしない
+- Mobile 375px、Desktop、Light / Darkでscore delta、日付、change itemの折り返しを確認する
+- AI Insight、Asset Health、Today Actionと内容が矛盾しない
+- 画面文言にfalseな「先月比」「運用益」断定がない
+
 ---
 
 ## Analytics and Verification Policy

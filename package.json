@@ -8,6 +8,7 @@
     "test:portfolio-context": "node scripts/verify-portfolio-context.js",
     "test:dashboard-insights": "node scripts/verify-dashboard-insights.js",
     "test:asset-health-score": "node scripts/verify-asset-health-score.js",
+    "test:portfolio-change": "node scripts/verify-portfolio-change-tracking.js",
     "start": "next start"
   },
   "engines": {

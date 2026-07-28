@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Deployment Step 8-B
+### Deployment Step 9-A
 
 **Status**
 
@@ -12,7 +12,7 @@
 
 ## Current Goal
 
-Explainable Asset Health Score
+Portfolio Change Tracking
 
 ---
 
@@ -85,7 +85,21 @@ Explainable Asset Health Score
 - improvementPotentialはnegative factorの絶対値合計として算出
 - スコアは資産配分と積立状況を基にした参考指標であり、投資成果予測ではないことをカード内に明記
 - `npm run test:asset-health-score` でスコア、factor、Today Action整合性、再現性を検証
-- Productionデプロイは未実行。反映後にAsset Health Score Smoke Testが必要
+- Step8-B Production Smoke Testを完了扱いとし、Asset Health Scoreを正式完了
+
+### Dashboard v3.4 / Portfolio Change Tracking
+
+- Dashboardに `前回からの変化` カードを追加
+- Portfolio保存確定時に、現在の資産状況から最大5件のlocalStorage snapshotを保存
+- snapshotは `PortfolioInsights` と `AssetHealthScore` を再利用し、fingerprintで同一内容の重複保存を防止
+- Dashboardでは現在状態と前回の異なるsnapshotを比較し、Health Score、積立、カテゴリ比率、health factorの変化を短く表示
+- 初回導入時は現在状態をbaselineとして保存し、「比較できる記録はまだありません」と表示
+- empty portfolio snapshotは保存せず、全資産削除時は資産未登録状態を優先
+- 「先月比」「前月」「昨日」など厳密な期間比較に見える表現は禁止
+- 金額差は登録値の差であり、運用益や市場変動理由とは断定しない
+- OpenAI API、Supabase、DBは不使用。履歴はブラウザlocalStorage内のみで、複数端末同期はなし
+- `npm run test:portfolio-change` でsnapshot、storage、comparison、summaryを検証
+- Productionデプロイは未実行。反映後にPortfolio Change Tracking Smoke Testが必要
 
 ### Dashboard v3.1 / Monetization Foundation
 

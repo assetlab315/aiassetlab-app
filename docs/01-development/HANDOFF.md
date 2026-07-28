@@ -98,6 +98,14 @@ AI Chat運用メモ
 
 ・Asset Health Scoreの検証は `npm run test:asset-health-score` で行います。Production反映後は、資産未登録、現金90% / 株式10%、暗号資産70% / 現金30%、単一株式100%、分散良好・積立あり / なしを確認してください。
 
+・Step9-AではDashboardに `前回からの変化` カードを追加しました。Portfolio保存確定時に最大5件のsnapshotを `aiassetlab.portfolioSnapshots.v1` へ保存し、Dashboardで現在状態と前回の異なる記録を比較します。
+
+・snapshotは `PortfolioInsights` と `AssetHealthScore` を再利用します。同一fingerprintは重複保存しません。empty portfolio snapshotは保存せず、全資産削除時はDashboardの資産未登録状態を優先します。
+
+・比較表現は「前回の記録」「前回保存時」を使います。「先月比」「前月」「昨日」など実際のsnapshot時点を保証しない表現や、登録金額差を運用益と断定する表現は禁止です。
+
+・Portfolio Change Trackingの検証は `npm run test:portfolio-change` で行います。履歴はlocalStorageのみで、複数端末同期はありません。ブラウザデータ削除で履歴も消えます。
+
 ---
 
 環境変数

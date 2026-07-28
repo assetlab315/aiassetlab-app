@@ -38,6 +38,11 @@ Version1.1公開前に確認する項目です。
 - [x] Asset Health ScoreはOpenAI APIを呼ばず、Portfolio Insightsから決定論的に生成している
 - [x] Asset Health Scoreは資産配分と積立状況を基にした参考指標であり、投資成果予測ではないことを表示している
 - [x] `npm run test:asset-health-score` でscore、grade、factor、improvementPotential、Today Action整合性を確認している
+- [x] Step8-B Production Smoke Testを完了扱いとして記録している
+- [x] Step9-AでPortfolio Change Trackingを実装している
+- [x] Portfolio snapshotはlocalStorageのみへ最大5件保存し、同一fingerprintの重複保存を防止している
+- [x] 比較対象は「前回の異なる記録」であり、厳密な月次・日次比較として表示しない
+- [x] `npm run test:portfolio-change` でsnapshot、storage、comparison、summary主要シナリオを確認している
 - [ ] Step7-B反映後にProduction再デプロイを実施している
 - [ ] Step7-B反映後に新NISA、資産未登録、情報不足、危険相談、個別銘柄、機密情報のSmoke Testを実施している
 - [ ] Step7-C反映後に現金90% / 株式10%、暗号資産70%、1銘柄100%、資産なしのSmoke Testを実施している
@@ -45,6 +50,7 @@ Version1.1公開前に確認する項目です。
 - [ ] Step7-C.2反映後にNISA質問で旧制度年額が出ないことをProductionで確認している
 - [ ] Step8-A反映後にDashboardで資産未登録、現金偏重、暗号資産偏重、単一資産集中、分散良好のInsight CardをProductionで確認している
 - [ ] Step8-B反映後にDashboardで資産未登録、現金偏重、暗号資産偏重、単一資産集中、分散良好・積立あり / なしのAsset HealthをProductionで確認している
+- [ ] Step9-A反映後にPortfolio Change Trackingの履歴なし、積立開始、積立停止、暗号資産集中発生、単一資産集中解消、mixed、小さな変化、同一内容再保存、全資産削除、不正localStorageをProductionで確認している
 - [ ] OpenAI接続失敗時にfallback回答へ切り替わることを確認している
 - [ ] 本番ログにAPIキーやOpenAI response bodyが出ないことを確認している
 

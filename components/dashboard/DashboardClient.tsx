@@ -10,17 +10,20 @@ import DashboardHabitCard from "./DashboardHabitCard";
 import DashboardPremiumPreviewCard from "./DashboardPremiumPreviewCard";
 import DashboardReleaseCheckCard from "./DashboardReleaseCheckCard";
 import DashboardTodayAiCard from "./DashboardTodayAiCard";
+import PortfolioChangeCard from "./PortfolioChangeCard";
 import FeatureNavigation from "../common/FeatureNavigation";
 import SectionHeader from "../common/SectionHeader";
 import PageContainer from "../layout/PageContainer";
 import Button from "../ui/Button";
 import Card from "../ui/Card";
 import type { PortfolioAsset } from "../../features/portfolio/types";
+import type { DashboardChangeSummary } from "../../features/portfolio-history/types";
 import { calculatePortfolioSummary } from "../../lib/portfolio/calculatePortfolio";
 import { formatCurrency } from "../../lib/portfolio/formatPortfolio";
 import { loadPortfolioAssets } from "../../lib/portfolio/storage";
 import { createPortfolioInsights } from "../../lib/chat/createPortfolioInsights";
 import { createAssetHealthScore } from "../../lib/dashboard/createAssetHealthScore";
+import { createDashboardChangeSummary } from "../../lib/dashboard/createDashboardChangeSummary";
 import {
   createDashboardAssetImpact,
   createDashboardDailyCheck,
@@ -30,6 +33,14 @@ import {
   createDashboardTasks,
   createDashboardTodayAi,
 } from "../../lib/dashboard/createDashboardInsights";
+import { comparePortfolioSnapshots } from "../../lib/portfolio-history/comparePortfolioSnapshots";
+import { createPortfolioSnapshotFromAssets } from "../../lib/portfolio-history/createPortfolioSnapshot";
+import {
+  ensureInitialPortfolioSnapshot,
+  getLatestSnapshot,
+  getPreviousDistinctSnapshot,
+  savePortfolioSnapshot,
+} from "../../lib/portfolio-history/portfolioSnapshotStorage";
 
 const dailyCheckStorageKey = "aiassetlab:dashboard-daily-check";
 
@@ -54,6 +65,7 @@ export default function DashboardClient() {
   const [isReady, setIsReady] = useState(false);
   const [isDailyChecked, setIsDailyChecked] = useState(false);
   const [dateLabel, setDateLabel] = useState("");
+  const [changeSummary, setChangeSummary] = useState<DashboardChangeSummary | null>(null);
 
   useEffect(() => {
     setAssets(loadPortfolioAssets());
@@ -93,6 +105,61 @@ export default function DashboardClient() {
     () => createDashboardPremiumPreview(assets, summary),
     [assets, summary],
   );
+
+  useEffect(() => {
+    if (!isReady || !portfolioInsights || !assetHealthScore || !dashboardInsights) {
+      setChangeSummary(null);
+      return;
+    }
+
+    const currentSnapshot = createPortfolioSnapshotFromAssets(assets);
+    if (!currentSnapshot) {
+      setChangeSummary(null);
+      return;
+    }
+
+    const latestSnapshot = getLatestSnapshot();
+    if (!latestSnapshot) {
+      ensureInitialPortfolioSnapshot(currentSnapshot);
+      setChangeSummary(
+        createDashboardChangeSummary({
+          comparison: null,
+          currentDashboardInsights: dashboardInsights,
+          currentHealthScore: assetHealthScore,
+        }),
+      );
+      return;
+    }
+
+    const previousSnapshot =
+      latestSnapshot.fingerprint === currentSnapshot.fingerprint
+        ? getPreviousDistinctSnapshot()
+        : latestSnapshot;
+
+    if (!previousSnapshot || previousSnapshot.fingerprint === currentSnapshot.fingerprint) {
+      setChangeSummary(
+        createDashboardChangeSummary({
+          comparison: null,
+          currentDashboardInsights: dashboardInsights,
+          currentHealthScore: assetHealthScore,
+        }),
+      );
+      return;
+    }
+
+    const comparison = comparePortfolioSnapshots(previousSnapshot, currentSnapshot);
+    if (latestSnapshot.fingerprint !== currentSnapshot.fingerprint) {
+      savePortfolioSnapshot(currentSnapshot);
+    }
+
+    setChangeSummary(
+      createDashboardChangeSummary({
+        comparison,
+        currentDashboardInsights: dashboardInsights,
+        currentHealthScore: assetHealthScore,
+      }),
+    );
+  }, [assetHealthScore, assets, dashboardInsights, isReady, portfolioInsights]);
 
   function handleDailyCheck() {
     localStorage.setItem(dailyCheckStorageKey, getTodayKey());
@@ -190,6 +257,10 @@ export default function DashboardClient() {
       <DashboardInsightCard insight={dashboardInsights} />
 
       <AssetHealthScoreCard healthScore={assetHealthScore} />
+
+      {!isReady || portfolioInsights ? (
+        <PortfolioChangeCard changeSummary={changeSummary} />
+      ) : null}
 
       <DashboardAssetImpactCard impact={assetImpact} />
 

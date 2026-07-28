@@ -14,6 +14,11 @@ import {
   calculatePortfolioSummary,
 } from "../../lib/portfolio/calculatePortfolio";
 import { loadPortfolioAssets, savePortfolioAssets } from "../../lib/portfolio/storage";
+import { createPortfolioSnapshotFromAssets } from "../../lib/portfolio-history/createPortfolioSnapshot";
+import {
+  PORTFOLIO_SNAPSHOT_STORAGE_KEY,
+  savePortfolioSnapshot,
+} from "../../lib/portfolio-history/portfolioSnapshotStorage";
 
 const emptyInput: AssetFormInput = {
   name: "",
@@ -45,6 +50,16 @@ function toInput(asset: PortfolioAsset): AssetFormInput {
   };
 }
 
+function savePortfolioChangeSnapshot(assets: PortfolioAsset[]) {
+  try {
+    savePortfolioSnapshot(createPortfolioSnapshotFromAssets(assets));
+  } catch {
+    if (process.env.NODE_ENV !== "production") {
+      console.warn("Portfolio change snapshot failed.");
+    }
+  }
+}
+
 export default function PortfolioClient() {
   const [assets, setAssets] = useState<PortfolioAsset[]>([]);
   const [input, setInput] = useState<AssetFormInput>(emptyInput);
@@ -68,17 +83,23 @@ export default function PortfolioClient() {
     if (!input.name.trim()) return;
 
     if (editingId) {
-      setAssets((current) =>
-        current.map((asset) =>
+      setAssets((current) => {
+        const nextAssets = current.map((asset) =>
           asset.id === editingId ? toAsset(input, editingId) : asset,
-        ),
-      );
+        );
+        savePortfolioChangeSnapshot(nextAssets);
+        return nextAssets;
+      });
       setEditingId(null);
       setInput(emptyInput);
       return;
     }
 
-    setAssets((current) => [toAsset(input), ...current]);
+    setAssets((current) => {
+      const nextAssets = [toAsset(input), ...current];
+      savePortfolioChangeSnapshot(nextAssets);
+      return nextAssets;
+    });
     setInput(emptyInput);
   };
 
@@ -93,12 +114,17 @@ export default function PortfolioClient() {
   };
 
   const handleDelete = (assetId: string) => {
-    setAssets((current) => current.filter((asset) => asset.id !== assetId));
+    setAssets((current) => {
+      const nextAssets = current.filter((asset) => asset.id !== assetId);
+      savePortfolioChangeSnapshot(nextAssets);
+      return nextAssets;
+    });
     if (editingId === assetId) handleCancel();
   };
 
   const handleResetDemo = () => {
     window.localStorage.removeItem("aiassetlab_portfolio_assets_v1");
+    window.localStorage.removeItem(PORTFOLIO_SNAPSHOT_STORAGE_KEY);
     window.location.reload();
   };
 
