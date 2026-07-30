@@ -74,6 +74,13 @@ export type DailyAdvisor = {
   priority: DailyAdvisorPriority;
 };
 
+export type ActionAdvisor = {
+  reason: string;
+  currentStatus: string;
+  recommendations: string[];
+  chatPrompt: string;
+};
+
 export type DashboardDailyCheck = {
   greeting: string;
   title: string;

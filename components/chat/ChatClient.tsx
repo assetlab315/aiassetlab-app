@@ -86,10 +86,19 @@ export default function ChatClient() {
   });
   const bottomRef = useRef<HTMLDivElement | null>(null);
   const isSendingRef = useRef(false);
+  const initialPromptAppliedRef = useRef(false);
 
   useEffect(() => {
     setContext(readPortfolioContext());
     setIsContextReady(true);
+
+    if (initialPromptAppliedRef.current || typeof window === "undefined") return;
+    initialPromptAppliedRef.current = true;
+
+    const prompt = new URLSearchParams(window.location.search).get("prompt");
+    if (prompt) {
+      setInput(prompt.slice(0, MAX_CHAT_MESSAGE_LENGTH));
+    }
   }, []);
 
   useEffect(() => {

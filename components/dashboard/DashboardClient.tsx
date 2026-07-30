@@ -18,6 +18,7 @@ import PageContainer from "../layout/PageContainer";
 import Button from "../ui/Button";
 import Card from "../ui/Card";
 import type { DashboardChangeSummary } from "../../features/portfolio-history/types";
+import { createActionAdvisor } from "../../features/dashboard/createActionAdvisor";
 import { createDailyAdvisor } from "../../features/dashboard/createDailyAdvisor";
 import { calculatePortfolioSummary } from "../../lib/portfolio/calculatePortfolio";
 import { formatCurrency } from "../../lib/portfolio/formatPortfolio";
@@ -112,6 +113,10 @@ export default function DashboardClient() {
     () => (isReady ? createDailyAdvisor(portfolioInsights) : createDailyAdvisor(null)),
     [isReady, portfolioInsights],
   );
+  const actionAdvisor = useMemo(
+    () => createActionAdvisor(dailyAdvisor, isReady ? portfolioInsights : null),
+    [dailyAdvisor, isReady, portfolioInsights],
+  );
   const dashboardInsights = useMemo(
     () => (isReady ? createDashboardInsights({ portfolioInsights }) : null),
     [isReady, portfolioInsights],
@@ -201,7 +206,7 @@ export default function DashboardClient() {
 
   return (
     <PageContainer size="xl">
-      <DailyAdvisorCard advisor={dailyAdvisor} />
+      <DailyAdvisorCard advisor={dailyAdvisor} actionAdvisor={actionAdvisor} />
 
       <section className="rounded-[2rem] bg-white p-6 shadow-sm md:p-8">
         <p className="mb-3 text-sm font-black text-blue-600">AI Dashboard</p>

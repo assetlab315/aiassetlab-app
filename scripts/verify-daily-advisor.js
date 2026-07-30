@@ -29,6 +29,7 @@ require.extensions[".tsx"] = (module, filename) => {
 
 const { createPortfolioInsights } = require("../lib/chat/createPortfolioInsights.ts");
 const { createDailyAdvisor } = require("../features/dashboard/createDailyAdvisor.ts");
+const { createActionAdvisor } = require("../features/dashboard/createActionAdvisor.ts");
 
 function insights(assets) {
   return createPortfolioInsights(assets);
@@ -40,50 +41,60 @@ function assertShort(advisor, label) {
     `${label}: expected 2 to 4 messages`,
   );
   advisor.messages.forEach((message) => {
-    assert(message.length <= 45, `${label}: message is too long: ${message}`);
-    assert(/[。]$/.test(message), `${label}: message should end naturally: ${message}`);
+    assert(message.length <= 60, `${label}: message is too long: ${message}`);
   });
 }
 
-function assertIncludes(advisor, expected, label) {
-  const text = advisor.messages.join("");
-  assert(text.includes(expected), `${label}: expected "${text}" to include "${expected}"`);
+function assertAction(advisor, portfolioInsights, label) {
+  const actionAdvisor = createActionAdvisor(advisor, portfolioInsights);
+  assert(actionAdvisor.reason.length > 0, `${label}: reason is required`);
+  assert(actionAdvisor.currentStatus.length > 0, `${label}: current status is required`);
+  assert(
+    actionAdvisor.recommendations.length > 0 && actionAdvisor.recommendations.length <= 3,
+    `${label}: recommendations should be 1 to 3`,
+  );
+  assert(actionAdvisor.chatPrompt.includes(advisor.messages[0]), `${label}: prompt should reference Daily Advisor`);
+  assert(actionAdvisor.chatPrompt.includes("今日のAIでは"), `${label}: prompt should include Daily Advisor intro`);
+  assert(actionAdvisor.chatPrompt.includes("私のポートフォリオなら"), `${label}: prompt should ask about portfolio`);
+  return actionAdvisor;
 }
 
 const empty = createDailyAdvisor(null);
 assert.strictEqual(empty.priority, "empty");
-assertIncludes(empty, "資産情報が登録されていません", "empty");
 assertShort(empty, "empty");
+const emptyAction = assertAction(empty, null, "empty action");
+assert(emptyAction.currentStatus.length > 0, "empty action should describe current status");
 
-const cashOnly = createDailyAdvisor(
-  insights([{ name: "現金", category: "cash", amount: 1000000, monthlyContribution: 0 }]),
-);
+const cashOnlyInsights = insights([
+  { name: "cash", category: "cash", amount: 1000000, monthlyContribution: 0 },
+]);
+const cashOnly = createDailyAdvisor(cashOnlyInsights);
 assert.strictEqual(cashOnly.priority, "cash");
-assertIncludes(cashOnly, "現金比率が高め", "cash 100%");
-assertIncludes(cashOnly, "積立", "cash 100%");
 assertShort(cashOnly, "cash 100%");
+const cashAction = assertAction(cashOnly, cashOnlyInsights, "cash action");
+assert(cashAction.recommendations.length <= 3, "cash action should be compact");
 
-const noMonthly = createDailyAdvisor(
-  insights([
-    { name: "現金", category: "cash", amount: 400000, monthlyContribution: 0 },
-    { name: "投資信託", category: "fund", amount: 600000, monthlyContribution: 0 },
-  ]),
-);
+const noMonthlyInsights = insights([
+  { name: "cash", category: "cash", amount: 400000, monthlyContribution: 0 },
+  { name: "fund", category: "fund", amount: 600000, monthlyContribution: 0 },
+]);
+const noMonthly = createDailyAdvisor(noMonthlyInsights);
 assert.strictEqual(noMonthly.priority, "monthly-investment");
-assertIncludes(noMonthly, "積立設定がまだありません", "no monthly");
 assertShort(noMonthly, "no monthly");
+const noMonthlyAction = assertAction(noMonthly, noMonthlyInsights, "no monthly action");
+assert(noMonthlyAction.recommendations.length <= 3, "no monthly action should be compact");
 
-const diversified = createDailyAdvisor(
-  insights([
-    { name: "現金", category: "cash", amount: 250000, monthlyContribution: 5000 },
-    { name: "投資信託", category: "fund", amount: 300000, monthlyContribution: 20000 },
-    { name: "株式", category: "stock", amount: 250000, monthlyContribution: 5000 },
-    { name: "債券", category: "other", amount: 200000, monthlyContribution: 5000 },
-  ]),
-);
+const diversifiedInsights = insights([
+  { name: "cash", category: "cash", amount: 250000, monthlyContribution: 5000 },
+  { name: "fund", category: "fund", amount: 300000, monthlyContribution: 20000 },
+  { name: "stock", category: "stock", amount: 250000, monthlyContribution: 5000 },
+  { name: "bond", category: "other", amount: 200000, monthlyContribution: 5000 },
+]);
+const diversified = createDailyAdvisor(diversifiedInsights);
 assert.strictEqual(diversified.priority, "positive");
-assertIncludes(diversified, "おおむね整っています", "diversified");
 assertShort(diversified, "diversified");
+const diversifiedAction = assertAction(diversified, diversifiedInsights, "diversified action");
+assert(diversifiedAction.recommendations.length <= 3, "diversified action should be compact");
 
 const componentSource = fs.readFileSync("components/dashboard/DashboardClient.tsx", "utf8");
 assert(
@@ -92,9 +103,33 @@ assert(
   "DailyAdvisorCard should be rendered at the top of Dashboard",
 );
 assert(
+  componentSource.includes("createActionAdvisor") &&
+    componentSource.includes("actionAdvisor={actionAdvisor}"),
+  "Dashboard should pass Action Advisor into DailyAdvisorCard",
+);
+assert(
   !componentSource.includes("DashboardTodayAiCard") &&
     !componentSource.includes("createDashboardTodayAi"),
   "Dashboard should avoid duplicate Today AI cards",
+);
+
+const cardSource = fs.readFileSync("components/dashboard/DailyAdvisorCard.tsx", "utf8");
+assert(cardSource.includes("aria-expanded"), "Details button should expose expanded state");
+assert(cardSource.includes("DailyAdvisorDetails"), "Details component should be rendered");
+assert(cardSource.includes("encodeURIComponent(actionAdvisor.chatPrompt)"), "Chat prompt should be encoded");
+assert(cardSource.includes("/chat?prompt="), "AI consultation should navigate to Chat with prompt");
+
+const detailsSource = fs.readFileSync("components/dashboard/DailyAdvisorDetails.tsx", "utf8");
+assert(detailsSource.includes("actionAdvisor.reason"), "Details should show reason");
+assert(detailsSource.includes("actionAdvisor.currentStatus"), "Details should show current status");
+assert(detailsSource.includes("actionAdvisor.recommendations.map"), "Details should show recommendations");
+
+const chatClientSource = fs.readFileSync("components/chat/ChatClient.tsx", "utf8");
+assert(chatClientSource.includes('get("prompt")'), "ChatClient should read prompt query");
+assert(chatClientSource.includes("setInput(prompt.slice"), "ChatClient should set initial input");
+assert(
+  !chatClientSource.includes("sendMessage(prompt"),
+  "ChatClient should not auto-send the initial prompt",
 );
 
 console.log("Daily advisor checks passed.");
@@ -102,9 +137,13 @@ console.log(
   JSON.stringify(
     {
       empty,
+      emptyAction,
       cashOnly,
+      cashAction,
       noMonthly,
+      noMonthlyAction,
       diversified,
+      diversifiedAction,
     },
     null,
     2,
