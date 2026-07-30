@@ -63,6 +63,7 @@ Version1.1公開前に確認する項目です。
 - [x] Step10-A2でRLS実環境検証用SQLを追加している
 - [x] Step10-A2.1でlocal > 0 / cloud = 0 のmigration pending永続化と承認後refetchを実装している
 - [x] Step10-A2.1で `npm test` を追加し、load order安定性とpending migrationを検証している
+- [x] Step10-A2.2でDashboardも `usePortfolioSync()` からcloud restoreする構成へ修正している
 - [ ] Step7-B反映後にProduction再デプロイを実施している
 - [ ] Step7-B反映後に新NISA、資産未登録、情報不足、危険相談、個別銘柄、機密情報のSmoke Testを実施している
 - [ ] Step7-C反映後に現金90% / 株式10%、暗号資産70%、1銘柄100%、資産なしのSmoke Testを実施している
@@ -80,6 +81,7 @@ Version1.1公開前に確認する項目です。
 - [ ] Step10-A2でEmail OTP受信確認、またはProductionではGoogle主導線にする判断を記録している
 - [ ] Step10-A2でSupabase SSR middleware Edge Runtime warningがPreview Runtime障害につながらないことを確認している
 - [ ] Step10-A2.1反映後にPreviewでlocal資産2〜3件からGoogleログインし、migration確認UI、承認、Supabase upsert、再fetch、logout/relogin復元を確認している
+- [ ] Step10-A2.2反映後にPreviewでlogout / relogin後、`/portfolio` を開かず `/dashboard` 直行でもcloud資産が復元されることを確認している
 - [ ] OpenAI接続失敗時にfallback回答へ切り替わることを確認している
 - [ ] 本番ログにAPIキーやOpenAI response bodyが出ないことを確認している
 

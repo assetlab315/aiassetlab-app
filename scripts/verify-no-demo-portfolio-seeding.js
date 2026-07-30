@@ -178,10 +178,8 @@ assert(
   "Portfolio sync hook should initialize with empty assets",
 );
 assert(
-  /useState<PortfolioAsset\[\]>\(\[\]\)/.test(
-    fs.readFileSync("components/dashboard/DashboardClient.tsx", "utf8"),
-  ),
-  "DashboardClient should initialize with empty assets",
+  /usePortfolioSync\(\)/.test(fs.readFileSync("components/dashboard/DashboardClient.tsx", "utf8")),
+  "DashboardClient should use the portfolio sync hook initialized with empty assets",
 );
 assert(
   /isReady \? createPortfolioInsights\(assets\) : null/.test(

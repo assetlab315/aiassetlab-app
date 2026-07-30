@@ -144,6 +144,10 @@ AI Chat運用メモ
 
 ・Preview検証用ログは `[portfolio-sync]` の `console.info` です。auth/local/cloud count、decision、modal、upload、refetchの状態だけを出し、tokenや資産JSONは出しません。`aiassetlab.jp` / `www.aiassetlab.jp` では出しません。
 
+・Step10-A2.2では、logout / relogin後にDashboardが0件表示になる問題を修正しました。Dashboardも `usePortfolioSync()` をmountするため、`/portfolio` を開かなくてもcloud fetch、local cache更新、visible state更新が走ります。
+
+・Dashboard検証ログは `[dashboard-portfolio]` です。`load source`、`asset count`、`waiting for sync`、`sync completed` を出します。こちらもProduction domainでは出しません。
+
 ---
 
 環境変数

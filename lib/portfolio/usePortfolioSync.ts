@@ -74,7 +74,9 @@ export function usePortfolioSync() {
     saveCloudPortfolioCache(targetUser.id, cloudAssets);
     saveCloudSnapshotCache(targetUser.id, cloudSnapshots);
     savePortfolioSyncMeta(targetUser.id, createAssetsFingerprint(cloudAssets));
+    logPortfolioSyncEvent("local cache updated", { assetCount: cloudAssets.length });
     setAssets(cloudAssets);
+    logPortfolioSyncEvent("visible state updated", { assetCount: cloudAssets.length });
   }, [localRepository]);
 
   const load = useCallback(async () => {
@@ -112,11 +114,18 @@ export function usePortfolioSync() {
     const cloudRepository = createSupabasePortfolioRepository(supabase, data.user.id);
 
     try {
+      logPortfolioSyncEvent("cloud fetch started", { hasUser: true });
       const [cloudAssets, cloudSnapshots] = await Promise.all([
         cloudRepository.loadAssets(),
         cloudRepository.loadSnapshots(),
       ]);
       logPortfolioSyncEvent("cloud fetch completed", { assetCount: cloudAssets.length });
+      logPortfolioSyncEvent("cloud fetch result", {
+        rowCount: cloudAssets.length,
+        assetCount: cloudAssets.length,
+        hasError: false,
+      });
+      logPortfolioSyncEvent("cloud snapshot parsed", { assetCount: cloudSnapshots.length });
 
       const storedPending = loadPortfolioMigrationPending(data.user.id);
       if (storedPending) {
@@ -194,6 +203,11 @@ export function usePortfolioSync() {
         setAssets(cachedAssets);
         savePortfolioSnapshots(cachedSnapshots);
       }
+      logPortfolioSyncEvent("cloud fetch result", {
+        rowCount: 0,
+        assetCount: cachedAssets.length,
+        hasError: true,
+      });
       logPortfolioSyncEvent("cloud fetch failed", { fallbackCacheAssetCount: cachedAssets.length });
       setStatus("error");
       setMessage("クラウドのPortfolioを読み込めませんでした。時間をおいて再度お試しください。");
@@ -292,7 +306,9 @@ export function usePortfolioSync() {
       savePortfolioSyncMeta(user.id, createAssetsFingerprint(refetchedAssets));
       await localRepository.saveAssets(refetchedAssets);
       savePortfolioSnapshots(refetchedSnapshots);
+      logPortfolioSyncEvent("local cache updated", { assetCount: refetchedAssets.length });
       setAssets(refetchedAssets);
+      logPortfolioSyncEvent("visible state updated", { assetCount: refetchedAssets.length });
       setPendingLocalAssets([]);
       setPendingLocalSnapshots([]);
       setMigrationState(null);

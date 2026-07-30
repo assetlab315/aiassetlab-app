@@ -75,6 +75,7 @@ assert.strictEqual(cases.sameAssetsDifferentSnapshots.decision, "conflict");
 assert.strictEqual(createAssetsFingerprint([asset("b", 2), asset("a", 1)]), createAssetsFingerprint([asset("a", 1), asset("b", 2)]));
 
 const syncSource = fs.readFileSync("lib/portfolio/usePortfolioSync.ts", "utf8");
+const dashboardSource = fs.readFileSync("components/dashboard/DashboardClient.tsx", "utf8");
 assert(syncSource.includes("uploadLocalToCloud"), "migration approval action should exist");
 assert(syncSource.includes("prepareOverwriteCloud"), "overwrite should require preparation");
 assert(syncSource.includes("confirmOverwriteCloud"), "overwrite should require confirmation");
@@ -85,6 +86,11 @@ assert(syncSource.includes("clearPortfolioMigrationPending"), "resolved migratio
 assert(syncSource.includes("logPortfolioSyncEvent(\"auth user resolved\""), "auth resolved log should exist");
 assert(syncSource.includes("logPortfolioSyncEvent(\"local load completed\""), "local load log should exist");
 assert(syncSource.includes("logPortfolioSyncEvent(\"cloud fetch completed\""), "cloud fetch log should exist");
+assert(syncSource.includes("logPortfolioSyncEvent(\"cloud fetch started\""), "cloud fetch started log should exist");
+assert(syncSource.includes("logPortfolioSyncEvent(\"cloud fetch result\""), "cloud fetch result log should exist");
+assert(syncSource.includes("logPortfolioSyncEvent(\"cloud snapshot parsed\""), "cloud snapshot parsed log should exist");
+assert(syncSource.includes("logPortfolioSyncEvent(\"local cache updated\""), "local cache update log should exist");
+assert(syncSource.includes("logPortfolioSyncEvent(\"visible state updated\""), "visible state update log should exist");
 assert(syncSource.includes("logPortfolioSyncEvent(\"migration decision\""), "migration decision log should exist");
 assert(syncSource.includes("logPortfolioSyncEvent(\"migration modal opened\""), "migration modal log should exist");
 assert(syncSource.includes("logPortfolioSyncEvent(\"upload started\""), "upload started log should exist");
@@ -97,6 +103,11 @@ assert(syncSource.includes("cloudRepository.loadAssets()"), "cloud refetch path 
 assert(syncSource.includes("localRepository.saveAssets(nextAssets)"), "guest fallback save path should exist");
 assert(!syncSource.includes("console.log"), "sync should not log portfolio data");
 assert(!syncSource.includes("console.error"), "sync should not log portfolio data");
+assert(dashboardSource.includes("usePortfolioSync"), "Dashboard should load cloud assets without opening Portfolio");
+assert(!dashboardSource.includes("loadPortfolioAssets"), "Dashboard should not settle on local storage only");
+assert(dashboardSource.includes("[dashboard-portfolio]"), "Dashboard sync diagnostics should exist");
+assert(dashboardSource.includes("waiting for sync"), "Dashboard should log waiting state");
+assert(dashboardSource.includes("sync completed"), "Dashboard should log completed state");
 
 const repositorySource = fs.readFileSync("lib/portfolio/supabasePortfolioRepository.ts", "utf8");
 assert(repositorySource.includes("onConflict: \"user_id,id\""), "asset id should be preserved per user");
@@ -161,6 +172,7 @@ runLoadOrderChecks().then(() => {
         invalidLocalStorage: "sanitizePortfolioAssets filters invalid data",
         invalidCloudResponse: "sanitizePortfolioAssets filters invalid rows",
         loadOrderStable: true,
+        dashboardDirectSync: true,
       },
       null,
       2,

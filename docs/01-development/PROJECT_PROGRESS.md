@@ -164,6 +164,14 @@ Supabase Preview Integration and Authentication Verification
 - Preview検証用に秘密情報を含まない `console.info` ログを追加。Production domainでは出さない
 - `npm test` を追加し、load order安定性とpending/refetch経路を検証
 
+### Dashboard Cloud Restore Fix
+
+- logout / relogin後、Dashboard直行時にcloud資産が復元されず0件表示になる問題を修正
+- Dashboardは `loadPortfolioAssets()` のlocalStorage直読みではなく、Portfolioと同じ `usePortfolioSync()` を使う
+- `/portfolio` を開かなくても `/dashboard` mount時にauth / local / cloud loadが走り、cloud fetch成功後にlocal cacheとvisible stateを更新する
+- Preview検証用に `[dashboard-portfolio]` ログを追加
+- `test:portfolio-sync` でDashboardが同期Hookを使い、localStorage直読みへ戻っていないことを検証
+
 ### Dashboard v3.1 / Monetization Foundation
 
 - Dashboard上にPremium候補カードを追加

@@ -17,11 +17,10 @@ import SectionHeader from "../common/SectionHeader";
 import PageContainer from "../layout/PageContainer";
 import Button from "../ui/Button";
 import Card from "../ui/Card";
-import type { PortfolioAsset } from "../../features/portfolio/types";
 import type { DashboardChangeSummary } from "../../features/portfolio-history/types";
 import { calculatePortfolioSummary } from "../../lib/portfolio/calculatePortfolio";
 import { formatCurrency } from "../../lib/portfolio/formatPortfolio";
-import { loadPortfolioAssets } from "../../lib/portfolio/storage";
+import { usePortfolioSync } from "../../lib/portfolio/usePortfolioSync";
 import { createPortfolioInsights } from "../../lib/chat/createPortfolioInsights";
 import { createAssetHealthScore } from "../../lib/dashboard/createAssetHealthScore";
 import { createDashboardChangeSummary } from "../../lib/dashboard/createDashboardChangeSummary";
@@ -46,6 +45,19 @@ import {
 
 const dailyCheckStorageKey = "aiassetlab:dashboard-daily-check";
 
+function shouldLogDashboardPortfolio() {
+  if (typeof window === "undefined") return false;
+  return !["aiassetlab.jp", "www.aiassetlab.jp"].includes(window.location.hostname);
+}
+
+function logDashboardPortfolioEvent(
+  event: string,
+  details: Record<string, string | number | boolean | null> = {},
+) {
+  if (!shouldLogDashboardPortfolio()) return;
+  console.info("[dashboard-portfolio]", event, details);
+}
+
 function getTodayKey() {
   const now = new Date();
   const year = now.getFullYear();
@@ -63,18 +75,25 @@ function getDateLabel() {
 }
 
 export default function DashboardClient() {
-  const [assets, setAssets] = useState<PortfolioAsset[]>([]);
-  const [isReady, setIsReady] = useState(false);
+  const { assets, isReady, status: syncStatus } = usePortfolioSync();
   const [isDailyChecked, setIsDailyChecked] = useState(false);
   const [dateLabel, setDateLabel] = useState("");
   const [changeSummary, setChangeSummary] = useState<DashboardChangeSummary | null>(null);
 
   useEffect(() => {
-    setAssets(loadPortfolioAssets());
     setIsDailyChecked(localStorage.getItem(dailyCheckStorageKey) === getTodayKey());
     setDateLabel(getDateLabel());
-    setIsReady(true);
   }, []);
+
+  useEffect(() => {
+    logDashboardPortfolioEvent("load source", {
+      source: syncStatus === "saved" ? "sync completed" : "waiting for sync",
+    });
+    logDashboardPortfolioEvent("asset count", { assetCount: assets.length });
+    logDashboardPortfolioEvent(isReady ? "sync completed" : "waiting for sync", {
+      assetCount: assets.length,
+    });
+  }, [assets.length, isReady, syncStatus]);
 
   const summary = useMemo(() => calculatePortfolioSummary(assets), [assets]);
   const dailyCheck = useMemo(

@@ -322,6 +322,17 @@ Step10-A2.1 Portfolio migration fix Preview Smoke Test:
 9. reload / logout / reloginでcloud assetsが復元されることを確認する
 10. upload失敗時は `保存できませんでした` 系の表示になり、画面のlocal assetsが消えないことを確認する
 
+Step10-A2.2 Dashboard cloud restore Preview Smoke Test:
+
+1. Supabase `portfolio_assets` に対象Googleアカウントの資産が残っている状態にする
+2. logoutしてlocal cacheが消えた状態にする
+3. 同じGoogleアカウントで再ログインする
+4. callback後または手動で `/dashboard` へ直行する
+5. `[portfolio-sync] cloud fetch started`、`cloud fetch result { assetCount: 2, hasError: false }`、`local cache updated`、`visible state updated` を確認する
+6. `[dashboard-portfolio] waiting for sync` から `sync completed` へ進むことを確認する
+7. Dashboardの総資産・保有資産件数がSupabaseの資産と一致することを確認する
+8. `/portfolio` を一度も開かない状態でもDashboardに反映されることを確認する
+
 - GA4は既存プロパティ「AI Asset Lab」と既存Web Streamを利用します。
 - GA4 Web Stream URLは `https://aiassetlab.jp`、Stream IDは `15218177688`、Measurement IDは `G-BB1DMLMD15` です。
 - GA4 Enhanced Measurementとページビュー計測は有効です。

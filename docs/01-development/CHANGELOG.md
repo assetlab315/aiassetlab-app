@@ -2,6 +2,27 @@
 
 ## 2026-07-28
 
+### Deployment Step 10-A2.2 - Dashboard Cloud Restore Fix
+
+#### Fixed
+
+- logout / relogin後にSupabase上のPortfolio資産が残っていてもDashboardが0件表示になる問題を修正
+- DashboardがlocalStorageを直接読む構成をやめ、Portfolioと同じ `usePortfolioSync()` 経由でcloud fetchとcache反映を実行するように変更
+- `/portfolio` を一度も開かず `/dashboard` へ直行した場合でも、ログイン済みならSupabaseから資産を取得してDashboardへ反映する構成へ修正
+
+#### Added
+
+- `[portfolio-sync] cloud fetch started/result`、`cloud snapshot parsed`、`local cache updated`、`visible state updated` のPreview検証ログを追加
+- `[dashboard-portfolio] load source`、`asset count`、`waiting for sync / sync completed` のPreview検証ログを追加
+- `test:portfolio-sync` でDashboardがlocalStorage直読みではなく同期Hookを使うことを検証
+
+#### Notes
+
+- Production deploy、promote、環境変数変更は実行していません
+- Preview再検証では、logout / relogin後に `/dashboard` 直行でSupabase資産が復元されることを確認してください
+
+## 2026-07-28
+
 ### Deployment Step 10-A2.1 - Portfolio Migration Flow Fix
 
 #### Fixed
