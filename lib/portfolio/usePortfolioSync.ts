@@ -35,6 +35,10 @@ type OverwriteState = {
   cloudAssetCount: number;
 } | null;
 
+type SaveAssetsOptions = {
+  operation?: "save" | "delete";
+};
+
 function shouldLogPortfolioSync() {
   if (typeof window === "undefined") return false;
   return !["aiassetlab.jp", "www.aiassetlab.jp"].includes(window.location.hostname);
@@ -221,7 +225,8 @@ export function usePortfolioSync() {
   }, [load]);
 
   const saveAssets = useCallback(
-    async (nextAssets: PortfolioAsset[]) => {
+    async (nextAssets: PortfolioAsset[], options: SaveAssetsOptions = {}) => {
+      const previousAssets = assets;
       setAssets(nextAssets);
 
       if (!user || !canUseSupabaseBrowserClient() || !isCloudReady) {
@@ -250,11 +255,12 @@ export function usePortfolioSync() {
         setStatus("saved");
         setMessage("クラウドへ保存しました。");
       } catch {
+        setAssets(previousAssets);
         setStatus("error");
         setMessage("クラウドへ保存できませんでした。入力内容は画面に残しています。");
       }
     },
-    [isCloudReady, localRepository, status, user],
+    [assets, isCloudReady, localRepository, status, user],
   );
 
   const skipMigration = useCallback(() => {

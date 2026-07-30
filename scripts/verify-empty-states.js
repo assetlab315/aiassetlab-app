@@ -13,7 +13,9 @@ assert(dashboardEmpty.includes("AIによる分析を始められます"), "Dashb
 assert(dashboardEmpty.includes('href="/portfolio"'), "Dashboard empty should link to Portfolio");
 assert(dashboardEmpty.includes("aria-labelledby"), "Dashboard empty should be accessible");
 assert(
-  dashboardClient.includes("isReady && assets.length === 0 ? <EmptyDashboard /> : null"),
+  dashboardClient.includes("assets.length === 0 ? <EmptyDashboard /> : null") &&
+    dashboardClient.indexOf("syncStatus === \"error\"") <
+      dashboardClient.indexOf("assets.length === 0 ? <EmptyDashboard"),
   "Dashboard empty should show only when there are no assets",
 );
 

@@ -7,6 +7,7 @@ const inputClass =
 type Props = {
   input: AssetFormInput;
   isEditing: boolean;
+  isSaving?: boolean;
   onChange: (input: AssetFormInput) => void;
   onSubmit: () => void;
   onCancel: () => void;
@@ -15,11 +16,12 @@ type Props = {
 export default function AssetForm({
   input,
   isEditing,
+  isSaving = false,
   onCancel,
   onChange,
   onSubmit,
 }: Props) {
-  const canSubmit = input.name.trim().length > 0;
+  const canSubmit = input.name.trim().length > 0 && !isSaving;
 
   return (
     <section className="rounded-3xl bg-white p-5 shadow-sm md:p-6">
@@ -118,6 +120,7 @@ export default function AssetForm({
           <button
             type="button"
             onClick={onCancel}
+            disabled={isSaving}
             className="min-h-12 rounded-full border border-slate-200 px-5 py-3 font-bold text-slate-600 hover:bg-slate-50 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-100"
           >
             キャンセル

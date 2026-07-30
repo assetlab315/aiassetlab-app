@@ -1,4 +1,5 @@
 import type { ChatMessage } from "../../features/chat/types";
+import LoadingSkeleton from "../feedback/LoadingSkeleton";
 
 function MessageBubble({ message }: { message: ChatMessage }) {
   const isUser = message.role === "user";
@@ -35,11 +36,7 @@ export default function ChatMessageList({
       ))}
 
       {isSending ? (
-        <div className="flex justify-start">
-          <div className="rounded-3xl border border-slate-100 bg-slate-50 px-5 py-4 text-slate-500">
-            AIが考えています...
-          </div>
-        </div>
+        <LoadingSkeleton variant="chat-answer" label="AIが回答を作成しています…" />
       ) : null}
     </div>
   );

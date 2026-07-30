@@ -6,6 +6,9 @@ import AssetForm from "./AssetForm";
 import AssetTable from "./AssetTable";
 import AllocationChart from "./AllocationChart";
 import EmptyPortfolio from "../empty/EmptyPortfolio";
+import ErrorState from "../feedback/ErrorState";
+import InlineError from "../feedback/InlineError";
+import LoadingSkeleton from "../feedback/LoadingSkeleton";
 import PortfolioNextActions from "./PortfolioNextActions";
 import PortfolioSummaryCards from "./PortfolioSummaryCards";
 import type { AssetFormInput, PortfolioAsset } from "../../features/portfolio/types";
@@ -49,6 +52,7 @@ export default function PortfolioClient() {
   const formRef = useRef<HTMLDivElement | null>(null);
   const [input, setInput] = useState<AssetFormInput>(emptyInput);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [lastOperation, setLastOperation] = useState<"load" | "save" | "delete">("load");
   const {
     assets,
     user,
@@ -64,25 +68,37 @@ export default function PortfolioClient() {
     prepareOverwriteCloud,
     confirmOverwriteCloud,
     cancelOverwrite,
+    reload,
   } = usePortfolioSync();
 
   const summary = useMemo(() => calculatePortfolioSummary(assets), [assets]);
   const allocations = useMemo(() => calculateAssetAllocation(assets), [assets]);
+  const isInitialLoading = !isReady || status === "loading";
+  const isSaving = status === "saving";
+  const portfolioErrorMessage =
+    status === "error"
+      ? lastOperation === "delete"
+        ? "削除できませんでした。データは変更されていません。"
+        : lastOperation === "save"
+          ? "保存できませんでした。もう一度お試しください。"
+          : "資産情報を取得できませんでした。"
+      : "";
 
   const handleSubmit = async () => {
-    if (!input.name.trim()) return;
+    if (!input.name.trim() || isSaving) return;
+    setLastOperation("save");
 
     if (editingId) {
       const nextAssets = assets.map((asset) =>
         asset.id === editingId ? toAsset(input, editingId) : asset,
       );
-      await saveAssets(nextAssets);
+      await saveAssets(nextAssets, { operation: "save" });
       setEditingId(null);
       setInput(emptyInput);
       return;
     }
 
-    await saveAssets([toAsset(input), ...assets]);
+    await saveAssets([toAsset(input), ...assets], { operation: "save" });
     setInput(emptyInput);
   };
 
@@ -97,7 +113,9 @@ export default function PortfolioClient() {
   };
 
   const handleDelete = async (assetId: string) => {
-    await saveAssets(assets.filter((asset) => asset.id !== assetId));
+    if (isSaving) return;
+    setLastOperation("delete");
+    await saveAssets(assets.filter((asset) => asset.id !== assetId), { operation: "delete" });
     if (editingId === assetId) handleCancel();
   };
 
@@ -127,6 +145,8 @@ export default function PortfolioClient() {
         </section>
 
         <PortfolioSummaryCards summary={summary} />
+
+        {portfolioErrorMessage ? <InlineError message={portfolioErrorMessage} /> : null}
 
         <section className="rounded-3xl border border-slate-100 bg-white p-5 shadow-sm">
           <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
@@ -249,6 +269,7 @@ export default function PortfolioClient() {
             <AssetForm
               input={input}
               isEditing={Boolean(editingId)}
+              isSaving={isSaving}
               onCancel={handleCancel}
               onChange={setInput}
               onSubmit={handleSubmit}
@@ -256,13 +277,28 @@ export default function PortfolioClient() {
           </div>
 
           <div className="space-y-6">
-            {assets.length === 0 ? (
+            {isInitialLoading ? (
+              <LoadingSkeleton variant="portfolio-list" label="資産一覧を読み込み中" />
+            ) : status === "error" && assets.length === 0 ? (
+              <ErrorState
+                title="資産情報を取得できませんでした。"
+                description="通信状態を確認して、もう一度お試しください。"
+                actionLabel="再試行"
+                loadingLabel="再試行中…"
+                isRetrying={false}
+                onRetry={() => {
+                  setLastOperation("load");
+                  reload();
+                }}
+              />
+            ) : assets.length === 0 ? (
               <EmptyPortfolio onAddAsset={handleAddAssetFocus} />
             ) : (
               <>
                 <AllocationChart allocations={allocations} />
                 <AssetTable
                   assets={assets}
+                  isBusy={isSaving}
                   onDelete={handleDelete}
                   onEdit={handleEdit}
                 />

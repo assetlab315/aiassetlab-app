@@ -13,6 +13,8 @@ import DailyAdvisorCard from "./DailyAdvisorCard";
 import PortfolioChangeCard from "./PortfolioChangeCard";
 import PortfolioReviewCard from "./PortfolioReviewCard";
 import EmptyDashboard from "../empty/EmptyDashboard";
+import ErrorState from "../feedback/ErrorState";
+import LoadingSkeleton from "../feedback/LoadingSkeleton";
 import OnboardingModal from "../onboarding/OnboardingModal";
 import FeatureNavigation from "../common/FeatureNavigation";
 import SectionHeader from "../common/SectionHeader";
@@ -79,7 +81,7 @@ function getDateLabel() {
 }
 
 export default function DashboardClient() {
-  const { assets, isReady, status: syncStatus } = usePortfolioSync();
+  const { assets, isReady, status: syncStatus, reload } = usePortfolioSync();
   const onboarding = useOnboarding();
   const [isDailyChecked, setIsDailyChecked] = useState(false);
   const [dateLabel, setDateLabel] = useState("");
@@ -211,13 +213,37 @@ export default function DashboardClient() {
   return (
     <PageContainer size="xl">
       <OnboardingModal
-        isOpen={onboarding.isReady && onboarding.isOpen}
+        isOpen={
+          onboarding.isReady &&
+          onboarding.isOpen &&
+          isReady &&
+          syncStatus !== "loading" &&
+          syncStatus !== "error"
+        }
         onComplete={onboarding.complete}
       />
 
-      <DailyAdvisorCard advisor={dailyAdvisor} actionAdvisor={actionAdvisor} />
+      {!isReady || syncStatus === "loading" ? (
+        <>
+          <LoadingSkeleton variant="dashboard-card" label="Dashboardを読み込み中" />
+          <LoadingSkeleton variant="dashboard-card" label="資産情報を読み込み中" />
+        </>
+      ) : syncStatus === "error" ? (
+        <ErrorState
+          title="資産情報を読み込めませんでした"
+          description="通信状態を確認して、もう一度お試しください。"
+          actionLabel="再試行"
+          loadingLabel="再試行中…"
+          isRetrying={false}
+          onRetry={reload}
+        />
+      ) : (
+        <>
+          <DailyAdvisorCard advisor={dailyAdvisor} actionAdvisor={actionAdvisor} />
 
-      {isReady && assets.length === 0 ? <EmptyDashboard /> : null}
+          {assets.length === 0 ? <EmptyDashboard /> : null}
+        </>
+      )}
 
       <section className="rounded-[2rem] bg-white p-6 shadow-sm md:p-8">
         <p className="mb-3 text-sm font-black text-blue-600">AI Dashboard</p>

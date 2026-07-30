@@ -4,11 +4,12 @@ import { formatCurrency } from "../../lib/portfolio/formatPortfolio";
 
 type Props = {
   assets: PortfolioAsset[];
+  isBusy?: boolean;
   onEdit: (asset: PortfolioAsset) => void;
   onDelete: (assetId: string) => void;
 };
 
-export default function AssetTable({ assets, onDelete, onEdit }: Props) {
+export default function AssetTable({ assets, isBusy = false, onDelete, onEdit }: Props) {
   return (
     <section className="rounded-3xl bg-white p-6 shadow-sm">
       <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
@@ -52,6 +53,7 @@ export default function AssetTable({ assets, onDelete, onEdit }: Props) {
               <button
                 type="button"
                 onClick={() => onEdit(asset)}
+                disabled={isBusy}
                 aria-label={`${asset.name}を編集する`}
                 className="min-h-11 rounded-full border border-slate-200 px-4 py-2 text-sm font-bold text-slate-700 hover:bg-white focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-100"
               >
@@ -60,6 +62,7 @@ export default function AssetTable({ assets, onDelete, onEdit }: Props) {
               <button
                 type="button"
                 onClick={() => onDelete(asset.id)}
+                disabled={isBusy}
                 aria-label={`${asset.name}を削除する`}
                 className="min-h-11 rounded-full border border-red-100 px-4 py-2 text-sm font-bold text-red-600 hover:bg-red-50 focus:outline-none focus-visible:ring-4 focus-visible:ring-red-100"
               >

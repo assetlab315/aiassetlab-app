@@ -7,6 +7,7 @@ import ChatMessageList from "./ChatMessageList";
 import ChatSuggestions from "./ChatSuggestions";
 import ChatContextPanel from "./ChatContextPanel";
 import EmptyChat from "../empty/EmptyChat";
+import ErrorState from "../feedback/ErrorState";
 import { INITIAL_CHAT_MESSAGES } from "../../features/chat/constants";
 import { loadPortfolioAssets } from "../../lib/portfolio/storage";
 import type {
@@ -78,6 +79,8 @@ export default function ChatClient() {
   const [isSending, setIsSending] = useState(false);
   const [isFallbackAnswer, setIsFallbackAnswer] = useState(false);
   const [noticeMessage, setNoticeMessage] = useState("");
+  const [chatError, setChatError] = useState(false);
+  const [lastFailedQuestion, setLastFailedQuestion] = useState("");
   const [isContextReady, setIsContextReady] = useState(false);
   const [context, setContext] = useState<ChatUserContext>({
     totalAssets: 0,
@@ -149,6 +152,7 @@ export default function ChatClient() {
     setInput("");
     setIsSending(true);
     setNoticeMessage("");
+    setChatError(false);
 
     try {
       const response = await fetch("/api/chat", {
@@ -176,19 +180,13 @@ export default function ChatClient() {
           createdAt: new Date().toISOString(),
         },
       ]);
+      setLastFailedQuestion("");
     } catch {
       setIsFallbackAnswer(true);
       setNoticeMessage("");
-      setMessages((current) => [
-        ...current,
-        {
-          id: createId(),
-          role: "assistant",
-          content:
-            "一時的に回答できませんでした。少し時間をおいて、もう一度試してください。",
-          createdAt: new Date().toISOString(),
-        },
-      ]);
+      setChatError(true);
+      setLastFailedQuestion(trimmed);
+      setInput(trimmed);
     } finally {
       isSendingRef.current = false;
       setIsSending(false);
@@ -205,7 +203,7 @@ export default function ChatClient() {
               資産形成で迷ったことをAIに聞く
             </h1>
             <p className="mt-3 leading-7 text-slate-600">
-              登録した資産状況を踏まえて、次に確認することを短く整理します。
+              登録した資産状況を踏まえて、次に確認することを一緒に整理します。
             </p>
             <p className="mt-3 rounded-2xl bg-slate-50 px-4 py-3 text-xs leading-6 text-slate-500">
               AIの回答は参考情報です。投資助言や利益保証ではありません。パスワード、秘密鍵、カード番号などは入力しないでください。
@@ -218,6 +216,18 @@ export default function ChatClient() {
 
             <div className="border-t border-slate-100 p-4">
               {!hasUserMessages ? <EmptyChat onSelect={setInput} /> : null}
+              {chatError ? (
+                <div className="mb-4">
+                  <ErrorState
+                    title="回答を取得できませんでした"
+                    description="通信状態を確認して、もう一度お試しください。"
+                    actionLabel="もう一度送信"
+                    loadingLabel="送信中…"
+                    isRetrying={isSending}
+                    onRetry={() => sendMessage(lastFailedQuestion)}
+                  />
+                </div>
+              ) : null}
               <ChatSuggestions onSelect={(suggestion) => setInput(suggestion)} />
               <ChatInput
                 value={input}
@@ -262,7 +272,7 @@ export default function ChatClient() {
                 href="/simulator"
                 className="block rounded-2xl border border-slate-200 p-4 font-semibold text-slate-700 hover:border-blue-300 hover:bg-blue-50 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-100"
               >
-                将来のお金を計算する →
+                将来の見込みを計算する →
               </Link>
               <Link
                 href="/dashboard"
