@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import AssetForm from "./AssetForm";
 import AssetTable from "./AssetTable";
 import AllocationChart from "./AllocationChart";
-import EmptyPortfolio from "./EmptyPortfolio";
+import EmptyPortfolio from "../empty/EmptyPortfolio";
 import PortfolioNextActions from "./PortfolioNextActions";
 import PortfolioSummaryCards from "./PortfolioSummaryCards";
 import type { AssetFormInput, PortfolioAsset } from "../../features/portfolio/types";
@@ -46,6 +46,7 @@ function toInput(asset: PortfolioAsset): AssetFormInput {
 }
 
 export default function PortfolioClient() {
+  const formRef = useRef<HTMLDivElement | null>(null);
   const [input, setInput] = useState<AssetFormInput>(emptyInput);
   const [editingId, setEditingId] = useState<string | null>(null);
   const {
@@ -98,6 +99,10 @@ export default function PortfolioClient() {
   const handleDelete = async (assetId: string) => {
     await saveAssets(assets.filter((asset) => asset.id !== assetId));
     if (editingId === assetId) handleCancel();
+  };
+
+  const handleAddAssetFocus = () => {
+    formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   return (
@@ -240,17 +245,19 @@ export default function PortfolioClient() {
         </section>
 
         <div className="grid gap-6 lg:grid-cols-[420px_1fr]">
-          <AssetForm
-            input={input}
-            isEditing={Boolean(editingId)}
-            onCancel={handleCancel}
-            onChange={setInput}
-            onSubmit={handleSubmit}
-          />
+          <div ref={formRef}>
+            <AssetForm
+              input={input}
+              isEditing={Boolean(editingId)}
+              onCancel={handleCancel}
+              onChange={setInput}
+              onSubmit={handleSubmit}
+            />
+          </div>
 
           <div className="space-y-6">
             {assets.length === 0 ? (
-              <EmptyPortfolio />
+              <EmptyPortfolio onAddAsset={handleAddAssetFocus} />
             ) : (
               <>
                 <AllocationChart allocations={allocations} />

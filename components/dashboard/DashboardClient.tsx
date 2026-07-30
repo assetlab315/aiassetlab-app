@@ -12,6 +12,7 @@ import DashboardReleaseCheckCard from "./DashboardReleaseCheckCard";
 import DailyAdvisorCard from "./DailyAdvisorCard";
 import PortfolioChangeCard from "./PortfolioChangeCard";
 import PortfolioReviewCard from "./PortfolioReviewCard";
+import EmptyDashboard from "../empty/EmptyDashboard";
 import OnboardingModal from "../onboarding/OnboardingModal";
 import FeatureNavigation from "../common/FeatureNavigation";
 import SectionHeader from "../common/SectionHeader";
@@ -215,6 +216,8 @@ export default function DashboardClient() {
       />
 
       <DailyAdvisorCard advisor={dailyAdvisor} actionAdvisor={actionAdvisor} />
+
+      {isReady && assets.length === 0 ? <EmptyDashboard /> : null}
 
       <section className="rounded-[2rem] bg-white p-6 shadow-sm md:p-8">
         <p className="mb-3 text-sm font-black text-blue-600">AI Dashboard</p>

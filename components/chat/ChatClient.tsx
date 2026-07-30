@@ -6,6 +6,7 @@ import ChatInput from "./ChatInput";
 import ChatMessageList from "./ChatMessageList";
 import ChatSuggestions from "./ChatSuggestions";
 import ChatContextPanel from "./ChatContextPanel";
+import EmptyChat from "../empty/EmptyChat";
 import { INITIAL_CHAT_MESSAGES } from "../../features/chat/constants";
 import { loadPortfolioAssets } from "../../lib/portfolio/storage";
 import type {
@@ -106,6 +107,10 @@ export default function ChatClient() {
   }, [messages, isSending]);
 
   const inputLength = input.trim().length;
+  const hasUserMessages = useMemo(
+    () => messages.some((message) => message.role === "user"),
+    [messages],
+  );
   const inputError =
     inputLength > MAX_CHAT_MESSAGE_LENGTH
       ? "相談内容は1,000文字以内で入力してください。"
@@ -212,6 +217,7 @@ export default function ChatClient() {
             <div ref={bottomRef} />
 
             <div className="border-t border-slate-100 p-4">
+              {!hasUserMessages ? <EmptyChat onSelect={setInput} /> : null}
               <ChatSuggestions onSelect={(suggestion) => setInput(suggestion)} />
               <ChatInput
                 value={input}
