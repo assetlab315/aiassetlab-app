@@ -60,6 +60,20 @@ export type DashboardTodayAi = {
   message: string;
 };
 
+export type DailyAdvisorPriority =
+  | "empty"
+  | "cash"
+  | "monthly-investment"
+  | "nisa"
+  | "diversification"
+  | "positive";
+
+export type DailyAdvisor = {
+  title: string;
+  messages: string[];
+  priority: DailyAdvisorPriority;
+};
+
 export type DashboardDailyCheck = {
   greeting: string;
   title: string;

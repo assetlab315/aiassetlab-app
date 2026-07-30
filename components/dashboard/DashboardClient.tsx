@@ -9,7 +9,7 @@ import DashboardInsightCard from "./DashboardInsightCard";
 import DashboardHabitCard from "./DashboardHabitCard";
 import DashboardPremiumPreviewCard from "./DashboardPremiumPreviewCard";
 import DashboardReleaseCheckCard from "./DashboardReleaseCheckCard";
-import DashboardTodayAiCard from "./DashboardTodayAiCard";
+import DailyAdvisorCard from "./DailyAdvisorCard";
 import PortfolioChangeCard from "./PortfolioChangeCard";
 import PortfolioReviewCard from "./PortfolioReviewCard";
 import FeatureNavigation from "../common/FeatureNavigation";
@@ -18,6 +18,7 @@ import PageContainer from "../layout/PageContainer";
 import Button from "../ui/Button";
 import Card from "../ui/Card";
 import type { DashboardChangeSummary } from "../../features/portfolio-history/types";
+import { createDailyAdvisor } from "../../features/dashboard/createDailyAdvisor";
 import { calculatePortfolioSummary } from "../../lib/portfolio/calculatePortfolio";
 import { formatCurrency } from "../../lib/portfolio/formatPortfolio";
 import { usePortfolioSync } from "../../lib/portfolio/usePortfolioSync";
@@ -32,7 +33,6 @@ import {
   createDashboardInsights,
   createDashboardPremiumPreview,
   createDashboardTasks,
-  createDashboardTodayAi,
 } from "../../lib/dashboard/createDashboardInsights";
 import { comparePortfolioSnapshots } from "../../lib/portfolio-history/comparePortfolioSnapshots";
 import { createPortfolioSnapshotFromAssets } from "../../lib/portfolio-history/createPortfolioSnapshot";
@@ -104,13 +104,13 @@ export default function DashboardClient() {
     () => createDashboardAssetImpact(assets, summary),
     [assets, summary],
   );
-  const todayAi = useMemo(
-    () => createDashboardTodayAi(assets, summary),
-    [assets, summary],
-  );
   const portfolioInsights = useMemo(
     () => (isReady ? createPortfolioInsights(assets) : null),
     [assets, isReady],
+  );
+  const dailyAdvisor = useMemo(
+    () => (isReady ? createDailyAdvisor(portfolioInsights) : createDailyAdvisor(null)),
+    [isReady, portfolioInsights],
   );
   const dashboardInsights = useMemo(
     () => (isReady ? createDashboardInsights({ portfolioInsights }) : null),
@@ -201,6 +201,8 @@ export default function DashboardClient() {
 
   return (
     <PageContainer size="xl">
+      <DailyAdvisorCard advisor={dailyAdvisor} />
+
       <section className="rounded-[2rem] bg-white p-6 shadow-sm md:p-8">
         <p className="mb-3 text-sm font-black text-blue-600">AI Dashboard</p>
         <h1 className="text-3xl font-black tracking-tight text-slate-900 md:text-4xl">
@@ -218,8 +220,6 @@ export default function DashboardClient() {
           </Button>
         </div>
       </section>
-
-      <DashboardTodayAiCard todayAi={todayAi} />
 
       <Card variant="soft" className="bg-slate-50">
         <div className="flex items-start justify-between gap-4">
