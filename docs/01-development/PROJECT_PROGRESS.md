@@ -152,6 +152,18 @@ Supabase Preview Integration and Authentication Verification
 - 実Supabase Project接続、SQL適用、Google OAuth、Email OTP、Preview Deploymentは未実行
 - Productionデプロイ、Production環境変数変更は未実行
 
+### Portfolio Migration Flow Fix
+
+- Preview実機検証で確認された、local > 0 / cloud = 0 のmigration UI未表示を修正
+- HeaderのログインURLへ現在pathを `next` として付与し、Portfolioからログインした場合はcallback後にPortfolioへ戻る
+- `usePortfolioSync` はauth user、local load、cloud fetchの3結果が揃ってからmigration判定する
+- `use_local` / `conflict` は `aiassetlab.portfolioMigrationPending.v1` に保存し、再mountや画面遷移で確認UIが消えないようにする
+- migration承認時はpending local assetsをcloudへ保存し、成功後にcloudを再fetchして表示とcacheへ反映
+- upload/refetch失敗時は `error` 表示にし、local assetsを画面に残す
+- migration拒否時はguest backupへ退避したうえでcloudデータを採用する
+- Preview検証用に秘密情報を含まない `console.info` ログを追加。Production domainでは出さない
+- `npm test` を追加し、load order安定性とpending/refetch経路を検証
+
 ### Dashboard v3.1 / Monetization Foundation
 
 - Dashboard上にPremium候補カードを追加

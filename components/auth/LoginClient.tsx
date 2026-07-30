@@ -1,19 +1,26 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Button from "../ui/Button";
 import Card from "../ui/Card";
 import { canUseSupabaseBrowserClient, createSupabaseBrowserClient } from "../../lib/supabase/client";
+import { getSafeAuthRedirectPath } from "../../lib/auth/redirect";
 
-function getCallbackUrl() {
-  return `${window.location.origin}/auth/callback?next=/dashboard`;
+function getCallbackUrl(nextPath: string) {
+  return `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextPath)}`;
 }
 
 export default function LoginClient() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [nextPath, setNextPath] = useState("/dashboard");
   const canUseSupabase = useMemo(() => canUseSupabaseBrowserClient(), []);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setNextPath(getSafeAuthRedirectPath(params.get("next")));
+  }, []);
 
   const handleGoogleLogin = async () => {
     if (!canUseSupabase) {
@@ -28,7 +35,7 @@ export default function LoginClient() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: getCallbackUrl(),
+        redirectTo: getCallbackUrl(nextPath),
       },
     });
 
@@ -52,7 +59,7 @@ export default function LoginClient() {
     const { error } = await supabase.auth.signInWithOtp({
       email: email.trim(),
       options: {
-        emailRedirectTo: getCallbackUrl(),
+        emailRedirectTo: getCallbackUrl(nextPath),
       },
     });
 

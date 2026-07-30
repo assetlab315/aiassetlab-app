@@ -309,6 +309,19 @@ Step10-A2 Codex-side hardening:
   `./node_modules/@supabase/supabase-js/dist/index.mjs A Node.js API is used (process.version at line: 27) which is not supported in the Edge Runtime. Import trace: @supabase/ssr -> lib/supabase/middleware.ts`
 - 現時点の判断: build時warning。compile、type check、static generationは成功。Previewでmiddleware runtime error、OAuth loop、Cookie refresh failureが出る場合は修正必須
 
+Step10-A2.1 Portfolio migration fix Preview Smoke Test:
+
+1. Previewで未ログイン状態にする
+2. `/portfolio` で資産を2〜3件登録する
+3. HeaderのログインからGoogle OAuthを開始する
+4. callback後に `/portfolio` へ戻ることを確認する
+5. `[portfolio-sync] auth user resolved`、`local load completed`、`cloud fetch completed`、`migration decision`、`migration modal opened` がConsoleに出ることを確認する
+6. local > 0 / cloud = 0 で移行確認UIが表示されることを確認する
+7. `アカウントへ保存` で `upload started`、`upload succeeded`、`refetch succeeded` が出ることを確認する
+8. Supabase `portfolio_assets` に対象userの行が作成されることを確認する
+9. reload / logout / reloginでcloud assetsが復元されることを確認する
+10. upload失敗時は `保存できませんでした` 系の表示になり、画面のlocal assetsが消えないことを確認する
+
 - GA4は既存プロパティ「AI Asset Lab」と既存Web Streamを利用します。
 - GA4 Web Stream URLは `https://aiassetlab.jp`、Stream IDは `15218177688`、Measurement IDは `G-BB1DMLMD15` です。
 - GA4 Enhanced Measurementとページビュー計測は有効です。

@@ -9,8 +9,12 @@ import {
   clearCloudPortfolioCache,
   loadCloudPortfolioCache,
   loadCloudSnapshotCache,
+  loadPortfolioMigrationPending,
   saveCloudPortfolioCache,
   saveCloudSnapshotCache,
+  saveGuestPortfolioBackup,
+  savePortfolioMigrationPending,
+  clearPortfolioMigrationPending,
   savePortfolioSyncMeta,
 } from "./cloudPortfolioCache";
 import { createAssetsFingerprint } from "./portfolioFingerprint";
@@ -31,6 +35,16 @@ type OverwriteState = {
   cloudAssetCount: number;
 } | null;
 
+function shouldLogPortfolioSync() {
+  if (typeof window === "undefined") return false;
+  return !["aiassetlab.jp", "www.aiassetlab.jp"].includes(window.location.hostname);
+}
+
+function logPortfolioSyncEvent(event: string, details: Record<string, string | number | boolean | null> = {}) {
+  if (!shouldLogPortfolioSync()) return;
+  console.info("[portfolio-sync]", event, details);
+}
+
 function addSnapshot(snapshots: PortfolioSnapshot[], assets: PortfolioAsset[]) {
   const snapshot = createPortfolioSnapshotFromAssets(assets);
   if (!snapshot) return snapshots;
@@ -49,6 +63,8 @@ export function usePortfolioSync() {
   const [message, setMessage] = useState("Portfolioを読み込んでいます…");
   const [migrationState, setMigrationState] = useState<PortfolioMigrationState | null>(null);
   const [overwriteState, setOverwriteState] = useState<OverwriteState>(null);
+  const [pendingLocalAssets, setPendingLocalAssets] = useState<PortfolioAsset[]>([]);
+  const [pendingLocalSnapshots, setPendingLocalSnapshots] = useState<PortfolioSnapshot[]>([]);
 
   const isCloudReady = Boolean(user && status !== "migration_required" && status !== "conflict");
 
@@ -67,6 +83,7 @@ export function usePortfolioSync() {
 
     const localAssets = await localRepository.loadAssets();
     const localSnapshots = await localRepository.loadSnapshots();
+    logPortfolioSyncEvent("local load completed", { assetCount: localAssets.length });
     setAssets(localAssets);
 
     if (!canUseSupabaseBrowserClient()) {
@@ -90,6 +107,7 @@ export function usePortfolioSync() {
       return;
     }
 
+    logPortfolioSyncEvent("auth user resolved", { userResolved: true });
     setUser(data.user);
     const cloudRepository = createSupabasePortfolioRepository(supabase, data.user.id);
 
@@ -98,12 +116,41 @@ export function usePortfolioSync() {
         cloudRepository.loadAssets(),
         cloudRepository.loadSnapshots(),
       ]);
+      logPortfolioSyncEvent("cloud fetch completed", { assetCount: cloudAssets.length });
+
+      const storedPending = loadPortfolioMigrationPending(data.user.id);
+      if (storedPending) {
+        setPendingLocalAssets(storedPending.localAssets);
+        setPendingLocalSnapshots(storedPending.localSnapshots);
+        setMigrationState({
+          decision: storedPending.decision,
+          localAssetCount: storedPending.localAssets.length,
+          cloudAssetCount: cloudAssets.length,
+          localSnapshotCount: storedPending.localSnapshots.length,
+          cloudSnapshotCount: cloudSnapshots.length,
+        });
+        setStatus(storedPending.decision === "conflict" ? "conflict" : "migration_required");
+        setMessage("この端末の資産をアカウントへ保存するか確認してください。");
+        logPortfolioSyncEvent("migration modal opened", {
+          decision: storedPending.decision,
+          localAssetCount: storedPending.localAssets.length,
+          cloudAssetCount: cloudAssets.length,
+        });
+        setIsReady(true);
+        return;
+      }
+
       const nextMigrationState = getPortfolioMigrationState(
         localAssets,
         cloudAssets,
         localSnapshots,
         cloudSnapshots,
       );
+      logPortfolioSyncEvent("migration decision", {
+        decision: nextMigrationState.decision,
+        localAssetCount: nextMigrationState.localAssetCount,
+        cloudAssetCount: nextMigrationState.cloudAssetCount,
+      });
       setMigrationState(nextMigrationState);
 
       if (
@@ -111,6 +158,9 @@ export function usePortfolioSync() {
         nextMigrationState.decision === "same" ||
         nextMigrationState.decision === "use_cloud"
       ) {
+        clearPortfolioMigrationPending();
+        setPendingLocalAssets([]);
+        setPendingLocalSnapshots([]);
         applyCloudToCache(data.user, cloudAssets, cloudSnapshots);
         setStatus("saved");
         setMessage(
@@ -119,8 +169,23 @@ export function usePortfolioSync() {
             : "アカウントのPortfolioはまだ空です。",
         );
       } else {
+        const pendingDecision = nextMigrationState.decision === "conflict" ? "conflict" : "use_local";
+        setPendingLocalAssets(localAssets);
+        setPendingLocalSnapshots(localSnapshots);
+        savePortfolioMigrationPending(data.user.id, {
+          decision: pendingDecision,
+          localAssets,
+          localSnapshots,
+          cloudAssetCount: cloudAssets.length,
+          cloudSnapshotCount: cloudSnapshots.length,
+        });
         setStatus(nextMigrationState.decision === "conflict" ? "conflict" : "migration_required");
         setMessage("この端末の資産をアカウントへ保存するか確認してください。");
+        logPortfolioSyncEvent("migration modal opened", {
+          decision: pendingDecision,
+          localAssetCount: localAssets.length,
+          cloudAssetCount: cloudAssets.length,
+        });
       }
     } catch {
       const cachedAssets = loadCloudPortfolioCache(data.user.id);
@@ -129,6 +194,7 @@ export function usePortfolioSync() {
         setAssets(cachedAssets);
         savePortfolioSnapshots(cachedSnapshots);
       }
+      logPortfolioSyncEvent("cloud fetch failed", { fallbackCacheAssetCount: cachedAssets.length });
       setStatus("error");
       setMessage("クラウドのPortfolioを読み込めませんでした。時間をおいて再度お試しください。");
     }
@@ -178,35 +244,67 @@ export function usePortfolioSync() {
   );
 
   const skipMigration = useCallback(() => {
+    if (pendingLocalAssets.length > 0 || pendingLocalSnapshots.length > 0) {
+      saveGuestPortfolioBackup(pendingLocalAssets, pendingLocalSnapshots);
+    }
     setMigrationState(null);
-    setStatus("migration_required");
-    setMessage("今回は保存しません。アカウント保存は後で選べます。");
-  }, []);
+    setPendingLocalAssets([]);
+    setPendingLocalSnapshots([]);
+    clearPortfolioMigrationPending();
+    setStatus("saved");
+    setMessage("今回は保存しません。端末の資産は退避し、アカウントのデータを使用します。");
+    if (user) {
+      applyCloudToCache(user, [], []);
+    }
+  }, [applyCloudToCache, pendingLocalAssets, pendingLocalSnapshots, user]);
 
   const uploadLocalToCloud = useCallback(async () => {
     if (!user || !canUseSupabaseBrowserClient()) return;
     setStatus("saving");
     setMessage("この端末のPortfolioをアカウントへ保存中…");
+    logPortfolioSyncEvent("upload started", { assetCount: pendingLocalAssets.length });
 
     try {
       const supabase = createSupabaseBrowserClient();
       const cloudRepository = createSupabasePortfolioRepository(supabase, user.id);
-      const localAssets = await localRepository.loadAssets();
-      const localSnapshots = await localRepository.loadSnapshots();
+      const localAssets = pendingLocalAssets.length > 0 ? pendingLocalAssets : await localRepository.loadAssets();
+      const localSnapshots =
+        pendingLocalSnapshots.length > 0 ? pendingLocalSnapshots : await localRepository.loadSnapshots();
       await cloudRepository.saveAssets(localAssets);
       await cloudRepository.saveSnapshots(localSnapshots);
-      saveCloudPortfolioCache(user.id, localAssets);
-      saveCloudSnapshotCache(user.id, localSnapshots);
-      savePortfolioSyncMeta(user.id, createAssetsFingerprint(localAssets));
-      setAssets(localAssets);
+      logPortfolioSyncEvent("upload succeeded", { assetCount: localAssets.length });
+
+      let refetchedAssets: PortfolioAsset[];
+      let refetchedSnapshots: PortfolioSnapshot[];
+      try {
+        [refetchedAssets, refetchedSnapshots] = await Promise.all([
+          cloudRepository.loadAssets(),
+          cloudRepository.loadSnapshots(),
+        ]);
+      } catch {
+        logPortfolioSyncEvent("refetch failed", { assetCount: localAssets.length });
+        throw new Error("portfolio_migration_refetch_failed");
+      }
+      logPortfolioSyncEvent("refetch succeeded", { assetCount: refetchedAssets.length });
+
+      saveCloudPortfolioCache(user.id, refetchedAssets);
+      saveCloudSnapshotCache(user.id, refetchedSnapshots);
+      savePortfolioSyncMeta(user.id, createAssetsFingerprint(refetchedAssets));
+      await localRepository.saveAssets(refetchedAssets);
+      savePortfolioSnapshots(refetchedSnapshots);
+      setAssets(refetchedAssets);
+      setPendingLocalAssets([]);
+      setPendingLocalSnapshots([]);
       setMigrationState(null);
+      clearPortfolioMigrationPending();
       setStatus("saved");
       setMessage("アカウントへ保存しました。");
     } catch {
+      logPortfolioSyncEvent("upload failed", { assetCount: pendingLocalAssets.length });
       setStatus("error");
-      setMessage("アカウントへ保存できませんでした。再度お試しください。");
+      setMessage("アカウントへ保存できませんでした。端末の資産は画面に残しています。再度お試しください。");
     }
-  }, [localRepository, user]);
+  }, [localRepository, pendingLocalAssets, pendingLocalSnapshots, user]);
 
   const useCloudData = useCallback(async () => {
     if (!user || !canUseSupabaseBrowserClient()) return;

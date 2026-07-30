@@ -1,5 +1,6 @@
 import type { PortfolioAsset } from "../../features/portfolio/types";
 import type { PortfolioSnapshot } from "../../features/portfolio-history/types";
+import type { PortfolioMigrationDecision } from "./repository";
 import { sanitizePortfolioAssets } from "./portfolioValidation";
 import {
   loadPortfolioSnapshots,
@@ -7,11 +8,30 @@ import {
 } from "../portfolio-history/portfolioSnapshotStorage";
 
 export const PORTFOLIO_SYNC_META_KEY = "aiassetlab.portfolioSyncMeta.v1";
+export const PORTFOLIO_MIGRATION_PENDING_KEY = "aiassetlab.portfolioMigrationPending.v1";
+export const PORTFOLIO_GUEST_BACKUP_KEY = "aiassetlab.guestPortfolioBackup.v1";
 
 type SyncMeta = {
   lastUserHash: string;
   lastCloudFingerprint: string;
   syncedAt: string;
+};
+
+export type PortfolioMigrationPending = {
+  userHash: string;
+  decision: Extract<PortfolioMigrationDecision, "use_local" | "conflict">;
+  localAssets: PortfolioAsset[];
+  localSnapshots: PortfolioSnapshot[];
+  cloudAssetCount: number;
+  cloudSnapshotCount: number;
+  createdAt: string;
+};
+
+export type GuestPortfolioBackup = {
+  assets: PortfolioAsset[];
+  snapshots: PortfolioSnapshot[];
+  createdAt: string;
+  reason: "migration_skipped";
 };
 
 type StorageLike = {
@@ -91,6 +111,70 @@ export function clearCloudPortfolioCache(userId: string) {
 
   storage.removeItem(getCloudPortfolioCacheKey(userId));
   storage.removeItem(getCloudSnapshotCacheKey(userId));
+}
+
+export function loadPortfolioMigrationPending(userId: string): PortfolioMigrationPending | null {
+  const storage = getStorage();
+  if (!storage) return null;
+
+  try {
+    const stored = storage.getItem(PORTFOLIO_MIGRATION_PENDING_KEY);
+    if (!stored) return null;
+
+    const parsed = JSON.parse(stored) as PortfolioMigrationPending;
+    if (
+      parsed.userHash !== hashUserId(userId) ||
+      !["use_local", "conflict"].includes(parsed.decision) ||
+      !Array.isArray(parsed.localAssets) ||
+      !Array.isArray(parsed.localSnapshots)
+    ) {
+      return null;
+    }
+
+    return {
+      ...parsed,
+      localAssets: sanitizePortfolioAssets(parsed.localAssets),
+      localSnapshots: parsed.localSnapshots.filter((snapshot) => snapshot && snapshot.version === 1),
+    };
+  } catch {
+    return null;
+  }
+}
+
+export function savePortfolioMigrationPending(
+  userId: string,
+  pending: Omit<PortfolioMigrationPending, "userHash" | "createdAt">,
+) {
+  const storage = getStorage();
+  if (!storage) return;
+
+  const nextPending: PortfolioMigrationPending = {
+    ...pending,
+    userHash: hashUserId(userId),
+    createdAt: new Date().toISOString(),
+  };
+
+  storage.setItem(PORTFOLIO_MIGRATION_PENDING_KEY, JSON.stringify(nextPending));
+}
+
+export function clearPortfolioMigrationPending() {
+  const storage = getStorage();
+  if (!storage) return;
+  storage.removeItem(PORTFOLIO_MIGRATION_PENDING_KEY);
+}
+
+export function saveGuestPortfolioBackup(assets: PortfolioAsset[], snapshots: PortfolioSnapshot[]) {
+  const storage = getStorage();
+  if (!storage) return;
+
+  const backup: GuestPortfolioBackup = {
+    assets: sanitizePortfolioAssets(assets),
+    snapshots: snapshots.filter((snapshot) => snapshot && snapshot.version === 1),
+    createdAt: new Date().toISOString(),
+    reason: "migration_skipped",
+  };
+
+  storage.setItem(PORTFOLIO_GUEST_BACKUP_KEY, JSON.stringify(backup));
 }
 
 export function getPortfolioSyncMeta(): SyncMeta | null {

@@ -27,10 +27,13 @@ assert.notStrictEqual(getCloudPortfolioCacheKey("user-a"), getCloudPortfolioCach
 assert.notStrictEqual(getCloudSnapshotCacheKey("user-a"), getCloudSnapshotCacheKey("user-b"));
 
 const accountSource = fs.readFileSync("components/auth/AccountClient.tsx", "utf8");
+const cacheSource = fs.readFileSync("lib/portfolio/cloudPortfolioCache.ts", "utf8");
 assert(accountSource.includes("clearCloudPortfolioCache(user.id)"), "logout should clear user cloud cache");
 assert(accountSource.includes("clearPortfolioAssets()"), "logout should clear formal portfolio localStorage");
 assert(accountSource.includes("clearPortfolioSnapshots()"), "logout should clear snapshots");
 assert(accountSource.includes("form.action = \"/auth/logout\""), "logout should use server route");
+assert(cacheSource.includes("PORTFOLIO_GUEST_BACKUP_KEY"), "migration skip should have a guest backup key");
+assert(cacheSource.includes("PORTFOLIO_MIGRATION_PENDING_KEY"), "migration pending should have a durable key");
 
 const logoutRouteSource = fs.readFileSync("app/auth/logout/route.ts", "utf8");
 assert(logoutRouteSource.includes("auth.signOut"), "logout route should sign out Supabase");

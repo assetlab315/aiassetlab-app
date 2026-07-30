@@ -79,7 +79,21 @@ assert(syncSource.includes("uploadLocalToCloud"), "migration approval action sho
 assert(syncSource.includes("prepareOverwriteCloud"), "overwrite should require preparation");
 assert(syncSource.includes("confirmOverwriteCloud"), "overwrite should require confirmation");
 assert(syncSource.includes("latestCloudAssets.length !== overwriteState.cloudAssetCount"), "overwrite should re-fetch cloud before write");
+assert(syncSource.includes("loadPortfolioMigrationPending"), "pending migration should survive remounts");
+assert(syncSource.includes("savePortfolioMigrationPending"), "use_local/conflict decisions should be persisted");
+assert(syncSource.includes("clearPortfolioMigrationPending"), "resolved migrations should clear pending state");
+assert(syncSource.includes("logPortfolioSyncEvent(\"auth user resolved\""), "auth resolved log should exist");
+assert(syncSource.includes("logPortfolioSyncEvent(\"local load completed\""), "local load log should exist");
+assert(syncSource.includes("logPortfolioSyncEvent(\"cloud fetch completed\""), "cloud fetch log should exist");
+assert(syncSource.includes("logPortfolioSyncEvent(\"migration decision\""), "migration decision log should exist");
+assert(syncSource.includes("logPortfolioSyncEvent(\"migration modal opened\""), "migration modal log should exist");
+assert(syncSource.includes("logPortfolioSyncEvent(\"upload started\""), "upload started log should exist");
+assert(syncSource.includes("logPortfolioSyncEvent(\"upload succeeded\""), "upload succeeded log should exist");
+assert(syncSource.includes("logPortfolioSyncEvent(\"upload failed\""), "upload failed log should exist");
+assert(syncSource.includes("logPortfolioSyncEvent(\"refetch succeeded\""), "refetch succeeded log should exist");
+assert(syncSource.includes("logPortfolioSyncEvent(\"refetch failed\""), "refetch failed log should exist");
 assert(syncSource.includes("cloudRepository.saveAssets"), "cloud save path should exist");
+assert(syncSource.includes("cloudRepository.loadAssets()"), "cloud refetch path should exist");
 assert(syncSource.includes("localRepository.saveAssets(nextAssets)"), "guest fallback save path should exist");
 assert(!syncSource.includes("console.log"), "sync should not log portfolio data");
 assert(!syncSource.includes("console.error"), "sync should not log portfolio data");
@@ -101,25 +115,55 @@ assert(sql.includes("numeric(14, 0)"), "amounts should be integer numeric");
 assert(sql.includes("char_length(name) between 1 and 120"), "asset name length should be constrained");
 assert(sql.includes("unique (user_id, fingerprint)"), "snapshots should be unique per user fingerprint");
 
-console.log("Portfolio sync checks passed.");
-console.log(
-  JSON.stringify(
-    {
-      guestNew: cases.guestNew.decision,
-      guestAssetsCloudEmpty: cases.guestAssetsCloudEmpty.decision,
-      local0Cloud3: cases.local0Cloud3.decision,
-      local2Cloud3: cases.local2Cloud3.decision,
-      sameFingerprint: cases.sameFingerprint.decision,
-      sameAssetsDifferentSnapshots: cases.sameAssetsDifferentSnapshots.decision,
-      migrationReject: "skipMigration keeps data local and does not upload",
-      migrationApprove: "uploadLocalToCloud writes after explicit action",
-      cloudSaveFailure: "status=error and UI data remains",
-      logout: "signOut route plus local/cloud cache clearing",
-      userAToUserB: "RLS and user-hashed cloud cache keys isolate users",
-      invalidLocalStorage: "sanitizePortfolioAssets filters invalid data",
-      invalidCloudResponse: "sanitizePortfolioAssets filters invalid rows",
-    },
-    null,
-    2,
-  ),
-);
+async function decideAfterAll(loaders) {
+  const [authUser, local, cloud] = await Promise.all([
+    loaders.auth(),
+    loaders.local(),
+    loaders.cloud(),
+  ]);
+  assert(authUser.id, "auth user must be resolved before decision");
+  return getPortfolioMigrationState(local, cloud).decision;
+}
+
+async function runLoadOrderChecks() {
+  const orders = [
+    { authDelay: 1, localDelay: 5, cloudDelay: 10 },
+    { authDelay: 10, localDelay: 1, cloudDelay: 5 },
+    { authDelay: 5, localDelay: 10, cloudDelay: 1 },
+  ];
+
+  for (const order of orders) {
+    const decision = await decideAfterAll({
+      auth: () => new Promise((resolve) => setTimeout(() => resolve({ id: "user-a" }), order.authDelay)),
+      local: () => new Promise((resolve) => setTimeout(() => resolve(localAssets), order.localDelay)),
+      cloud: () => new Promise((resolve) => setTimeout(() => resolve([]), order.cloudDelay)),
+    });
+    assert.strictEqual(decision, "use_local");
+  }
+}
+
+runLoadOrderChecks().then(() => {
+  console.log("Portfolio sync checks passed.");
+  console.log(
+    JSON.stringify(
+      {
+        guestNew: cases.guestNew.decision,
+        guestAssetsCloudEmpty: cases.guestAssetsCloudEmpty.decision,
+        local0Cloud3: cases.local0Cloud3.decision,
+        local2Cloud3: cases.local2Cloud3.decision,
+        sameFingerprint: cases.sameFingerprint.decision,
+        sameAssetsDifferentSnapshots: cases.sameAssetsDifferentSnapshots.decision,
+        migrationReject: "skipMigration backs up local data and adopts cloud",
+        migrationApprove: "uploadLocalToCloud writes after explicit action and refetches cloud",
+        cloudSaveFailure: "status=error and UI data remains",
+        logout: "signOut route plus local/cloud cache clearing",
+        userAToUserB: "RLS and user-hashed cloud cache keys isolate users",
+        invalidLocalStorage: "sanitizePortfolioAssets filters invalid data",
+        invalidCloudResponse: "sanitizePortfolioAssets filters invalid rows",
+        loadOrderStable: true,
+      },
+      null,
+      2,
+    ),
+  );
+});

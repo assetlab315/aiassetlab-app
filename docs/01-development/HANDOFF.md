@@ -136,6 +136,14 @@ AI Chat運用メモ
 
 ・Step10-A2の実作業として、Supabase Project、SQL適用、Google OAuth、Email OTP、Vercel Preview環境変数、Preview Deploymentはまだ人間側の作業が必要です。
 
+・Step10-A2.1では、Preview実機で確認されたlocal Portfolio migration UI未表示を修正しました。Portfolioからログインする場合、Headerのログインリンクは `/login?next=/portfolio` を作り、OAuth callback後にPortfolioへ戻します。
+
+・`usePortfolioSync` はauth user、local load、cloud fetchが揃ってからmigration判定します。local > 0 / cloud = 0 は `aiassetlab.portfolioMigrationPending.v1` に保存し、再renderや再mountでも確認UIを維持します。
+
+・migration承認時はpending local assetsをSupabaseへ保存し、成功後にcloudを再fetchして画面とcacheを更新します。失敗時はlocal assetsを画面に残し、成功扱いにしません。
+
+・Preview検証用ログは `[portfolio-sync]` の `console.info` です。auth/local/cloud count、decision、modal、upload、refetchの状態だけを出し、tokenや資産JSONは出しません。`aiassetlab.jp` / `www.aiassetlab.jp` では出しません。
+
 ---
 
 環境変数

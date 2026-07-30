@@ -2,6 +2,32 @@
 
 ## 2026-07-28
 
+### Deployment Step 10-A2.1 - Portfolio Migration Flow Fix
+
+#### Fixed
+
+- Preview実機検証で、未ログイン時に作成したlocal PortfolioがGoogleログイン後にcloud migration確認UIへ進まない問題を修正
+- Headerのログイン導線が現在ページを `next` として渡し、Portfolioからログインした場合は `/portfolio` へ戻るように修正
+- `auth user resolved`、`local load completed`、`cloud fetch completed` の結果が揃ってからmigration判定を行う構成へ整理
+- local > 0 / cloud = 0 またはconflictのmigration pendingをlocalStorageへ保存し、画面遷移や再mountで確認UIが消えないように修正
+- migration承認時はpending local assetsをSupabaseへ保存し、成功後にcloudを再fetchして画面とcacheへ反映
+- migration失敗時はlocal assetsを画面に残し、成功扱いにしない
+- migration拒否時はlocal assetsをbackup keyへ退避し、cloud側の空状態を採用できるように修正
+- `useSearchParams()` によるbuild時Suspenseエラーを避けるため、LoginClientの `next` 読み取りをclient effectへ変更
+
+#### Added
+
+- Preview検証用の安全な `console.info` ログを追加
+- `npm test` scriptを追加し、既存自動テストをまとめて実行可能に変更
+- `test:portfolio-sync` にpending migration、upload/refetch、load order安定性の検証を追加
+
+#### Notes
+
+- Productionデプロイ、promote、環境変数変更は実行していません
+- Preview再検証では、local > 0 / cloud = 0 でmigration確認UIが表示され、承認後にSupabase行作成と再fetchが行われることを確認してください
+
+## 2026-07-28
+
 ### Deployment Step 10-A2 - Supabase Preview Integration Hardening
 
 #### Added
