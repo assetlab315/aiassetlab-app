@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import { Bot } from "lucide-react";
 import type { ActionAdvisor, DailyAdvisor } from "../../features/dashboard/types";
 import DailyAdvisorDetails from "./DailyAdvisorDetails";
 import Card from "../ui/Card";
@@ -20,9 +21,12 @@ export default function DailyAdvisorCard({ advisor, actionAdvisor }: Props) {
 
   return (
     <Card className="border border-blue-100 bg-white">
-      <div className="flex items-center gap-2">
-        <span aria-hidden="true" className="text-lg">
-          🤖
+      <div className="flex items-center gap-3">
+        <span
+          aria-hidden="true"
+          className="flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-50 text-blue-600"
+        >
+          <Bot className="h-5 w-5" />
         </span>
         <h2 className="text-sm font-black text-blue-600">{advisor.title}</h2>
       </div>
@@ -36,13 +40,13 @@ export default function DailyAdvisorCard({ advisor, actionAdvisor }: Props) {
           type="button"
           aria-expanded={isExpanded}
           onClick={() => setIsExpanded((current) => !current)}
-          className="min-h-11 rounded-2xl border border-slate-200 px-4 py-2 text-sm font-black text-slate-700 hover:border-blue-300 hover:bg-blue-50 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-100"
+          className="inline-flex min-h-12 items-center justify-center rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-bold text-slate-700 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-100"
         >
           詳しく見る
         </button>
         <Link
           href={chatHref}
-          className="inline-flex min-h-11 items-center justify-center rounded-2xl bg-blue-600 px-4 py-2 text-sm font-black text-white hover:bg-blue-700 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-200"
+          className="inline-flex min-h-12 items-center justify-center rounded-full bg-blue-600 px-5 py-3 text-sm font-bold text-white transition hover:bg-blue-700 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-200"
         >
           AIに相談する
         </Link>

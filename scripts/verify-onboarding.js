@@ -32,7 +32,9 @@ assert(modalSource.includes("開始する"), "Modal should include start button"
 assert(modalSource.includes('role="dialog"'), "Modal should use dialog role");
 assert(modalSource.includes('aria-modal="true"'), "Modal should be aria-modal");
 assert(modalSource.includes("nextButtonRef.current?.focus()"), "Modal should move focus to the primary button");
-assert(!modalSource.includes("onKeyDown"), "Modal should not close on Esc");
+assert(modalSource.includes("handleKeyDown"), "Modal should trap Tab focus");
+assert(modalSource.includes('event.key !== "Tab"'), "Modal should not close on Esc");
+assert(!modalSource.includes("event.key === \"Escape\""), "Modal should not handle Escape close");
 assert(!modalSource.includes("onClick={onComplete}") || modalSource.includes("Skip"), "Backdrop should not close the modal");
 
 assert(stepSource.includes("OnboardingStepItem"), "Step component should expose a typed step item");

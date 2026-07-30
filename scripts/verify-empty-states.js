@@ -31,7 +31,7 @@ assert(
 );
 assert(!chatEmpty.includes("onSend"), "Chat chips should not auto-send");
 
-assert(portfolioEmpty.includes("資産はまだ登録されていません"), "Portfolio empty title is required");
+assert(portfolioEmpty.includes("まだ資産がありません。"), "Portfolio empty title is required");
 assert(portfolioEmpty.includes("現金"), "Portfolio empty should mention cash");
 assert(portfolioEmpty.includes("銀行預金"), "Portfolio empty should mention bank deposits");
 assert(portfolioEmpty.includes("資産を追加"), "Portfolio empty should include add button");
