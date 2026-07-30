@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "test": "npm run test:portfolio-context && npm run test:dashboard-insights && npm run test:asset-health-score && npm run test:portfolio-change && npm run test:no-demo-seeding && npm run test:portfolio-review && npm run test:daily-advisor && npm run test:onboarding && npm run test:empty-states && npm run test:loading-error-ux && npm run test:auth-foundation && npm run test:portfolio-sync && npm run test:auth-redirect && npm run test:logout-isolation",
+    "test": "npm run test:portfolio-context && npm run test:dashboard-insights && npm run test:asset-health-score && npm run test:portfolio-change && npm run test:no-demo-seeding && npm run test:portfolio-review && npm run test:daily-advisor && npm run test:onboarding && npm run test:empty-states && npm run test:loading-error-ux && npm run test:auth-foundation && npm run test:portfolio-sync && npm run test:auth-redirect && npm run test:logout-isolation && npm run test:release-readiness",
     "test:portfolio-context": "node scripts/verify-portfolio-context.js",
     "test:dashboard-insights": "node scripts/verify-dashboard-insights.js",
     "test:asset-health-score": "node scripts/verify-asset-health-score.js",
@@ -20,6 +20,7 @@
     "test:portfolio-sync": "node scripts/verify-portfolio-sync.js",
     "test:auth-redirect": "node scripts/verify-auth-redirect.js",
     "test:logout-isolation": "node scripts/verify-logout-isolation.js",
+    "test:release-readiness": "node scripts/verify-release-readiness.js",
     "start": "next start"
   },
   "engines": {

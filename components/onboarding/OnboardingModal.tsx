@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { Bot, ChartNoAxesColumn, CircleDollarSign, Sparkles } from "lucide-react";
 import OnboardingStep, { type OnboardingStepItem } from "./OnboardingStep";
 
@@ -50,7 +50,7 @@ export default function OnboardingModal({ isOpen, onComplete }: Props) {
 
   if (!isOpen) return null;
 
-  function handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
+  function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
     if (event.key !== "Tab") return;
 
     const focusable = dialogRef.current?.querySelectorAll<HTMLElement>(
