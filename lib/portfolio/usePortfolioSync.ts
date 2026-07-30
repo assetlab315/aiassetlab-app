@@ -250,6 +250,14 @@ export function usePortfolioSync() {
     try {
       const supabase = createSupabaseBrowserClient();
       const cloudRepository = createSupabasePortfolioRepository(supabase, user.id);
+      const latestCloudAssets = await cloudRepository.loadAssets();
+      if (latestCloudAssets.length !== overwriteState.cloudAssetCount) {
+        setStatus("conflict");
+        setMessage("アカウント側の件数が変わりました。最新データを確認してから選び直してください。");
+        setOverwriteState(null);
+        return;
+      }
+
       await cloudRepository.saveAssets(overwriteState.localAssets);
       await cloudRepository.saveSnapshots(overwriteState.localSnapshots);
       saveCloudPortfolioCache(user.id, overwriteState.localAssets);

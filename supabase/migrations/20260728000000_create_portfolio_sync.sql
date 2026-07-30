@@ -13,6 +13,10 @@ create table if not exists public.portfolio_assets (
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
   primary key (user_id, id),
+  constraint portfolio_assets_name_length_check
+    check (char_length(name) between 1 and 120),
+  constraint portfolio_assets_memo_length_check
+    check (memo is null or char_length(memo) <= 1000),
   constraint portfolio_assets_category_check
     check (category in ('cash', 'stock', 'fund', 'crypto', 'pension', 'other')),
   constraint portfolio_assets_amount_check check (amount >= 0),

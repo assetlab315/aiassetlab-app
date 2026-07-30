@@ -52,7 +52,16 @@ PreviewまたはProductionの対象Environmentだけに設定します。
 10. logout後に前ユーザー資産が見えない。
 11. User AとUser BのRLS isolationを確認する。
 
-## 6. Production前 Blockers
+## 6. RLS Verification
+
+1. `scripts/verify-supabase-rls.sql` を開く。
+2. `USER_A_UUID` と `USER_B_UUID` をPreview用テストユーザーのauth user idへ置き換える。
+3. Service Role clientではなく、RLSが効くauthenticated contextまたは通常のSupabase clientで確認する。
+4. `portfolio_assets` と `portfolio_snapshots` の `rowsecurity` がtrueであることを確認する。
+5. policy一覧でSELECT / INSERT / UPDATE / DELETEが両テーブルに存在することを確認する。
+6. User AからUser Bのinsert / select / update / deleteが拒否または0件になることを確認する。
+
+## 7. Production前 Blockers
 
 - SQL migration未適用
 - Google OAuth未設定
@@ -60,3 +69,4 @@ PreviewまたはProductionの対象Environmentだけに設定します。
 - RLS isolation未確認
 - Preview OAuth未確認
 - アカウント削除依頼運用未整理
+- Email OTPの本番配信方針未整理。Supabase標準メールはPreview検証成功を本番配信保証として扱わない

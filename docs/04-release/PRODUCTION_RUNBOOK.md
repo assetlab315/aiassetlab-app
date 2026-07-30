@@ -298,6 +298,17 @@ Step10-A2で人間が実施すること:
 6. Vercel Previewへ `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` を設定する
 7. Previewでlogin、callback、migration、conflict、logoutをSmoke Testする
 
+Step10-A2 Codex-side hardening:
+
+- Auth redirect guardでexternal URL、protocol-relative URL、encoded external URL、backslash、control characterを拒否
+- `/account` はSupabase設定済みかつ未ログイン時に `/login?next=/account` へredirect
+- overwriteは保存直前にcloud件数を再取得し、変化があれば停止
+- Portfolio同期UIに `aria-live` と保存中button disabledを追加
+- RLS検証用 `scripts/verify-supabase-rls.sql` を追加
+- build warning全文:
+  `./node_modules/@supabase/supabase-js/dist/index.mjs A Node.js API is used (process.version at line: 27) which is not supported in the Edge Runtime. Import trace: @supabase/ssr -> lib/supabase/middleware.ts`
+- 現時点の判断: build時warning。compile、type check、static generationは成功。Previewでmiddleware runtime error、OAuth loop、Cookie refresh failureが出る場合は修正必須
+
 - GA4は既存プロパティ「AI Asset Lab」と既存Web Streamを利用します。
 - GA4 Web Stream URLは `https://aiassetlab.jp`、Stream IDは `15218177688`、Measurement IDは `G-BB1DMLMD15` です。
 - GA4 Enhanced Measurementとページビュー計測は有効です。

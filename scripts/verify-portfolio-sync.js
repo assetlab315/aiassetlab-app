@@ -78,6 +78,7 @@ const syncSource = fs.readFileSync("lib/portfolio/usePortfolioSync.ts", "utf8");
 assert(syncSource.includes("uploadLocalToCloud"), "migration approval action should exist");
 assert(syncSource.includes("prepareOverwriteCloud"), "overwrite should require preparation");
 assert(syncSource.includes("confirmOverwriteCloud"), "overwrite should require confirmation");
+assert(syncSource.includes("latestCloudAssets.length !== overwriteState.cloudAssetCount"), "overwrite should re-fetch cloud before write");
 assert(syncSource.includes("cloudRepository.saveAssets"), "cloud save path should exist");
 assert(syncSource.includes("localRepository.saveAssets(nextAssets)"), "guest fallback save path should exist");
 assert(!syncSource.includes("console.log"), "sync should not log portfolio data");
@@ -97,6 +98,7 @@ assert(sql.includes("alter table public.portfolio_snapshots enable row level sec
 assert(sql.match(/auth\.uid\(\) = user_id/g).length >= 8, "RLS should use auth.uid ownership checks");
 assert(sql.includes("primary key (user_id, id)"), "asset id should be user-scoped text");
 assert(sql.includes("numeric(14, 0)"), "amounts should be integer numeric");
+assert(sql.includes("char_length(name) between 1 and 120"), "asset name length should be constrained");
 assert(sql.includes("unique (user_id, fingerprint)"), "snapshots should be unique per user fingerprint");
 
 console.log("Portfolio sync checks passed.");

@@ -15,10 +15,18 @@ Deployment Step10-A1で追加した認証・Portfolioクラウド同期基盤の
 1. `/login` でGoogle OAuthまたはEmail OTPを開始する。
 2. Supabase Authが `/auth/callback` へ戻す。
 3. callback routeが `code` を `exchangeCodeForSession()` でsessionへ交換する。
-4. `next` は内部パスだけ許可し、未指定または不正値は `/dashboard` へ戻す。
+4. `next` は内部相対パスだけ許可し、未指定または不正値は `/dashboard` へ戻す。
 5. `/auth/logout` がSupabase sessionを削除する。
 
 token、OAuth code、Cookie、資産JSONはログへ出しません。
+
+Redirect guard rejects:
+
+- `//evil.example`
+- `https://evil.example`
+- encoded external URL
+- backslash-based paths
+- control characters
 
 ## Source of Truth
 
@@ -41,6 +49,7 @@ Guest modeは維持します。`/`, `/diagnosis`, `/portfolio`, `/dashboard`, `/
 | >0 | >0 and different fingerprint | conflict UI |
 
 Conflict時は自動mergeしません。`この端末のデータで置き換える` は二段階確認にし、実行直前にcloudを再取得する設計です。
+Step10-A2では、実行直前にcloud件数が変化していた場合は置き換えを停止し、選択をやり直す構成へ補強しました。
 
 ## Portfolio Assets
 
@@ -77,3 +86,4 @@ Conflict時は自動mergeしません。`この端末のデータで置き換え
 - Google OAuthとSupabase URL Configurationは未設定です。
 - RLSはSQLとして保存済みですが、実Project上の検証はStep10-A2で行います。
 - アカウント削除UIは未実装です。auth user削除時は `on delete cascade` で資産・snapshotが削除される設計です。
+- Supabase SSR middleware由来のEdge Runtime warningはbuild時に確認済みです。PreviewでRuntime error、OAuth loop、Cookie refresh failureが出る場合はNo-Goとして扱います。

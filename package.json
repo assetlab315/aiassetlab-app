@@ -13,6 +13,8 @@
     "test:portfolio-review": "node scripts/verify-portfolio-review.js",
     "test:auth-foundation": "node scripts/verify-auth-foundation.js",
     "test:portfolio-sync": "node scripts/verify-portfolio-sync.js",
+    "test:auth-redirect": "node scripts/verify-auth-redirect.js",
+    "test:logout-isolation": "node scripts/verify-logout-isolation.js",
     "start": "next start"
   },
   "engines": {

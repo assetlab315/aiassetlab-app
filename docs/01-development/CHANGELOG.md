@@ -2,6 +2,29 @@
 
 ## 2026-07-28
 
+### Deployment Step 10-A2 - Supabase Preview Integration Hardening
+
+#### Added
+
+- Auth redirect guardを `lib/auth/redirect.ts` に切り出し、external URL、protocol-relative URL、encoded external URL、backslash、control characterを拒否する `test:auth-redirect` を追加
+- logout isolationとoverwrite直前cloud再取得を検証する `test:logout-isolation` を追加
+- Preview RLS検証用SQL `scripts/verify-supabase-rls.sql` を追加
+
+#### Changed
+
+- `/account` はSupabase設定済みかつ未ログインの場合、server側で `/login?next=/account` へredirect
+- Portfolio conflict overwriteは保存直前にcloud件数を再取得し、変化があれば処理停止
+- Portfolio同期UIへ `aria-live`、region label、保存中の二重送信抑止を追加
+- SQL migrationへ資産名・memoの長さ制約を追加
+
+#### Notes
+
+- Supabase Project接続、SQL適用、Google OAuth、Email OTP、RLS実環境検証、Vercel Preview環境変数設定、Preview DeploymentはCodexでは実行していません
+- Productionデプロイ、Production環境変数変更は実行していません
+- build時にSupabase SSR middleware由来のEdge Runtime warningを確認。compile、type check、static generationは成功
+
+## 2026-07-28
+
 ### Deployment Step 10-A1 - Supabase Auth and Portfolio Sync Foundation
 
 #### Added

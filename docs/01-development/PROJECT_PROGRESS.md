@@ -2,7 +2,7 @@
 
 ## Current Sprint
 
-### Deployment Step 10-A1
+### Deployment Step 10-A2
 
 **Status**
 
@@ -12,7 +12,7 @@
 
 ## Current Goal
 
-Supabase Authentication and Portfolio Cloud Sync Foundation
+Supabase Preview Integration and Authentication Verification
 
 ---
 
@@ -139,6 +139,18 @@ Supabase Authentication and Portfolio Cloud Sync Foundation
 - `portfolio_snapshots` は `snapshot_data jsonb` と `(user_id, fingerprint)` uniqueで保存し、最大5件はapplication logicで制御
 - RLSはselect / insert / update / deleteすべて `auth.uid() = user_id`
 - Service Role Keyは未使用。SQL適用、Google OAuth、RLS実環境検証、Productionデプロイは未実行
+
+### Supabase Preview Integration Hardening
+
+- Step10-A2の実Preview接続前監査として、Auth redirect、logout isolation、overwrite safety、RLS検証手順を強化
+- `next` redirectは内部相対パスのみ許可し、`//evil.example`、`https://evil.example`、encoded external URL、backslash、control characterを拒否
+- `/account` はSupabase設定済みかつ未ログインならserver側で `/login?next=/account` へredirect
+- overwrite実行前にcloud件数を再取得し、件数変化時は置き換えを停止
+- Portfolio同期UIへ `aria-live`、region label、保存中button disabledを追加
+- SQL migrationへ `char_length(name) between 1 and 120`、`memo <= 1000` の制約を追加
+- `scripts/verify-supabase-rls.sql` を追加し、RLS有効化、policy一覧、User A / User BのCRUD分離確認手順を保存
+- 実Supabase Project接続、SQL適用、Google OAuth、Email OTP、Preview Deploymentは未実行
+- Productionデプロイ、Production環境変数変更は未実行
 
 ### Dashboard v3.1 / Monetization Foundation
 

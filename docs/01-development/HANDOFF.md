@@ -128,6 +128,14 @@ AI Chat運用メモ
 
 ・Service Role Keyは今回使いません。Client Component、browser bundle、`.env.example`、docsへ秘密鍵を置かない方針です。
 
+・Step10-A2ではPreview接続前のhardeningとして、Auth redirect guard、logout isolation検証、overwrite直前cloud再取得、同期UIのaria-live / button disabled、SQL name/memo制約を追加しました。
+
+・Auth callbackの `next` は `lib/auth/redirect.ts` で内部相対パスのみ許可します。`//evil.example`、`https://evil.example`、encoded external URL、backslash、control characterは `/dashboard` へfallbackします。
+
+・RLS実環境検証は `scripts/verify-supabase-rls.sql` を参照してください。Service Roleを使った確認はRLSをバイパスするため、authenticated contextまたは通常のSupabase clientで確認します。
+
+・Step10-A2の実作業として、Supabase Project、SQL適用、Google OAuth、Email OTP、Vercel Preview環境変数、Preview Deploymentはまだ人間側の作業が必要です。
+
 ---
 
 環境変数

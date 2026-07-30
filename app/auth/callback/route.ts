@@ -1,18 +1,11 @@
 import { NextResponse } from "next/server";
 import { canUseSupabaseServerClient, createSupabaseServerClient } from "../../../lib/supabase/server";
-
-function getSafeNextPath(value: string | null) {
-  if (!value || !value.startsWith("/") || value.startsWith("//")) {
-    return "/dashboard";
-  }
-
-  return value;
-}
+import { getSafeAuthRedirectPath } from "../../../lib/auth/redirect";
 
 export async function GET(request: Request) {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get("code");
-  const next = getSafeNextPath(requestUrl.searchParams.get("next"));
+  const next = getSafeAuthRedirectPath(requestUrl.searchParams.get("next"));
 
   if (!canUseSupabaseServerClient()) {
     return NextResponse.redirect(new URL("/login?error=supabase_not_configured", requestUrl));

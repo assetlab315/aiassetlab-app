@@ -17,6 +17,7 @@ assert(packageJson.dependencies["@supabase/ssr"], "@supabase/ssr is required");
   "app/auth/callback/route.ts",
   "app/auth/logout/route.ts",
   "app/login/page.tsx",
+  "app/account/page.tsx",
   "components/auth/LoginClient.tsx",
   "components/auth/AuthNavItem.tsx",
 ].forEach((path) => assert(fs.existsSync(path), `${path} should exist`));
@@ -27,19 +28,24 @@ const clientSource = read("lib/supabase/client.ts");
 const serverSource = read("lib/supabase/server.ts");
 const middlewareSource = read("lib/supabase/middleware.ts");
 const callbackSource = read("app/auth/callback/route.ts");
+const redirectSource = read("lib/auth/redirect.ts");
 const loginSource = read("components/auth/LoginClient.tsx");
 const logoutSource = read("app/auth/logout/route.ts");
 const layoutSource = read("app/layout.tsx");
+const accountSource = read("app/account/page.tsx");
 
 assert(clientSource.includes("createBrowserClient"), "browser client should use @supabase/ssr");
 assert(serverSource.includes("createServerClient"), "server client should use @supabase/ssr");
 assert(middlewareSource.includes("supabase.auth.getUser()"), "middleware should refresh session with getUser");
 assert(callbackSource.includes("exchangeCodeForSession"), "callback should exchange OAuth code");
-assert(callbackSource.includes("startsWith(\"/\")"), "callback should only allow internal next paths");
-assert(callbackSource.includes("startsWith(\"//\")"), "callback should reject protocol-relative URLs");
+assert(callbackSource.includes("getSafeAuthRedirectPath"), "callback should use shared redirect guard");
+assert(redirectSource.includes("startsWith(\"/\")"), "redirect guard should only allow internal paths");
+assert(redirectSource.includes("startsWith(\"//\")"), "redirect guard should reject protocol-relative URLs");
+assert(redirectSource.includes("includes(\"\\\\\")"), "redirect guard should reject backslashes");
 assert(!callbackSource.includes("console.log"), "callback should not log tokens or codes");
 assert(!callbackSource.includes("console.error"), "callback should not log callback internals");
 assert(logoutSource.includes("auth.signOut"), "logout should clear Supabase session");
+assert(accountSource.includes("redirect(\"/login?next=/account\")"), "account should redirect logged-out users");
 assert(loginSource.includes("signInWithOAuth"), "Google OAuth should be available");
 assert(loginSource.includes("signInWithOtp"), "email auth foundation should be available");
 assert(layoutSource.includes("AuthNavItem"), "layout should expose login/account navigation");

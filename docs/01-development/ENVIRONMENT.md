@@ -34,3 +34,5 @@ AI Asset Labのローカル開発・Preview検証で使う環境変数です。�
 - Preview: Vercel Preview URLの `/auth/callback`
 - Production: `https://aiassetlab.jp/auth/callback`
 - callback URLはSupabase Authentication URL ConfigurationとGoogle Cloud OAuth Clientの両方で整合させます。
+- Step10-A2のPreview検証では、まずPreview EnvironmentのみにSupabase public envを設定します。Production scopeには追加しません。
+- Google OAuthのAuthorized redirect URIには、アプリの `/auth/callback` ではなく、Supabase Provider画面に表示されるSupabase Auth callback URLを登録します。

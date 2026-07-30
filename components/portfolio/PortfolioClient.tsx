@@ -129,7 +129,7 @@ export default function PortfolioClient() {
               <p className="text-sm font-black text-blue-600">
                 {user ? "アカウント同期" : "ゲスト保存"}
               </p>
-              <p className="mt-1 text-sm font-bold leading-6 text-slate-600">
+              <p className="mt-1 text-sm font-bold leading-6 text-slate-600" aria-live="polite">
                 {message}
               </p>
             </div>
@@ -149,8 +149,8 @@ export default function PortfolioClient() {
           </div>
 
           {migrationState?.decision === "use_local" ? (
-            <div className="mt-4 rounded-2xl bg-blue-50 p-4">
-              <p className="font-black text-blue-900">
+            <div className="mt-4 rounded-2xl bg-blue-50 p-4" role="region" aria-labelledby="portfolio-migration-title">
+              <p id="portfolio-migration-title" className="font-black text-blue-900">
                 このブラウザに登録されている資産{migrationState.localAssetCount}件をアカウントへ保存しますか？
               </p>
               <p className="mt-2 text-sm font-bold leading-6 text-blue-800">
@@ -160,6 +160,7 @@ export default function PortfolioClient() {
                 <button
                   type="button"
                   onClick={skipMigration}
+                  disabled={status === "saving"}
                   className="min-h-11 rounded-full border border-blue-200 bg-white px-4 text-sm font-black text-blue-700"
                 >
                   今回は保存しない
@@ -167,6 +168,7 @@ export default function PortfolioClient() {
                 <button
                   type="button"
                   onClick={uploadLocalToCloud}
+                  disabled={status === "saving"}
                   className="min-h-11 rounded-full bg-blue-600 px-4 text-sm font-black text-white"
                 >
                   アカウントへ保存
@@ -176,8 +178,8 @@ export default function PortfolioClient() {
           ) : null}
 
           {migrationState?.decision === "conflict" ? (
-            <div className="mt-4 rounded-2xl bg-amber-50 p-4">
-              <p className="font-black text-amber-900">保存済みデータが見つかりました</p>
+            <div className="mt-4 rounded-2xl bg-amber-50 p-4" role="region" aria-labelledby="portfolio-conflict-title">
+              <p id="portfolio-conflict-title" className="font-black text-amber-900">保存済みデータが見つかりました</p>
               <p className="mt-2 text-sm font-bold leading-6 text-amber-800">
                 この端末のデータ: {migrationState.localAssetCount}件 / アカウントのデータ: {migrationState.cloudAssetCount}件
               </p>
@@ -185,6 +187,7 @@ export default function PortfolioClient() {
                 <button
                   type="button"
                   onClick={useCloudData}
+                  disabled={status === "saving"}
                   className="min-h-11 rounded-full bg-slate-900 px-4 text-sm font-black text-white"
                 >
                   アカウントのデータを使用
@@ -192,6 +195,7 @@ export default function PortfolioClient() {
                 <button
                   type="button"
                   onClick={prepareOverwriteCloud}
+                  disabled={status === "saving"}
                   className="min-h-11 rounded-full border border-amber-300 bg-white px-4 text-sm font-black text-amber-800"
                 >
                   この端末のデータで置き換える
@@ -199,6 +203,7 @@ export default function PortfolioClient() {
                 <button
                   type="button"
                   onClick={skipMigration}
+                  disabled={status === "saving"}
                   className="min-h-11 rounded-full border border-slate-200 bg-white px-4 text-sm font-black text-slate-700"
                 >
                   後で決める
@@ -208,14 +213,15 @@ export default function PortfolioClient() {
           ) : null}
 
           {overwriteState ? (
-            <div className="mt-4 rounded-2xl border border-red-200 bg-red-50 p-4">
-              <p className="font-black text-red-900">
+            <div className="mt-4 rounded-2xl border border-red-200 bg-red-50 p-4" role="region" aria-labelledby="portfolio-overwrite-title">
+              <p id="portfolio-overwrite-title" className="font-black text-red-900">
                 アカウントに保存されている資産{overwriteState.cloudAssetCount}件が、この端末の資産{overwriteState.localAssets.length}件で置き換えられます。
               </p>
               <div className="mt-4 flex flex-col gap-3 sm:flex-row">
                 <button
                   type="button"
                   onClick={cancelOverwrite}
+                  disabled={status === "saving"}
                   className="min-h-11 rounded-full border border-red-200 bg-white px-4 text-sm font-black text-red-800"
                 >
                   キャンセル
@@ -223,6 +229,7 @@ export default function PortfolioClient() {
                 <button
                   type="button"
                   onClick={confirmOverwriteCloud}
+                  disabled={status === "saving"}
                   className="min-h-11 rounded-full bg-red-600 px-4 text-sm font-black text-white"
                 >
                   置き換える

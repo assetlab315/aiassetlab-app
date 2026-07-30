@@ -58,6 +58,9 @@ Version1.1公開前に確認する項目です。
 - [x] Step10-A1で `portfolio_assets` / `portfolio_snapshots` のRLS付きSQL migrationを作成している
 - [x] Step10-A1でService Role Keyを使用しない構成を確認している
 - [x] `npm run test:auth-foundation` / `npm run test:portfolio-sync` を追加している
+- [x] Step10-A2でAuth redirect guardと `test:auth-redirect` を追加している
+- [x] Step10-A2でlogout isolation / overwrite再取得確認と `test:logout-isolation` を追加している
+- [x] Step10-A2でRLS実環境検証用SQLを追加している
 - [ ] Step7-B反映後にProduction再デプロイを実施している
 - [ ] Step7-B反映後に新NISA、資産未登録、情報不足、危険相談、個別銘柄、機密情報のSmoke Testを実施している
 - [ ] Step7-C反映後に現金90% / 株式10%、暗号資産70%、1銘柄100%、資産なしのSmoke Testを実施している
@@ -72,6 +75,8 @@ Version1.1公開前に確認する項目です。
 - [ ] Step10-A2でGoogle OAuth Providerとcallback URLを設定している
 - [ ] Step10-A2でPreview login / callback / migration / conflict / logoutを確認している
 - [ ] Step10-A2でRLS isolationをUser A / User Bで確認している
+- [ ] Step10-A2でEmail OTP受信確認、またはProductionではGoogle主導線にする判断を記録している
+- [ ] Step10-A2でSupabase SSR middleware Edge Runtime warningがPreview Runtime障害につながらないことを確認している
 - [ ] OpenAI接続失敗時にfallback回答へ切り替わることを確認している
 - [ ] 本番ログにAPIキーやOpenAI response bodyが出ないことを確認している
 
