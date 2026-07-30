@@ -12,6 +12,7 @@ import DashboardReleaseCheckCard from "./DashboardReleaseCheckCard";
 import DailyAdvisorCard from "./DailyAdvisorCard";
 import PortfolioChangeCard from "./PortfolioChangeCard";
 import PortfolioReviewCard from "./PortfolioReviewCard";
+import OnboardingModal from "../onboarding/OnboardingModal";
 import FeatureNavigation from "../common/FeatureNavigation";
 import SectionHeader from "../common/SectionHeader";
 import PageContainer from "../layout/PageContainer";
@@ -23,6 +24,7 @@ import { createDailyAdvisor } from "../../features/dashboard/createDailyAdvisor"
 import { calculatePortfolioSummary } from "../../lib/portfolio/calculatePortfolio";
 import { formatCurrency } from "../../lib/portfolio/formatPortfolio";
 import { usePortfolioSync } from "../../lib/portfolio/usePortfolioSync";
+import { useOnboarding } from "../../hooks/useOnboarding";
 import { createPortfolioInsights } from "../../lib/chat/createPortfolioInsights";
 import { createAssetHealthScore } from "../../lib/dashboard/createAssetHealthScore";
 import { createDashboardChangeSummary } from "../../lib/dashboard/createDashboardChangeSummary";
@@ -77,6 +79,7 @@ function getDateLabel() {
 
 export default function DashboardClient() {
   const { assets, isReady, status: syncStatus } = usePortfolioSync();
+  const onboarding = useOnboarding();
   const [isDailyChecked, setIsDailyChecked] = useState(false);
   const [dateLabel, setDateLabel] = useState("");
   const [changeSummary, setChangeSummary] = useState<DashboardChangeSummary | null>(null);
@@ -206,6 +209,11 @@ export default function DashboardClient() {
 
   return (
     <PageContainer size="xl">
+      <OnboardingModal
+        isOpen={onboarding.isReady && onboarding.isOpen}
+        onComplete={onboarding.complete}
+      />
+
       <DailyAdvisorCard advisor={dailyAdvisor} actionAdvisor={actionAdvisor} />
 
       <section className="rounded-[2rem] bg-white p-6 shadow-sm md:p-8">
