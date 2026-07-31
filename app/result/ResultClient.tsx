@@ -3,6 +3,10 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import {
+  createInlineDiagnosisResult,
+  loadLocalDiagnosisResult,
+} from "../../lib/diagnosis/storage";
 
 type DiagnosisResult = {
   id: string;
@@ -84,21 +88,53 @@ export default function ResultClient() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let isMounted = true;
+
     async function fetchResult() {
-      if (!resultId) {
+      const inlineResult = createInlineDiagnosisResult(searchParams);
+      if (inlineResult) {
+        if (!isMounted) return;
+        setResult(inlineResult);
         setLoading(false);
         return;
       }
 
-      const res = await fetch(`/api/diagnosis?id=${resultId}`);
-      const json = await res.json();
+      if (!resultId) {
+        if (isMounted) setLoading(false);
+        return;
+      }
 
-      setResult(json.data);
-      setLoading(false);
+      const localResult = loadLocalDiagnosisResult(resultId);
+      if (localResult) {
+        if (!isMounted) return;
+        setResult(localResult);
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/diagnosis?id=${resultId}`);
+        if (!res.ok) {
+          if (isMounted) setLoading(false);
+          return;
+        }
+
+        const json = await res.json();
+        if (!isMounted) return;
+        setResult(json.data ?? null);
+      } catch {
+        if (!isMounted) return;
+        setResult(null);
+      }
+
+      if (isMounted) setLoading(false);
     }
 
     fetchResult();
-  }, [resultId]);
+    return () => {
+      isMounted = false;
+    };
+  }, [resultId, searchParams]);
 
   const aiAnalysis = useMemo(() => {
     if (!result) return "";

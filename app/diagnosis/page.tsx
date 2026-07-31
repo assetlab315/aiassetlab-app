@@ -3,6 +3,15 @@
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import {
+  createInlineDiagnosisUrl,
+  saveLocalDiagnosisResult,
+  type DiagnosisResultInput,
+} from "../../lib/diagnosis/storage";
+import {
+  canUseSupabaseBrowserClient,
+  createSupabaseBrowserClient,
+} from "../../lib/supabase/client";
 
 const questions = [
   {
@@ -83,8 +92,22 @@ export default function DiagnosisPage() {
 
   const current = questions[step];
 
-  async function saveResult() {
-    setSaving(true);
+  async function getLoggedInUserId() {
+    if (!canUseSupabaseBrowserClient()) return null;
+
+    try {
+      const supabase = createSupabaseBrowserClient();
+      const { data, error } = await supabase.auth.getUser();
+      if (error || !data.user) return null;
+      return data.user.id;
+    } catch {
+      return null;
+    }
+  }
+
+  async function saveCloudDiagnosisResult(input: DiagnosisResultInput) {
+    const userId = await getLoggedInUserId();
+    if (!userId) return null;
 
     try {
       const res = await fetch("/api/diagnosis", {
@@ -92,30 +115,49 @@ export default function DiagnosisPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          score,
-          type: resultType,
-          comment,
-          answers,
-        }),
+        body: JSON.stringify(input),
       });
 
-      if (!res.ok) {
-        alert("保存に失敗しました。");
-        return;
-      }
+      if (!res.ok) return null;
 
       const result = await res.json();
       const resultId = result?.data?.id;
+      return typeof resultId === "string" ? resultId : null;
+    } catch {
+      return null;
+    }
+  }
 
-      if (!resultId) {
-        alert("診断結果IDの取得に失敗しました。");
+  async function saveResult() {
+    if (saving) return;
+    setSaving(true);
+
+    const resultInput = {
+      score,
+      type: resultType,
+      comment,
+      answers,
+    };
+
+    try {
+      const localResult = saveLocalDiagnosisResult(resultInput);
+
+      if (!localResult) {
+        router.push(createInlineDiagnosisUrl(resultInput));
         return;
       }
 
-      router.push(`/result?id=${resultId}`);
+      const cloudResultId = await saveCloudDiagnosisResult(resultInput);
+      if (cloudResultId) {
+        saveLocalDiagnosisResult(resultInput, {
+          id: cloudResultId,
+          source: "cloud-cache",
+        });
+      }
+
+      router.push(`/result?id=${cloudResultId ?? localResult.id}`);
     } catch {
-      alert("保存中にエラーが発生しました。");
+      router.push(createInlineDiagnosisUrl(resultInput));
     } finally {
       setSaving(false);
     }
