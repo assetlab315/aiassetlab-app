@@ -24,7 +24,7 @@ export default function AssetForm({
   const canSubmit = input.name.trim().length > 0 && !isSaving;
 
   return (
-    <section className="rounded-3xl bg-white p-5 shadow-sm md:p-6">
+    <section className="rounded-3xl border border-slate-100 bg-slate-50 p-5 md:p-6">
       <p className="text-sm font-bold text-blue-600">資産を登録</p>
       <h2 className="mt-2 text-2xl font-black text-slate-900">
         {isEditing ? "資産を編集する" : "まず1つ追加しましょう"}

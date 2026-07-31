@@ -170,12 +170,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 </div>
                 <div className="flex items-center gap-2">
                   <AuthNavItem />
-                  <a
-                    href={siteUrl}
-                    className="rounded-xl border px-4 py-2 text-sm font-bold hover:bg-slate-50 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-100"
-                  >
-                    Webサイトへ
-                  </a>
                 </div>
               </div>
               <nav className="flex gap-2 overflow-x-auto px-4 pb-3 lg:hidden">

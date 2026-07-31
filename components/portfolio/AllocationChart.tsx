@@ -7,13 +7,10 @@ type Props = {
 
 export default function AllocationChart({ allocations }: Props) {
   return (
-    <section className="rounded-3xl bg-white p-6 shadow-sm">
+    <div>
       <div className="flex items-start justify-between gap-4">
         <div>
           <p className="text-sm font-bold text-blue-600">資産配分</p>
-          <h2 className="mt-2 text-2xl font-black text-slate-900">
-            どこにお金があるかを見る
-          </h2>
         </div>
       </div>
 
@@ -35,6 +32,6 @@ export default function AllocationChart({ allocations }: Props) {
           </div>
         ))}
       </div>
-    </section>
+    </div>
   );
 }

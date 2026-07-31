@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useMemo, useRef, useState } from "react";
 import AssetForm from "./AssetForm";
 import AssetTable from "./AssetTable";
@@ -9,13 +8,12 @@ import EmptyPortfolio from "../empty/EmptyPortfolio";
 import ErrorState from "../feedback/ErrorState";
 import InlineError from "../feedback/InlineError";
 import LoadingSkeleton from "../feedback/LoadingSkeleton";
-import PortfolioNextActions from "./PortfolioNextActions";
-import PortfolioSummaryCards from "./PortfolioSummaryCards";
 import type { AssetFormInput, PortfolioAsset } from "../../features/portfolio/types";
 import {
   calculateAssetAllocation,
   calculatePortfolioSummary,
 } from "../../lib/portfolio/calculatePortfolio";
+import { formatCurrency } from "../../lib/portfolio/formatPortfolio";
 import { usePortfolioSync } from "../../lib/portfolio/usePortfolioSync";
 
 const emptyInput: AssetFormInput = {
@@ -126,32 +124,49 @@ export default function PortfolioClient() {
   return (
     <main className="min-h-screen bg-slate-50 px-4 py-6 text-slate-900 md:px-8 md:py-8">
       <div className="mx-auto flex max-w-6xl flex-col gap-6">
-        <section className="rounded-3xl bg-gradient-to-br from-blue-600 to-indigo-700 p-5 text-white shadow-sm md:p-8">
-          <p className="text-sm font-bold text-blue-100">AI Asset Lab</p>
-          <div className="mt-3 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-            <div>
-              <h1 className="text-3xl font-black md:text-4xl">資産を登録・確認する</h1>
-              <p className="mt-3 max-w-2xl leading-7 text-blue-50">
-                いま持っている資産と毎月の積立を登録すると、DashboardとAI相談があなた向けになります。
-              </p>
-            </div>
-            <Link
-              href="/dashboard"
-              className="inline-flex min-h-12 items-center justify-center rounded-full bg-white px-5 py-3 text-center text-sm font-bold text-blue-700 hover:bg-blue-50 focus:outline-none focus-visible:ring-4 focus-visible:ring-white/40"
-            >
-              Dashboardを見る
-            </Link>
-          </div>
-        </section>
-
-        <PortfolioSummaryCards summary={summary} />
-
         {portfolioErrorMessage ? <InlineError message={portfolioErrorMessage} /> : null}
 
-        <section className="rounded-3xl border border-slate-100 bg-white p-5 shadow-sm">
-          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+        <section className="rounded-3xl bg-white p-5 shadow-sm md:p-8" data-portfolio-card="summary">
+          <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
             <div>
-              <p className="text-sm font-black text-blue-600">
+              <p className="text-sm font-black text-blue-600">資産サマリー</p>
+              <h1 className="mt-2 text-3xl font-black tracking-tight text-slate-900 md:text-4xl">
+                いまの資産を確認する
+              </h1>
+            </div>
+            <button
+              type="button"
+              onClick={handleAddAssetFocus}
+              className="inline-flex min-h-12 items-center justify-center rounded-full bg-blue-600 px-5 py-3 text-sm font-black text-white transition hover:bg-blue-700 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-200"
+            >
+              資産を追加
+            </button>
+          </div>
+
+          <div className="mt-6 grid gap-3 sm:grid-cols-3">
+            <div className="rounded-2xl bg-slate-50 p-4">
+              <p className="text-xs font-black text-slate-500">総資産</p>
+              <p className="mt-2 text-2xl font-black text-slate-900 md:text-3xl">
+                {formatCurrency(summary.totalAmount)}
+              </p>
+            </div>
+            <div className="rounded-2xl bg-slate-50 p-4">
+              <p className="text-xs font-black text-slate-500">毎月の積立</p>
+              <p className="mt-2 text-2xl font-black text-blue-600">
+                {formatCurrency(summary.totalMonthlyContribution)}
+              </p>
+            </div>
+            <div className="rounded-2xl bg-slate-50 p-4">
+              <p className="text-xs font-black text-slate-500">登録資産数</p>
+              <p className="mt-2 text-2xl font-black text-slate-900">
+                {summary.assetCount}件
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-5 flex flex-col gap-3 rounded-2xl bg-slate-50 p-4 md:flex-row md:items-center md:justify-between">
+            <div>
+              <p className="text-xs font-black text-slate-500">
                 {user ? "アカウント同期" : "ゲスト保存"}
               </p>
               <p className="mt-1 text-sm font-bold leading-6 text-slate-600" aria-live="polite">
@@ -264,51 +279,60 @@ export default function PortfolioClient() {
           ) : null}
         </section>
 
-        <div className="grid gap-6 lg:grid-cols-[420px_1fr]">
-          <div ref={formRef}>
-            <AssetForm
-              input={input}
-              isEditing={Boolean(editingId)}
-              isSaving={isSaving}
-              onCancel={handleCancel}
-              onChange={setInput}
-              onSubmit={handleSubmit}
-            />
+        <section className="rounded-3xl bg-white p-5 shadow-sm md:p-8" data-portfolio-card="breakdown">
+          <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="text-sm font-black text-blue-600">資産の内訳</p>
+              <h2 className="mt-2 text-2xl font-black text-slate-900">配分と一覧</h2>
+            </div>
+            <p className="text-sm font-bold text-slate-500">
+              詳細はここで追加・編集します。
+            </p>
           </div>
 
-          <div className="space-y-6">
-            {isInitialLoading ? (
-              <LoadingSkeleton variant="portfolio-list" label="資産一覧を読み込み中" />
-            ) : status === "error" && assets.length === 0 ? (
-              <ErrorState
-                title="資産情報を取得できませんでした。"
-                description="通信状態を確認して、もう一度お試しください。"
-                actionLabel="再試行"
-                loadingLabel="再試行中…"
-                isRetrying={false}
-                onRetry={() => {
-                  setLastOperation("load");
-                  reload();
-                }}
+          <div className="mt-6 grid gap-6 lg:grid-cols-[380px_1fr]">
+            <div ref={formRef}>
+              <AssetForm
+                input={input}
+                isEditing={Boolean(editingId)}
+                isSaving={isSaving}
+                onCancel={handleCancel}
+                onChange={setInput}
+                onSubmit={handleSubmit}
               />
-            ) : assets.length === 0 ? (
-              <EmptyPortfolio onAddAsset={handleAddAssetFocus} />
-            ) : (
-              <>
-                <AllocationChart allocations={allocations} />
-                <AssetTable
-                  assets={assets}
-                  isBusy={isSaving}
-                  onDelete={handleDelete}
-                  onEdit={handleEdit}
+            </div>
+
+            <div className="space-y-6">
+              {isInitialLoading ? (
+                <LoadingSkeleton variant="portfolio-list" label="資産一覧を読み込み中" />
+              ) : status === "error" && assets.length === 0 ? (
+                <ErrorState
+                  title="資産情報を取得できませんでした。"
+                  description="通信状態を確認して、もう一度お試しください。"
+                  actionLabel="再試行"
+                  loadingLabel="再試行中…"
+                  isRetrying={false}
+                  onRetry={() => {
+                    setLastOperation("load");
+                    reload();
+                  }}
                 />
-              </>
-            )}
+              ) : assets.length === 0 ? (
+                <EmptyPortfolio onAddAsset={handleAddAssetFocus} />
+              ) : (
+                <>
+                  <AllocationChart allocations={allocations} />
+                  <AssetTable
+                    assets={assets}
+                    isBusy={isSaving}
+                    onDelete={handleDelete}
+                    onEdit={handleEdit}
+                  />
+                </>
+              )}
+            </div>
           </div>
-        </div>
-
-        <PortfolioNextActions />
-
+        </section>
       </div>
     </main>
   );

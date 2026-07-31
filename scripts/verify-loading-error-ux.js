@@ -24,8 +24,8 @@ assert(feedbackSource.includes("disabled || isLoading"), "LoadingButton should p
 assert(
   dashboardSource.includes("!isReady || syncStatus === \"loading\"") &&
     dashboardSource.indexOf("!isReady || syncStatus === \"loading\"") <
-      dashboardSource.indexOf("assets.length === 0 ? <EmptyDashboard"),
-  "Dashboard should prioritize loading before empty state",
+      dashboardSource.indexOf("data-dashboard-main-blocks=\"3\""),
+  "Dashboard should prioritize loading before normal blocks",
 );
 assert(
   dashboardSource.includes("syncStatus === \"error\"") &&

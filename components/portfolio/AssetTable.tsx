@@ -11,11 +11,10 @@ type Props = {
 
 export default function AssetTable({ assets, isBusy = false, onDelete, onEdit }: Props) {
   return (
-    <section className="rounded-3xl bg-white p-6 shadow-sm">
+    <div>
       <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="text-sm font-bold text-blue-600">登録済みの資産</p>
-          <h2 className="mt-2 text-2xl font-black text-slate-900">資産一覧</h2>
         </div>
         <p className="text-sm text-slate-500">編集・削除できます</p>
       </div>
@@ -72,6 +71,6 @@ export default function AssetTable({ assets, isBusy = false, onDelete, onEdit }:
           </article>
         ))}
       </div>
-    </section>
+    </div>
   );
 }
