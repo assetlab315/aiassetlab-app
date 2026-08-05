@@ -31,8 +31,8 @@ export default function TermsPage() {
           <h2 className="text-xl font-bold text-slate-900">お問い合わせ</h2>
           <p>
             利用規約に関するお問い合わせは{" "}
-            <a className="font-bold text-blue-700 underline" href="mailto:contact@aiassetlab.jp">
-              contact@aiassetlab.jp
+            <a className="font-bold text-blue-700 underline" href="mailto:assetlab315@gmail.com">
+              assetlab315@gmail.com
             </a>{" "}
             までご連絡ください。
           </p>

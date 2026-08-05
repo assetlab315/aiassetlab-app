@@ -92,8 +92,8 @@ export default function PrivacyPage() {
             <h2 className="text-xl font-bold text-slate-900">13. 問い合わせ先</h2>
           <p>
             プライバシーポリシーに関するお問い合わせは{" "}
-            <a className="font-bold text-blue-700 underline" href="mailto:contact@aiassetlab.jp">
-              contact@aiassetlab.jp
+            <a className="font-bold text-blue-700 underline" href="mailto:assetlab315@gmail.com">
+              assetlab315@gmail.com
             </a>{" "}
             までご連絡ください。
           </p>

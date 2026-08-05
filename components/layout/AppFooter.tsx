@@ -27,7 +27,7 @@ export default function AppFooter() {
               プライバシーポリシー
             </Link>
             <a
-              href="mailto:contact@aiassetlab.jp"
+              href="mailto:assetlab315@gmail.com"
               className="font-semibold text-slate-600 hover:text-blue-700 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-100"
             >
               お問い合わせ
